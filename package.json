@@ -1,0 +1,22 @@
+{
+  "name": "gitplayback",
+  "version": "1.0.0",
+  "description": "A tool to help people better understand others' code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darksim735/gitplayback.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/darksim735/gitplayback/issues"
+  },
+  "homepage": "https://github.com/darksim735/gitplayback",
+  "dependencies": {
+    "sqlite3": "^3.0.8"
+  }
+}
