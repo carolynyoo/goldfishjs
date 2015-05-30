@@ -7,17 +7,17 @@ var db = new sqlite3.Database(file);
 
 db.serialize(function() {
   if(!exists) {
-    db.run("CREATE TABLE Planck (diff TEXT, date TEXT)");
+    db.run("CREATE TABLE Planck (id INTEGER PRIMARY KEY, diff TEXT, savedat DATE)");
   }
 
-	var stmt = db.prepare("INSERT INTO Planck(diff, date) VALUES (text, datetest)");
+	var stmt = db.prepare("INSERT INTO Planck(diff, savedat) VALUES (?, ?)");
 	fs.readFile('helloworld.txt', "utf-8", function(err, text) {
 		console.log('readfile from text', text);
 		datetest = Date.now();
 	  	stmt.run(text, datetest);
 		stmt.finalize();
-		db.each("SELECT rowid AS id, diff, date FROM Planck", function(err, row) {
-		    console.log(row.id + ": " + row.diff);
+		db.each("SELECT id, diff, savedat FROM Planck", function(err, row) {
+		    console.log(row.id + ": " + row.diff, "Saved at : " + row.savedat);
 		});
 	});
  
