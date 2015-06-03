@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/darksim735/gitplayback",
   "dependencies": {
+    "chokidar": "^1.0.2",
     "sqlite3": "^3.0.8"
   }
 }

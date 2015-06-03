@@ -1,1 +1,5 @@
 node_modules/
+bower_components/
+db/test.db
+.bin
+*.DS_Store

@@ -1,4 +1,0 @@
-function readFile () {
-  var stmt = db.prepare("INSERT INTO Planck (text_state, saved_at, author VALUES (?,?,?)"); 
-  
-}
