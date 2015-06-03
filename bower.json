@@ -1,0 +1,20 @@
+{
+  "name": "gitplayback",
+  "version": "0.0.0",
+  "homepage": "https://github.com/darksim735/gitplayback",
+  "authors": [
+    "Carolyn Yoo <yoo.carolyn@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "~0.9.7",
+    "angular-ui-router": "~0.2.15"
+  }
+}
