@@ -13,3 +13,14 @@ sequelize
       console.log('Connection has been established successfully');
     }
   });
+
+  var Keyframe = require('./keyframe')(sequelize);
+  var Author = require('./author')(sequelize);
+
+Author.hasMany(Keyframe);
+Keyframe.belongsTo(Author);
+
+module.exports = {
+  Author: Author,
+  Keyframe: Keyframe
+};
