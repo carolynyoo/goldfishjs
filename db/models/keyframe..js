@@ -7,12 +7,11 @@ models.exports = function(db){
 		filename: Sequelize.TEXT,
 		text_state: Sequelize.TEXT,
 		event_type: Sequelize.TEXT,
-		saved_at: { 
-			type: Sequelize.DATE, 
-			defaultValue: 
-			Sequelize.NOW 
-		},
-		author: Sequelize.STRING
+		last_commit: ...,	// look up git event types, does git provide info?
+		prev_keyframe: ...,
+		next_keyframe: ...,
+		branch_name: ..., // what info can we discern from th branch names?
+		repo_name: ...  // separate table
 	});
 
 	return Keyframe;
