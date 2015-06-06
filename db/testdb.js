@@ -1,6 +1,7 @@
 var fs = require("fs");
 var chokidar = require('chokidar');
 
+// Allows command line to be executed with node
 var nodeCLI = require("shelljs-nodecli");
 
 var models = require('./models'),
@@ -20,21 +21,15 @@ console.log("something ran");
 function readFile (event, filepath) {
   fs.readFile(filepath, "utf-8", function(err, text) {
   
-    // reads last commit hash for current branch
+    // Reads last commit hash for current branch
     var lastCommit = nodeCLI.exec("git", "rev-parse","head", {async:true});
     lastCommit.stdout.on('data', function(lastcommit){
-    //    console.log("this is branchname:", lastcommit);
-    //    console.log("typeofdata:", typeof lastcommit);
 
-    // reads current branch name
+    // Reads current branch name
     var currBranch = nodeCLI.exec("git", "rev-parse", "--abbrev-ref", "HEAD", {async: true});
     currBranch.stdout.on('data', function(branchname){
-    // avoid regex solution
-    //git rev-parse --abbrev-ref HEAD
-        console.log("branchname: ", branchname);
 
-
-    // fyi: if I understand correctly, sequelize will pluralize the model to become the table name. We can shut this off if you guys prefer.
+    // Read keyframe to database
     Keyframe
       .create({
         filename: filepath,
