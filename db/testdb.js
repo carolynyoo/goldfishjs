@@ -29,7 +29,7 @@ function readFile (event, filepath) {
       var currBranch = nodeCLI.exec("git", "rev-parse", "--abbrev-ref", "HEAD", {async: true});
       currBranch.stdout.on('data', function(branchname){
 
-
+      // Reads last commit time
       var commitTime = nodeCLI.exec("git", "rev-parse", "HEAD", "|", "git", "show", "-s", "--format=%ct", {async: true});
       commitTime.stdout.on('data', function(committime){
 
