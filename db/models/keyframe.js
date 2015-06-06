@@ -8,7 +8,7 @@ module.exports = function(sequelize){
 		text_state: Sequelize.TEXT,
 		event_type: Sequelize.TEXT,
 		last_commit: Sequelize.STRING(40),		// look up git event types, does git provide info?
-		last_commit_time: Sequelize.DATE,
+		last_commit_time: Sequelize.TEXT,
 		branch_name: Sequelize.STRING(40) 		// what info can we discern from th branch names?
 	});
 
