@@ -7,10 +7,10 @@ module.exports = function(sequelize){
 		filename: Sequelize.TEXT,
 		text_state: Sequelize.TEXT,
 		event_type: Sequelize.TEXT,
-		last_commit: Sequelize.STRING,		// look up git event types, does git provide info?
+		last_commit: Sequelize.STRING(40),		// look up git event types, does git provide info?
 		prev_keyframe: Sequelize.INTEGER,
 		next_keyframe: Sequelize.INTEGER,
-		branch_name: Sequelize.STRING 		// what info can we discern from th branch names?
+		branch_name: Sequelize.STRING() 		// what info can we discern from th branch names?
 	});
 
 	return Keyframe;

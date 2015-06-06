@@ -1,10 +1,8 @@
-// Wrote to testing looking for error
-
 var fs = require("fs");
 var chokidar = require('chokidar');
 
-// var sqlite3 = require("sqlite3").verbose();
-// var db = new sqlite3.Database(file);
+// Allows command line to be executed with node
+var nodeCLI = require("shelljs-nodecli");
 
 var models = require('./models'),
     Author = models.Author,
@@ -22,17 +20,25 @@ console.log("something ran");
 
 function readFile (event, filepath) {
   fs.readFile(filepath, "utf-8", function(err, text) {
+  
+    // Reads last commit hash for current branch
+    var lastCommit = nodeCLI.exec("git", "rev-parse","head", {async:true});
+    lastCommit.stdout.on('data', function(lastcommit){
 
-    // fyi: if I understand correctly, sequelize will pluralize the model to become the table name. We can shut this off if you guys prefer.
+    // Reads current branch name
+    var currBranch = nodeCLI.exec("git", "rev-parse", "--abbrev-ref", "HEAD", {async: true});
+    currBranch.stdout.on('data', function(branchname){
+
+    // Read keyframe to database
     Keyframe
       .create({
         filename: filepath,
         text_state: text,
         event_type: event,
-        last_commit: "test commit text",
+        last_commit: lastcommit,
         prev_keyframe: "prev keyframe placeholder",
         next_keyframe: "next keyframe placeholder",
-        branch_name: "git branch placeholder"
+        branch_name: branchname
       })
       .then(function(keyframe) {
         console.log("keyframe create successful: ");
@@ -40,7 +46,8 @@ function readFile (event, filepath) {
         console.log("keyframe create error: ", err);
       });
 
+    });
   });
 
-
-// No crappy logs!!! *smiley*
+    });
+}
