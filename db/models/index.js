@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize'),
     sequelize = new Sequelize('git-playback', 'root', null, {
       dialect: 'sqlite',
-      storage: "../" + __dirname + "storage.db",
+      storage: '/Users/panagiotis/dev/projects/gitplayback/db/storage.db',
       port: 3306
     });
 
