@@ -1,40 +1,7 @@
-// Wrote to testing looking for error
-
 var fs = require("fs");
 var chokidar = require('chokidar');
 
 var nodeCLI = require("shelljs-nodecli");
-
-//nodeCLI.exec("git", "rev-parse", "head", ">", "lastcommit.txt");
-
-
-//nodeCLI.exec("echo", "hello", ">", "hello.txt", {async:true});
-nodeCLI.exec("git", "rev-parse","head", ">", "gitoutput.txt", {async:true});
-
-
-function getCurrentBranch(changethis){
-
-    var currBranch = nodeCLI.exec("git", "rev-parse","head", {async:true});
-    currBranch.stdout.on('data', function(data){
-        changethis =  data;
-    });
-
-}
-
-
-
-/*
-var child = nodeCLI.exec('echo', 'hello', {async:true});
-        
-child.stdout.on('data', function(data) {
-        console.log(data);
-        nodeCLI.exec("data > hello");
-});
-*/
-
-
-// var sqlite3 = require("sqlite3").verbose();
-// var db = new sqlite3.Database(file);
 
 var models = require('./models'),
     Author = models.Author,
@@ -53,13 +20,19 @@ console.log("something ran");
 function readFile (event, filepath) {
   fs.readFile(filepath, "utf-8", function(err, text) {
   
-    var branchname;
+    // reads last commit hash for current branch
+    var lastCommit = nodeCLI.exec("git", "rev-parse","head", {async:true});
+    lastCommit.stdout.on('data', function(lastcommit){
+    //    console.log("this is branchname:", lastcommit);
+    //    console.log("typeofdata:", typeof lastcommit);
 
-    var currBranch = nodeCLI.exec("git", "rev-parse","head", {async:true});
+    // reads current branch name
+    var currBranch = nodeCLI.exec("git", "rev-parse", "--abbrev-ref", "HEAD", {async: true});
     currBranch.stdout.on('data', function(branchname){
-        console.log("this is branchname:", branchname);
-        console.log("typeofdata:", typeof branchname);
-        
+    // avoid regex solution
+    //git rev-parse --abbrev-ref HEAD
+        console.log("branchname: ", branchname);
+
 
     // fyi: if I understand correctly, sequelize will pluralize the model to become the table name. We can shut this off if you guys prefer.
     Keyframe
@@ -67,7 +40,7 @@ function readFile (event, filepath) {
         filename: filepath,
         text_state: text,
         event_type: event,
-        last_commit: "test commit text",
+        last_commit: lastcommit,
         prev_keyframe: "prev keyframe placeholder",
         next_keyframe: "next keyframe placeholder",
         branch_name: branchname
@@ -78,6 +51,7 @@ function readFile (event, filepath) {
         console.log("keyframe create error: ", err);
       });
 
+    });
   });
 
     });
