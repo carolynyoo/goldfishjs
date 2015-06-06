@@ -1,7 +1,11 @@
+var path = require('path');
+var storagePath = path.join(__dirname, "..", "storage.db");
+console.log("storagePath: ", storagePath);
+
 var Sequelize = require('sequelize'),
     sequelize = new Sequelize('git-playback', 'root', null, {
       dialect: 'sqlite',
-      storage: '/Users/panagiotis/dev/projects/gitplayback/db/storage.db',
+      storage: storagePath,
       port: 3306
     });
 
