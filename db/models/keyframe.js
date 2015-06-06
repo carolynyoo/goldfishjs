@@ -3,16 +3,25 @@ var Sequelize = require('sequelize');
 module.exports = function(sequelize){
 
 	var Keyframe = sequelize.define('Keyframe', {
-		id: { type: Sequelize.INTEGER, primaryKey: true},
+		id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
 		filename: Sequelize.TEXT,
 		text_state: Sequelize.TEXT,
 		event_type: Sequelize.TEXT,
 		last_commit: Sequelize.STRING,		// look up git event types, does git provide info?
-		prev_keyframe: Sequelize.INTEGER,
-		next_keyframe: Sequelize.INTEGER,
 		branch_name: Sequelize.STRING 		// what info can we discern from th branch names?
 	});
 
 	return Keyframe;
 
 };
+
+// we can set instance methods on our models...
+// http://stackoverflow.com/questions/19433824/using-instance-methods-in-sequelize
+
+
+// Keyframe.find( function (err, keyframe) {
+
+// 	keyframe.assixgnPrev...
+
+// 	keyframe.assignNext
+// }

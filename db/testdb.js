@@ -31,16 +31,50 @@ function readFile (event, filepath) {
         event_type: event,
         last_commit: "test commit text",
         prev_keyframe: "prev keyframe placeholder",
-        next_keyframe: "next keyframe placeholder",
+        next_keyframe: null,
         branch_name: "git branch placeholder"
       })
       .then(function(keyframe) {
-        console.log("keyframe create successful: ");
+        console.log("keyframe create successful: ", keyframe.get({plain: true})); 
+        addToTail(keyframe);
       }).catch(function(err) {
         console.log("keyframe create error: ", err);
       });
 
-  });
+  })
+};
+
+var addToTail = function (newKeyframe) {
+  // find the last chronological keyframe  --> query the latest...
+  // var = oldKeyFrame is result of first line --> createKeyframe()
+  // update oldKeyFrame.next_keyframe = newKeyFrame.ID
+  // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
+  console.log('newkf id?', newKeyframe.id);
+  Keyframe
+    .find({ where: { id: newKeyframe.id - 1 }})
+    .then(function(oldKeyFrame) {
+      console.log("oldKeyFrame retrieved: ", oldKeyFrame.id);
+
+      console.log("Add to Tail successful");
+    }).catch(function(err) {
+      console.log("Add to Tail error: ", err);
+    });
+
+};
+
+var insertKeyframe = function (revertKeyframe, newKeyframe) {
+  // newKeyframe.prev_keyframe = revertKeyframe.ID
+}
+
+// No crappy logs!!! *smiley*.quit
 
 
-// No crappy logs!!! *smiley*
+
+
+
+
+
+
+
+
+

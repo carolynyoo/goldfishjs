@@ -25,6 +25,8 @@ sequelize
 // Declare cardinality rules
 Author.hasMany(Keyframe);
 Keyframe.belongsTo(Author);
+// Keyframe.belongsTo(Keyframe, { as: "prev_keyframe", constraints: false });
+// Keyframe.belongsTo(Keyframe, { as: "next_keyframe", constraints: false });
 Repo.hasMany(Keyframe);
 Author.hasMany(Repo);
 Repo.belongsTo(Author);
