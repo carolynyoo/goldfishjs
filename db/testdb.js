@@ -7,7 +7,7 @@ var exists = fs.existsSync(file);
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database(file);
 
-var models = require('../models'),
+var models = require('./models'),
     Author = models.Author,
     Keyframe = models.Keyframe,
     Repo = models.Repo;
@@ -33,8 +33,9 @@ function readFile (event, filepath) {
 	// var stmt = db.prepare("INSERT INTO Planck(filename, text_state, event_type, saved_at, author) VALUES (?, ?, ?, ?, ?)");
 
   fs.readFile(filepath, "utf-8", function(err, text) {
-    
-    Keyframe
+
+    // fyi: sequelize will pluralize the model to become the table name. We can shut this off if you guys prefer.
+    Keyframes
       .create({
         filename: filepath,
         text_state: text,

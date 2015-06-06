@@ -6,17 +6,23 @@ var Sequelize = require('sequelize'),
 
 sequelize
   .authenticate()
-  .complete(function (err) {
-    if (!!err) {
-      console.log('Unable to connect to the database', err);
-    } else {
-      console.log('Connection has been established successfully');
-    }
+  .then(function(err) {
+    console.log('Connection has been established successfully.');
+  }, function (err) { 
+    console.log('Unable to connect to the database:', err);
   });
 
   var Keyframe = require('./keyframe')(sequelize);
-  var Author = require('./author')(sequelize);
-  var Repo = require('./repo')(sequelize);
+  var Author = require('author')(sequelize);
+  var Repo = require('repo')(sequelize);
+
+sequelize
+  .sync({ force: true })
+  .then(function(err) {
+    console.log('It worked!');
+  }, function (err) { 
+    console.log('An error occurred while creating the table:', err);
+  });
 
 // Declare cardinality rules
 Author.hasMany(Keyframe);
