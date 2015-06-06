@@ -58,12 +58,14 @@ var addToTail = function (newKeyframe) {
   // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
   console.log('newkf id?', newKeyframe.id);
   Keyframe
-    .find({ where: { id: newKeyframe.id - 1 }})
-    .then(function(oldKeyFrame) {
-      console.log("oldKeyFrame retrieved: ", oldKeyFrame.id);
-
-      console.log("Add to Tail successful");
-    }).catch(function(err) {
+    .update({nextKeyframeId: newKeyframe.id}, { where: { id: newKeyframe.id - 1 }})
+    .then(function() {
+      Keyframe.update({prevKeyframeId: newKeyframe.id-1}, { where: { id: newKeyframe.id }})
+    })
+    .then(function() {
+      console.log("Add to Tail successful"); 
+    })
+    .catch(function(err) {
       console.log("Add to Tail error: ", err);
     });
 

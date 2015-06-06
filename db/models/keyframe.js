@@ -13,7 +13,7 @@ module.exports = function(sequelize){
 
 	return Keyframe;
 
-};
+}; 
 
 // we can set instance methods on our models...
 // http://stackoverflow.com/questions/19433824/using-instance-methods-in-sequelize
