@@ -16,11 +16,16 @@ sequelize
 
   var Keyframe = require('./keyframe')(sequelize);
   var Author = require('./author')(sequelize);
+  var Repo = require('./repo')(sequelize);
 
+// Declare cardinality rules
 Author.hasMany(Keyframe);
 Keyframe.belongsTo(Author);
+Repo.hasMany(Keyframe);
+Repo.belongsTo(Author);
 
 module.exports = {
   Author: Author,
-  Keyframe: Keyframe
+  Keyframe: Keyframe,
+  Repo: Repo
 };
