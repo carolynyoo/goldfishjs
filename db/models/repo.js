@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 
-models.exports = function(db){
+module.exports = function(sequelize){
 
 	var Repo = sequelize.define('Repo', {
 		id: { type: Sequelize.STRING, primaryKey: true},
@@ -8,7 +8,7 @@ models.exports = function(db){
 		url: Sequelize.STRING,
 		remotes: Sequelize.STRING,
 		description: Sequelize.STRING,
-		head: sequelize.STRING
+		head: Sequelize.STRING
 	});
 
 	return Repo;

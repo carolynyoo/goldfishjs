@@ -12,6 +12,8 @@ var models = require('./models'),
     Keyframe = models.Keyframe,
     Repo = models.Repo;
 
+console.log("something ran");
+
 db.serialize(function() {
   if(!exists) {
     db.run("CREATE TABLE Planck (id INTEGER PRIMARY KEY, filename TEXT, text_state TEXT, event_type TEXT, saved_at DATE, author TEXT)");
@@ -35,7 +37,7 @@ function readFile (event, filepath) {
   fs.readFile(filepath, "utf-8", function(err, text) {
 
     // fyi: sequelize will pluralize the model to become the table name. We can shut this off if you guys prefer.
-    Keyframes
+    Keyframe
       .create({
         filename: filepath,
         text_state: text,
@@ -55,8 +57,8 @@ function readFile (event, filepath) {
     // datetest = Date.now();
     // stmt.run(filepath, text, event, datetest, "Randy Wong");
     // stmt.finalize();
-    db.each("SELECT id, filename, text_state, event_type, saved_at, author FROM Planck", function(err, row) {
-      console.log(row.id + "filename: " + row.filename + "text: " + row.text_state, "event: " + row.event_type + "Saved at : " + row.saved_at, "Author: "+row.author);
-    });
+    // db.each("SELECT id, filename, text_state, event_type, saved_at, author FROM Planck", function(err, row) {
+    //   console.log(row.id + "filename: " + row.filename + "text: " + row.text_state, "event: " + row.event_type + "Saved at : " + row.saved_at, "Author: "+row.author);
+    // });
   });
 }

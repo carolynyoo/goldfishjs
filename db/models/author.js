@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 
-models.exports = function(db){
+module.exports = function(sequelize){
 
 	var Author = sequelize.define('Author', {
 		id: { type: Sequelize.STRING, primaryKey: true},

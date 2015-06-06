@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 
-models.exports = function(db){
+module.exports = function(sequelize){
 
 	var Keyframe = sequelize.define('Keyframe', {
 		id: { type: Sequelize.STRING, primaryKey: true},
