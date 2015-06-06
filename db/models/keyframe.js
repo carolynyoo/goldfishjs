@@ -3,7 +3,7 @@ var Sequelize = require('sequelize');
 module.exports = function(sequelize){
 
 	var Keyframe = sequelize.define('Keyframe', {
-		id: { type: Sequelize.STRING, primaryKey: true},
+		id: { type: Sequelize.INTEGER, primaryKey: true},
 		filename: Sequelize.TEXT,
 		text_state: Sequelize.TEXT,
 		event_type: Sequelize.TEXT,

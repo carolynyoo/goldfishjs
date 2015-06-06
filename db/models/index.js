@@ -1,6 +1,7 @@
 var Sequelize = require('sequelize'),
     sequelize = new Sequelize('git-playback', 'root', null, {
       dialect: 'sqlite',
+      storage: "../" + __dirname + "storage.db",
       port: 3306
     });
 
@@ -25,11 +26,11 @@ Repo.belongsTo(Author);
 
 // Create the tables, add {force: true} as an option to drop the tables
 sequelize
-  .sync()
+  .sync({force: true})
   .then(function(err) {
     console.log('It worked!');
   }, function (err) { 
-    console.log('An error occurred while creating the table:', err);
+    console.log('An error occurred while creating the table:');
   });
 
 module.exports = {

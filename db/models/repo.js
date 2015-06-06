@@ -8,7 +8,9 @@ module.exports = function(sequelize){
 		url: Sequelize.STRING,
 		remotes: Sequelize.STRING,
 		description: Sequelize.STRING,
-		head: Sequelize.STRING
+		head: Sequelize.STRING,
+		collaborators: Sequelize.STRING
+		//stats i.e. total commits
 	});
 
 	return Repo;
