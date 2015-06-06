@@ -3,7 +3,7 @@
 var fs = require("fs");
 var chokidar = require('chokidar');
 
-var sqlite3 = require("sqlite3").verbose();
+// var sqlite3 = require("sqlite3").verbose();
 // var db = new sqlite3.Database(file);
 
 var models = require('./models'),
@@ -15,7 +15,7 @@ console.log("something ran");
 
   // Watches from db for now as root
   // Fix for later - whole gitplayback directory
-  chokidar.watch(__dirname, {ignored: /[\/\\]\./}).on('all', function(event, path) {
+  chokidar.watch(__dirname, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
     // console.log(event, path);
     readFile(event, path); 
   });
@@ -41,4 +41,6 @@ function readFile (event, filepath) {
       });
 
   });
-}
+
+
+// No crappy logs!!! *smiley*

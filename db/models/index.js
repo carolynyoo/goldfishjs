@@ -6,6 +6,7 @@ var Sequelize = require('sequelize'),
     sequelize = new Sequelize('git-playback', 'root', null, {
       dialect: 'sqlite',
       storage: storagePath,
+      logging: false,
       port: 3306
     });
 
