@@ -18,6 +18,7 @@
   "homepage": "https://github.com/darksim735/gitplayback",
   "dependencies": {
     "chokidar": "^1.0.2",
+    "sequelize": "^3.2.0",
     "sqlite3": "^3.0.8"
   }
 }

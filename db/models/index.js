@@ -26,7 +26,7 @@ Repo.belongsTo(Author);
 
 // Create the tables, add {force: true} as an option to drop the tables
 sequelize
-  .sync({force: true})
+  .sync()
   .then(function(err) {
     console.log('It worked!');
   }, function (err) { 
