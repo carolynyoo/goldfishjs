@@ -1,4 +1,4 @@
-// Wrote to testing if update reads to new db
+// Wrote to testing looking for error
 
 var fs = require("fs");
 var chokidar = require('chokidar');
@@ -43,7 +43,7 @@ function readFile (event, filepath) {
       .create({
         filename: filepath,
         text_state: text,
-        event_type: "save state",
+        event_type: event,
         last_commit: "test commit text",
         prev_keyframe: "prev keyframe placeholder",
         next_keyframe: "next keyframe placeholder",
