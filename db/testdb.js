@@ -25,30 +25,31 @@ function readFile (event, filepath) {
     var lastCommit = nodeCLI.exec("git", "rev-parse","head", {async:true});
     lastCommit.stdout.on('data', function(lastcommit){
 
-    // Reads current branch name
-    var currBranch = nodeCLI.exec("git", "rev-parse", "--abbrev-ref", "HEAD", {async: true});
-    currBranch.stdout.on('data', function(branchname){
+      // Reads current branch name
+      var currBranch = nodeCLI.exec("git", "rev-parse", "--abbrev-ref", "HEAD", {async: true});
+      currBranch.stdout.on('data', function(branchname){
 
-    // Read keyframe to database
-    Keyframe
-      .create({
-        filename: filepath,
-        text_state: text,
-        event_type: event,
-        last_commit: lastcommit,
-        prev_keyframe: "prev keyframe placeholder",
-        next_keyframe: null,
-        branch_name: branchname
-      })
-      .then(function(keyframe) {
-        console.log("keyframe create successful: ", keyframe.get({plain: true})); 
-        addToTail(keyframe);
-      }).catch(function(err) {
-        console.log("keyframe create error: ", err);
-      });
+        // Read keyframe to database
+        Keyframe
+          .create({
+            filename: filepath,
+            text_state: text,
+            event_type: event,
+            last_commit: lastcommit,
+            last_commit_time: Date.now(), // someone needs to fix 
+            prev_keyframe: null,
+            next_keyframe: null,
+            branch_name: branchname
+          })
+          .then(function(keyframe) {
+            console.log("keyframe create successful: ", keyframe.get({plain: true})); 
+            addToTail(keyframe);
+          }).catch(function(err) {
+            console.log("keyframe create error: ", err);
+          });
 
+      }); 
     }); 
-  }); 
 })}; 
 
 var addToTail = function (newKeyframe) {
