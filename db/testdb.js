@@ -29,6 +29,13 @@ function readFile (event, filepath) {
       var currBranch = nodeCLI.exec("git", "rev-parse", "--abbrev-ref", "HEAD", {async: true});
       currBranch.stdout.on('data', function(branchname){
 
+
+      var commitTime = nodeCLI.exec("git", "rev-parse", "HEAD", "|", "git", "show", "-s", "--format=%ct", {async: true});
+      commitTime.stdout.on('data', function(committime){
+
+//git rev-parse HEAD | git show -s --format=%ct
+
+
         // Read keyframe to database
         Keyframe
           .create({
@@ -36,7 +43,7 @@ function readFile (event, filepath) {
             text_state: text,
             event_type: event,
             last_commit: lastcommit,
-            last_commit_time: Date.now(), // someone needs to fix 
+            last_commit_time: committime, // someone needs to fix 
             prev_keyframe: null,
             next_keyframe: null,
             branch_name: branchname
@@ -47,7 +54,7 @@ function readFile (event, filepath) {
           }).catch(function(err) {
             console.log("keyframe create error: ", err);
           });
-
+});
       }); 
     }); 
 })}; 
