@@ -10,7 +10,7 @@ module.exports = function(sequelize){
 		last_commit: Sequelize.STRING,		// look up git event types, does git provide info?
 		prev_keyframe: Sequelize.INTEGER,
 		next_keyframe: Sequelize.INTEGER,
-		branch_name: Sequelize.STRING 		// what info can we discern from th branch names?
+		branch_name: Sequelize.STRING(40) 		// what info can we discern from th branch names?
 	});
 
 	return Keyframe;

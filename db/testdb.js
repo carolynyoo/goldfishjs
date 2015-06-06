@@ -3,6 +3,36 @@
 var fs = require("fs");
 var chokidar = require('chokidar');
 
+var nodeCLI = require("shelljs-nodecli");
+
+//nodeCLI.exec("git", "rev-parse", "head", ">", "lastcommit.txt");
+
+
+//nodeCLI.exec("echo", "hello", ">", "hello.txt", {async:true});
+nodeCLI.exec("git", "rev-parse","head", ">", "gitoutput.txt", {async:true});
+
+
+function getCurrentBranch(changethis){
+
+    var currBranch = nodeCLI.exec("git", "rev-parse","head", {async:true});
+    currBranch.stdout.on('data', function(data){
+        changethis =  data;
+    });
+
+}
+
+
+
+/*
+var child = nodeCLI.exec('echo', 'hello', {async:true});
+        
+child.stdout.on('data', function(data) {
+        console.log(data);
+        nodeCLI.exec("data > hello");
+});
+*/
+
+
 // var sqlite3 = require("sqlite3").verbose();
 // var db = new sqlite3.Database(file);
 
@@ -22,6 +52,14 @@ console.log("something ran");
 
 function readFile (event, filepath) {
   fs.readFile(filepath, "utf-8", function(err, text) {
+  
+    var branchname;
+
+    var currBranch = nodeCLI.exec("git", "rev-parse","head", {async:true});
+    currBranch.stdout.on('data', function(branchname){
+        console.log("this is branchname:", branchname);
+        console.log("typeofdata:", typeof branchname);
+        
 
     // fyi: if I understand correctly, sequelize will pluralize the model to become the table name. We can shut this off if you guys prefer.
     Keyframe
@@ -32,7 +70,7 @@ function readFile (event, filepath) {
         last_commit: "test commit text",
         prev_keyframe: "prev keyframe placeholder",
         next_keyframe: "next keyframe placeholder",
-        branch_name: "git branch placeholder"
+        branch_name: branchname
       })
       .then(function(keyframe) {
         console.log("keyframe create successful: ");
@@ -42,5 +80,5 @@ function readFile (event, filepath) {
 
   });
 
-
-// No crappy logs!!! *smiley*
+    });
+}
