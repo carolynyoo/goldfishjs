@@ -36,8 +36,8 @@ function readFile (event, filepath) {
 
   fs.readFile(filepath, "utf-8", function(err, text) {
 
-    // fyi: sequelize will pluralize the model to become the table name. We can shut this off if you guys prefer.
-    Keyframe
+    // fyi: if I understand correctly, sequelize will pluralize the model to become the table name. We can shut this off if you guys prefer.
+    Keyframes
       .create({
         filename: filepath,
         text_state: text,
