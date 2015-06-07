@@ -2,6 +2,8 @@ var app = angular.module('gitplayback', ['ui.router']);
 
 app.controller('MainController', function ($scope) {
 
+$scope.framesArray = ['nothing'];
+$scope.currentFrame = "no current frame";
 
 });
 
