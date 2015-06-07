@@ -4,6 +4,7 @@
   "description": "A tool to help people better understand others code",
   "main": "index.html",
   "scripts": {
+    "start": "./buildzip",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
