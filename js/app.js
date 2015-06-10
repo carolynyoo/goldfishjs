@@ -43,7 +43,7 @@ $scope.framesArray = $scope.getall.then(function (data) {
 
 	for (var i = 0; i < data.length; i++)
 	{ 
-	AllFramesArray.push(data[i].text_state);
+	AllFramesArray.push(data[i]);
 	}
 
 	console.log("AllFramesArray:", AllFramesArray);
@@ -57,10 +57,19 @@ $scope.advanceFrame = function(frameID, currframe){
 	console.log("clicked and ran advanceFrame function");
     console.log("frameID:", frameID);
     console.log("currframe:", currframe);
-    $scope.currentFrame = $scope.framesArray[frameID+1];
+    console.log("framesArrayLength: ",$scope.framesArray.length);
+    if (frameID == $scope.framesArray.length - 1){
+    	console.log("Got to last frame");
+		$scope.currentFrame = "Frame " + frameID + " is the last frame!";
+		$scope.$digest();
+    }
+    else{
+    $scope.currentFrame = $scope.framesArray[frameID+1].text_state;
     $scope.currentFrameID += 1; 
     console.log("currframe after assigned:", currframe);
     $scope.$digest();
+	}
+
 };
 
 $scope.firstFrame = $scope.getall.then(function (data) {

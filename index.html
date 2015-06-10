@@ -25,22 +25,26 @@
     </script>
 </head>
 <body>
-    <h1>Hello Node Webkit</h1>
+    <h1>Welcome to Git Playback!</h1>
 <div ng-app="gitplayback">
 	<div ng-controller="MainController">
-	{{2+2}}
+
+    <h3>Click to Advance Frame</h3>
+    <button type="button" id="advance" class="btn btn-danger" ng-click="advanceFrame(currentFrameID, currentFrame)">Next Frame</button>
     <p>
        frame id: {{currentFrameID}}
     </p>
     <em>Current Frame</em>
+    <div ng-show="currentFrameID === 0">
+    <em>First Frame</em>
+    <p>
+    {{firstFrame}}
+    </p>
+    </div>
 	<p>
 		{{currentFrame}}
 	</p>
-    <button type="button" id="advance" class="btn btn-danger" ng-click="advanceFrame(currentFrameID, currentFrame)">Next Frame</button>
-	<em>First Frame</em>
-    <p>
-	{{firstFrame}}
-	</p>
+
 	</div>
 </div>
 </body>
