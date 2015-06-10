@@ -36,6 +36,11 @@ $scope.getall = KeyframeFactory.getAllKeyframes();
 $scope.framesArray = "empty";
 $scope.currentFrameID = 0;
 
+$scope.branchName = "branch name goes here";
+$scope.fileName = "filename goes here";
+$scope.lastCommit = "last commit hash goes here";
+$scope.lastCommitTime = "which occurred at this time";
+
 $scope.framesArray = $scope.getall.then(function (data) {
 	
 	//data[0]["dataValues"]["text_state"];
@@ -65,10 +70,28 @@ $scope.advanceFrame = function(frameID, currframe){
     }
     else{
     $scope.currentFrame = $scope.framesArray[frameID+1].text_state;
-    $scope.currentFrameID += 1; 
+    $scope.branchName = $scope.framesArray[frameID+1].branch_name;
+    $scope.fileName = $scope.framesArray[frameID+1].filename;
+    $scope.lastCommit = $scope.framesArray[frameID+1].last_commit;
+    $scope.lastCommitTime = $scope.framesArray[frameID+1].last_commit_time;
+    $scope.currentFrameID += 1;
     console.log("currframe after assigned:", currframe);
     $scope.$digest();
 	}
+
+};
+
+
+$scope.backTenFrames = function(frameID){
+	
+	$scope.currentFrameID -= 10;
+    $scope.currentFrame = $scope.framesArray[frameID].text_state;
+    $scope.branchName = $scope.framesArray[frameID].branch_name;
+    $scope.fileName = $scope.framesArray[frameID].filename;
+    $scope.lastCommit = $scope.framesArray[frameID].last_commit;
+    $scope.lastCommitTime = $scope.framesArray[frameID].last_commit_time;
+    
+    $scope.$digest();	
 
 };
 
@@ -142,4 +165,18 @@ app.factory('KeyframeFactory', function () {
 
 		}
 	}
+});
+
+app.filter('datetime', function($filter)
+{
+ return function(input)
+ {
+  if(input == null){ return ""; } 
+  input = Number(input);
+  var _date = $filter('date')(new Date(input),
+                              'MMM dd yyyy - HH:mm:ss');
+ 
+  return _date.toUpperCase();
+
+ };
 });
