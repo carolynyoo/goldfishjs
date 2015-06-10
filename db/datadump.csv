@@ -1,0 +1,1047 @@
+id,filename,text_state,event_type,last_commit,branch_name,createdAt,updatedAt,AuthorId,prevKeyframeId,nextKeyframeId,RepoId
+1,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+} ",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 21:36:47.642 +00:00","2015-06-06 21:36:58.296 +00:00",,,,
+2,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+}",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 21:36:58.271 +00:00","2015-06-06 21:38:31.421 +00:00",,,,
+3,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+}
+",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 21:38:31.410 +00:00","2015-06-06 21:43:19.658 +00:00",,,,
+4,/Users/panagiotis/dev/projects/gitplayback/db/testdb.js,"var fs = require(""fs"");
+var chokidar = require('chokidar');
+
+// Allows command line to be executed with node
+var nodeCLI = require(""shelljs-nodecli"");
+
+var models = require('./models'),
+    Author = models.Author,
+    Keyframe = models.Keyframe,
+    Repo = models.Repo;
+
+console.log(""something ran"");
+
+  // Watches from db for now as root
+  // Fix for later - whole gitplayback directory
+  chokidar.watch(__dirname, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
+    // console.log(event, path);
+    readFile(event, path); 
+  });
+
+function readFile (event, filepath) {
+  fs.readFile(filepath, ""utf-8"", function(err, text) {
+  
+    // Reads last commit hash for current branch
+    var lastCommit = nodeCLI.exec(""git"", ""rev-parse"",""head"", {async:true});
+    lastCommit.stdout.on('data', function(lastcommit){
+
+    // Reads current branch name
+    var currBranch = nodeCLI.exec(""git"", ""rev-parse"", ""--abbrev-ref"", ""HEAD"", {async: true});
+    currBranch.stdout.on('data', function(branchname){
+
+    // Read keyframe to database
+    Keyframe
+      .create({
+        filename: filepath,
+        text_state: text,
+        event_type: event,
+        last_commit: lastcommit,
+        prev_keyframe: ""prev keyframe placeholder"",
+        next_keyframe: null,
+        branch_name: branchname
+      })
+      .then(function(keyframe) {
+        console.log(""keyframe create successful: "", keyframe.get({plain: true})); 
+        addToTail(keyframe);
+      }).catch(function(err) {
+        console.log(""keyframe create error: "", err);
+      });
+
+    }); 
+  }); 
+})}; 
+
+var addToTail = function (newKeyframe) {
+  // find the last chronological keyframe  --> query the latest...
+  // var = oldKeyFrame is result of first line --> createKeyframe()
+  // update oldKeyFrame.next_keyframe = newKeyFrame.ID
+  // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
+  console.log('newkf id?', newKeyframe.id);
+  Keyframe
+    .update({ where: { id: newKeyframe.id - 1 }})
+    .then(function(oldKeyFrame) {
+      console.log(""oldKeyFrame retrieved: "", oldKeyFrame.id);
+      oldKeyFrame.updateAttributes({
+        next_keyframe: newKeyframe.id
+      }).then(function () {
+        console.log(""Add to Tail successful""); 
+      })
+    }).catch(function(err) {
+      console.log(""Add to Tail error: "", err);
+    });
+
+};
+
+var insertKeyframe = function (revertKeyframe, newKeyframe) {
+  // newKeyframe.prev_keyframe = revertKeyframe.ID
+}; 
+
+// No crappy logs!!! *smiley*.quit
+",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 21:43:19.640 +00:00","2015-06-06 21:44:56.396 +00:00",,,,
+5,/Users/panagiotis/dev/projects/gitplayback/db/testdb.js,"var fs = require(""fs"");
+var chokidar = require('chokidar');
+
+// Allows command line to be executed with node
+var nodeCLI = require(""shelljs-nodecli"");
+
+var models = require('./models'),
+    Author = models.Author,
+    Keyframe = models.Keyframe,
+    Repo = models.Repo;
+
+console.log(""something ran"");
+
+  // Watches from db for now as root
+  // Fix for later - whole gitplayback directory
+  chokidar.watch(__dirname, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
+    // console.log(event, path);
+    readFile(event, path); 
+  });
+
+function readFile (event, filepath) {
+  fs.readFile(filepath, ""utf-8"", function(err, text) {
+  
+    // Reads last commit hash for current branch
+    var lastCommit = nodeCLI.exec(""git"", ""rev-parse"",""head"", {async:true});
+    lastCommit.stdout.on('data', function(lastcommit){
+
+    // Reads current branch name
+    var currBranch = nodeCLI.exec(""git"", ""rev-parse"", ""--abbrev-ref"", ""HEAD"", {async: true});
+    currBranch.stdout.on('data', function(branchname){
+
+    // Read keyframe to database
+    Keyframe
+      .create({
+        filename: filepath,
+        text_state: text,
+        event_type: event,
+        last_commit: lastcommit,
+        prev_keyframe: ""prev keyframe placeholder"",
+        next_keyframe: null,
+        branch_name: branchname
+      })
+      .then(function(keyframe) {
+        console.log(""keyframe create successful: "", keyframe.get({plain: true})); 
+        addToTail(keyframe);
+      }).catch(function(err) {
+        console.log(""keyframe create error: "", err);
+      });
+
+    }); 
+  }); 
+})}; 
+
+var addToTail = function (newKeyframe) {
+  // find the last chronological keyframe  --> query the latest...
+  // var = oldKeyFrame is result of first line --> createKeyframe()
+  // update oldKeyFrame.next_keyframe = newKeyFrame.ID
+  // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
+  console.log('newkf id?', newKeyframe.id);
+  Keyframe
+    .update({ where: { id: newKeyframe.id - 1 }})
+    .then(function(oldKeyFrame) {
+      console.log(""oldKeyFrame retrieved: "", oldKeyFrame.id);
+      oldKeyframe.next_keyframe = newKeyframe.id;
+      console.log(""Add to Tail successful""); 
+    }).catch(function(err) {
+      console.log(""Add to Tail error: "", err);
+    });
+
+};
+
+var insertKeyframe = function (revertKeyframe, newKeyframe) {
+  // newKeyframe.prev_keyframe = revertKeyframe.ID
+}; 
+
+// No crappy logs!!! *smiley*.quit
+",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 21:44:56.373 +00:00","2015-06-06 21:44:56.373 +00:00",,,,
+6,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+}",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 21:45:33.186 +00:00","2015-06-06 21:45:33.186 +00:00",,,,
+7,/Users/panagiotis/dev/projects/gitplayback/db/testdb.js,"var fs = require(""fs"");
+var chokidar = require('chokidar');
+
+// Allows command line to be executed with node
+var nodeCLI = require(""shelljs-nodecli"");
+
+var models = require('./models'),
+    Author = models.Author,
+    Keyframe = models.Keyframe,
+    Repo = models.Repo;
+
+console.log(""something ran"");
+
+  // Watches from db for now as root
+  // Fix for later - whole gitplayback directory
+  chokidar.watch(__dirname, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
+    // console.log(event, path);
+    readFile(event, path); 
+  });
+
+function readFile (event, filepath) {
+  fs.readFile(filepath, ""utf-8"", function(err, text) {
+  
+    // Reads last commit hash for current branch
+    var lastCommit = nodeCLI.exec(""git"", ""rev-parse"",""head"", {async:true});
+    lastCommit.stdout.on('data', function(lastcommit){
+
+    // Reads current branch name
+    var currBranch = nodeCLI.exec(""git"", ""rev-parse"", ""--abbrev-ref"", ""HEAD"", {async: true});
+    currBranch.stdout.on('data', function(branchname){
+
+    // Read keyframe to database
+    Keyframe
+      .create({
+        filename: filepath,
+        text_state: text,
+        event_type: event,
+        last_commit: lastcommit,
+        prev_keyframe: ""prev keyframe placeholder"",
+        next_keyframe: null,
+        branch_name: branchname
+      })
+      .then(function(keyframe) {
+        console.log(""keyframe create successful: "", keyframe.get({plain: true})); 
+        addToTail(keyframe);
+      }).catch(function(err) {
+        console.log(""keyframe create error: "", err);
+      });
+
+    }); 
+  }); 
+})}; 
+
+var addToTail = function (newKeyframe) {
+  // find the last chronological keyframe  --> query the latest...
+  // var = oldKeyFrame is result of first line --> createKeyframe()
+  // update oldKeyFrame.next_keyframe = newKeyFrame.ID
+  // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
+  console.log('newkf id?', newKeyframe.id);
+  Keyframe
+    .update({next_keyframe: newKeyframe.id}, { where: { id: newKeyframe.id - 1 }})
+    .then(function(oldKeyFrame) {
+      console.log(""oldKeyFrame retrieved: "", oldKeyFrame.id);
+      // oldKeyframe.next_keyframe = newKeyframe.id;
+      console.log(""Add to Tail successful""); 
+    }).catch(function(err) {
+      console.log(""Add to Tail error: "", err);
+    });
+
+};
+
+var insertKeyframe = function (revertKeyframe, newKeyframe) {
+  // newKeyframe.prev_keyframe = revertKeyframe.ID
+}; 
+
+// No crappy logs!!! *smiley*.quit
+",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 21:47:03.166 +00:00","2015-06-06 21:47:44.115 +00:00",,,,
+8,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+}
+",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 21:47:44.092 +00:00","2015-06-06 21:49:40.986 +00:00",,,,
+9,/Users/panagiotis/dev/projects/gitplayback/db/testdb.js,"var fs = require(""fs"");
+var chokidar = require('chokidar');
+
+// Allows command line to be executed with node
+var nodeCLI = require(""shelljs-nodecli"");
+
+var models = require('./models'),
+    Author = models.Author,
+    Keyframe = models.Keyframe,
+    Repo = models.Repo;
+
+console.log(""something ran"");
+
+  // Watches from db for now as root
+  // Fix for later - whole gitplayback directory
+  chokidar.watch(__dirname, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
+    // console.log(event, path);
+    readFile(event, path); 
+  });
+
+function readFile (event, filepath) {
+  fs.readFile(filepath, ""utf-8"", function(err, text) {
+  
+    // Reads last commit hash for current branch
+    var lastCommit = nodeCLI.exec(""git"", ""rev-parse"",""head"", {async:true});
+    lastCommit.stdout.on('data', function(lastcommit){
+
+    // Reads current branch name
+    var currBranch = nodeCLI.exec(""git"", ""rev-parse"", ""--abbrev-ref"", ""HEAD"", {async: true});
+    currBranch.stdout.on('data', function(branchname){
+
+    // Read keyframe to database
+    Keyframe
+      .create({
+        filename: filepath,
+        text_state: text,
+        event_type: event,
+        last_commit: lastcommit,
+        prev_keyframe: ""prev keyframe placeholder"",
+        next_keyframe: null,
+        branch_name: branchname
+      })
+      .then(function(keyframe) {
+        console.log(""keyframe create successful: "", keyframe.get({plain: true})); 
+        addToTail(keyframe);
+      }).catch(function(err) {
+        console.log(""keyframe create error: "", err);
+      });
+
+    }); 
+  }); 
+})}; 
+
+var addToTail = function (newKeyframe) {
+  // find the last chronological keyframe  --> query the latest...
+  // var = oldKeyFrame is result of first line --> createKeyframe()
+  // update oldKeyFrame.next_keyframe = newKeyFrame.ID
+  // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
+  console.log('newkf id?', newKeyframe.id);
+  Keyframe
+    .update({next_keyframe: newKeyframe.id}, { where: { id: newKeyframe.id - 1 }})
+    // .then(function(oldKeyFrame) {
+    //   console.log(""oldKeyFrame retrieved: "", oldKeyFrame.id);
+    //   // oldKeyframe.next_keyframe = newKeyframe.id;
+    //   console.log(""Add to Tail successful""); 
+    }).catch(function(err) {
+      console.log(""Add to Tail error: "", err);
+    });
+
+};
+
+var insertKeyframe = function (revertKeyframe, newKeyframe) {
+  // newKeyframe.prev_keyframe = revertKeyframe.ID
+}; 
+
+// No crappy logs!!! *smiley*.quit
+",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 21:49:40.971 +00:00","2015-06-06 21:50:18.710 +00:00",,,,
+10,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+}",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+",yoyoyo,"2015-06-06 21:50:18.690 +00:00","2015-06-06 21:54:03.046 +00:00",,,,
+11,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+} ",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+",yoyoyo,"2015-06-06 21:54:03.024 +00:00","2015-06-06 21:54:28.673 +00:00",,,,
+12,/Users/panagiotis/dev/projects/gitplayback/db/testdb.js,"var fs = require(""fs"");
+var chokidar = require('chokidar');
+
+// Allows command line to be executed with node
+var nodeCLI = require(""shelljs-nodecli"");
+
+var models = require('./models'),
+    Author = models.Author,
+    Keyframe = models.Keyframe,
+    Repo = models.Repo;
+
+console.log(""something ran"");
+
+  // Watches from db for now as root
+  // Fix for later - whole gitplayback directory
+  chokidar.watch(__dirname, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
+    // console.log(event, path);
+    readFile(event, path); 
+  });
+
+function readFile (event, filepath) {
+  fs.readFile(filepath, ""utf-8"", function(err, text) {
+  
+    // Reads last commit hash for current branch
+    var lastCommit = nodeCLI.exec(""git"", ""rev-parse"",""head"", {async:true});
+    lastCommit.stdout.on('data', function(lastcommit){
+
+    // Reads current branch name
+    var currBranch = nodeCLI.exec(""git"", ""rev-parse"", ""--abbrev-ref"", ""HEAD"", {async: true});
+    currBranch.stdout.on('data', function(branchname){
+
+    // Read keyframe to database
+    Keyframe
+      .create({
+        filename: filepath,
+        text_state: text,
+        event_type: event,
+        last_commit: lastcommit,
+        prev_keyframe: ""prev keyframe placeholder"",
+        next_keyframe: null,
+        branch_name: branchname
+      })
+      .then(function(keyframe) {
+        console.log(""keyframe create successful: "", keyframe.get({plain: true})); 
+        addToTail(keyframe);
+      }).catch(function(err) {
+        console.log(""keyframe create error: "", err);
+      });
+
+    }); 
+  }); 
+})}; 
+
+var addToTail = function (newKeyframe) {
+  // find the last chronological keyframe  --> query the latest...
+  // var = oldKeyFrame is result of first line --> createKeyframe()
+  // update oldKeyFrame.next_keyframe = newKeyFrame.ID
+  // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
+  console.log('newkf id?', newKeyframe.id);
+  Keyframe
+    .update({branch_name: ""yoyoyo""}, { where: { id: newKeyframe.id - 1 }})
+    .then(function(oldKeyFrame) {
+      console.log(""oldKeyFrame retrieved: "", oldKeyFrame.id);
+      // oldKeyframe.next_keyframe = newKeyframe.id;
+      console.log(""Add to Tail successful""); 
+    })
+    .catch(function(err) {
+      console.log(""Add to Tail error: "", err);
+    });
+
+};
+
+var insertKeyframe = function (revertKeyframe, newKeyframe) {
+  // newKeyframe.prev_keyframe = revertKeyframe.ID
+}; 
+
+// No crappy logs!!! *smiley*.quit
+",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+",yoyoyo,"2015-06-06 21:54:28.665 +00:00","2015-06-06 21:54:35.910 +00:00",,,,
+13,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+}",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+",yoyoyo,"2015-06-06 21:54:35.881 +00:00","2015-06-06 21:55:23.137 +00:00",,,,
+14,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+} ",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+",yoyoyo,"2015-06-06 21:55:23.119 +00:00","2015-06-06 21:55:45.109 +00:00",,,,
+15,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+} ",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+",yoyoyo,"2015-06-06 21:55:45.071 +00:00","2015-06-06 21:55:45.185 +00:00",,,,
+16,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+} ",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+",yoyoyo,"2015-06-06 21:55:45.171 +00:00","2015-06-06 21:56:33.267 +00:00",,,,
+17,/Users/panagiotis/dev/projects/gitplayback/db/testdb.js,"var fs = require(""fs"");
+var chokidar = require('chokidar');
+
+// Allows command line to be executed with node
+var nodeCLI = require(""shelljs-nodecli"");
+
+var models = require('./models'),
+    Author = models.Author,
+    Keyframe = models.Keyframe,
+    Repo = models.Repo;
+
+console.log(""something ran"");
+
+  // Watches from db for now as root
+  // Fix for later - whole gitplayback directory
+  chokidar.watch(__dirname, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
+    // console.log(event, path);
+    readFile(event, path); 
+  });
+
+function readFile (event, filepath) {
+  fs.readFile(filepath, ""utf-8"", function(err, text) {
+  
+    // Reads last commit hash for current branch
+    var lastCommit = nodeCLI.exec(""git"", ""rev-parse"",""head"", {async:true});
+    lastCommit.stdout.on('data', function(lastcommit){
+
+    // Reads current branch name
+    var currBranch = nodeCLI.exec(""git"", ""rev-parse"", ""--abbrev-ref"", ""HEAD"", {async: true});
+    currBranch.stdout.on('data', function(branchname){
+
+    // Read keyframe to database
+    Keyframe
+      .create({
+        filename: filepath,
+        text_state: text,
+        event_type: event,
+        last_commit: lastcommit,
+        prev_keyframe: ""prev keyframe placeholder"",
+        next_keyframe: null,
+        branch_name: branchname
+      })
+      .then(function(keyframe) {
+        console.log(""keyframe create successful: "", keyframe.get({plain: true})); 
+        addToTail(keyframe);
+      }).catch(function(err) {
+        console.log(""keyframe create error: "", err);
+      });
+
+    }); 
+  }); 
+})}; 
+
+var addToTail = function (newKeyframe) {
+  // find the last chronological keyframe  --> query the latest...
+  // var = oldKeyFrame is result of first line --> createKeyframe()
+  // update oldKeyFrame.next_keyframe = newKeyFrame.ID
+  // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
+  console.log('newkf id?', newKeyframe.id);
+  Keyframe
+    .update({branch_name: ""yoyoyo""}, { where: { id: newKeyframe.id - 1 }})
+    .then(function(oldKeyFrame) {
+      console.log(""oldKeyFrame retrieved: "", oldKeyFrame);
+      // oldKeyframe.next_keyframe = newKeyframe.id;
+      console.log(""Add to Tail successful""); 
+    })
+    .catch(function(err) {
+      console.log(""Add to Tail error: "", err);
+    });
+
+};
+
+var insertKeyframe = function (revertKeyframe, newKeyframe) {
+  // newKeyframe.prev_keyframe = revertKeyframe.ID
+}; 
+
+// No crappy logs!!! *smiley*.quit
+",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+",yoyoyo,"2015-06-06 21:56:33.237 +00:00","2015-06-06 21:56:34.258 +00:00",,,,
+18,/Users/panagiotis/dev/projects/gitplayback/db/testdb.js,"var fs = require(""fs"");
+var chokidar = require('chokidar');
+
+// Allows command line to be executed with node
+var nodeCLI = require(""shelljs-nodecli"");
+
+var models = require('./models'),
+    Author = models.Author,
+    Keyframe = models.Keyframe,
+    Repo = models.Repo;
+
+console.log(""something ran"");
+
+  // Watches from db for now as root
+  // Fix for later - whole gitplayback directory
+  chokidar.watch(__dirname, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
+    // console.log(event, path);
+    readFile(event, path); 
+  });
+
+function readFile (event, filepath) {
+  fs.readFile(filepath, ""utf-8"", function(err, text) {
+  
+    // Reads last commit hash for current branch
+    var lastCommit = nodeCLI.exec(""git"", ""rev-parse"",""head"", {async:true});
+    lastCommit.stdout.on('data', function(lastcommit){
+
+    // Reads current branch name
+    var currBranch = nodeCLI.exec(""git"", ""rev-parse"", ""--abbrev-ref"", ""HEAD"", {async: true});
+    currBranch.stdout.on('data', function(branchname){
+
+    // Read keyframe to database
+    Keyframe
+      .create({
+        filename: filepath,
+        text_state: text,
+        event_type: event,
+        last_commit: lastcommit,
+        prev_keyframe: ""prev keyframe placeholder"",
+        next_keyframe: null,
+        branch_name: branchname
+      })
+      .then(function(keyframe) {
+        console.log(""keyframe create successful: "", keyframe.get({plain: true})); 
+        addToTail(keyframe);
+      }).catch(function(err) {
+        console.log(""keyframe create error: "", err);
+      });
+
+    }); 
+  }); 
+})}; 
+
+var addToTail = function (newKeyframe) {
+  // find the last chronological keyframe  --> query the latest...
+  // var = oldKeyFrame is result of first line --> createKeyframe()
+  // update oldKeyFrame.next_keyframe = newKeyFrame.ID
+  // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
+  console.log('newkf id?', newKeyframe.id);
+  Keyframe
+    .update({branch_name: ""yoyoyo""}, { where: { id: newKeyframe.id - 1 }})
+    .then(function(oldKeyFrame) {
+      console.log(""oldKeyFrame retrieved: "", oldKeyFrame);
+      // oldKeyframe.next_keyframe = newKeyframe.id;
+      console.log(""Add to Tail successful""); 
+    })
+    .catch(function(err) {
+      console.log(""Add to Tail error: "", err);
+    });
+
+};
+
+var insertKeyframe = function (revertKeyframe, newKeyframe) {
+  // newKeyframe.prev_keyframe = revertKeyframe.ID
+}; 
+
+// No crappy logs!!! *smiley*.quit
+",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+",yoyoyo,"2015-06-06 21:56:33.237 +00:00","2015-06-06 21:56:48.218 +00:00",,,,
+19,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+}  ",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+",yoyoyo,"2015-06-06 21:56:48.213 +00:00","2015-06-06 21:56:48.277 +00:00",,,,
+20,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+}  ",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+",yoyoyo,"2015-06-06 21:56:48.239 +00:00","2015-06-06 22:01:15.576 +00:00",,,,
+21,/Users/panagiotis/dev/projects/gitplayback/db/testdb.js,"var fs = require(""fs"");
+var chokidar = require('chokidar');
+
+// Allows command line to be executed with node
+var nodeCLI = require(""shelljs-nodecli"");
+
+var models = require('./models'),
+    Author = models.Author,
+    Keyframe = models.Keyframe,
+    Repo = models.Repo;
+
+console.log(""something ran"");
+
+  // Watches from db for now as root
+  // Fix for later - whole gitplayback directory
+  chokidar.watch(__dirname, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
+    // console.log(event, path);
+    readFile(event, path); 
+  });
+
+function readFile (event, filepath) {
+  fs.readFile(filepath, ""utf-8"", function(err, text) {
+  
+    // Reads last commit hash for current branch
+    var lastCommit = nodeCLI.exec(""git"", ""rev-parse"",""head"", {async:true});
+    lastCommit.stdout.on('data', function(lastcommit){
+
+    // Reads current branch name
+    var currBranch = nodeCLI.exec(""git"", ""rev-parse"", ""--abbrev-ref"", ""HEAD"", {async: true});
+    currBranch.stdout.on('data', function(branchname){
+
+    // Read keyframe to database
+    Keyframe
+      .create({
+        filename: filepath,
+        text_state: text,
+        event_type: event,
+        last_commit: lastcommit,
+        prev_keyframe: ""prev keyframe placeholder"",
+        next_keyframe: null,
+        branch_name: branchname
+      })
+      .then(function(keyframe) {
+        console.log(""keyframe create successful: "", keyframe.get({plain: true})); 
+        addToTail(keyframe);
+      }).catch(function(err) {
+        console.log(""keyframe create error: "", err);
+      });
+
+    }); 
+  }); 
+})}; 
+
+var addToTail = function (newKeyframe) {
+  // find the last chronological keyframe  --> query the latest...
+  // var = oldKeyFrame is result of first line --> createKeyframe()
+  // update oldKeyFrame.next_keyframe = newKeyFrame.ID
+  // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
+  console.log('newkf id?', newKeyframe.id);
+  Keyframe
+    .update({nextKeyframeId: 33}, { where: { id: newKeyframe.id - 1 }})
+    .then(function(oldKeyFrame) {
+      console.log(""oldKeyFrame retrieved: "", oldKeyFrame);
+      // oldKeyframe.next_keyframe = newKeyframe.id;
+      console.log(""Add to Tail successful""); 
+    })
+    .catch(function(err) {
+      console.log(""Add to Tail error: "", err);
+    });
+
+};
+
+var insertKeyframe = function (revertKeyframe, newKeyframe) {
+  // newKeyframe.prev_keyframe = revertKeyframe.ID
+}; 
+
+// No crappy logs!!! *smiley*.quit
+",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+",yoyoyo,"2015-06-06 22:01:15.570 +00:00","2015-06-06 22:01:16.593 +00:00",,,,
+22,/Users/panagiotis/dev/projects/gitplayback/db/testdb.js,"var fs = require(""fs"");
+var chokidar = require('chokidar');
+
+// Allows command line to be executed with node
+var nodeCLI = require(""shelljs-nodecli"");
+
+var models = require('./models'),
+    Author = models.Author,
+    Keyframe = models.Keyframe,
+    Repo = models.Repo;
+
+console.log(""something ran"");
+
+  // Watches from db for now as root
+  // Fix for later - whole gitplayback directory
+  chokidar.watch(__dirname, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
+    // console.log(event, path);
+    readFile(event, path); 
+  });
+
+function readFile (event, filepath) {
+  fs.readFile(filepath, ""utf-8"", function(err, text) {
+  
+    // Reads last commit hash for current branch
+    var lastCommit = nodeCLI.exec(""git"", ""rev-parse"",""head"", {async:true});
+    lastCommit.stdout.on('data', function(lastcommit){
+
+    // Reads current branch name
+    var currBranch = nodeCLI.exec(""git"", ""rev-parse"", ""--abbrev-ref"", ""HEAD"", {async: true});
+    currBranch.stdout.on('data', function(branchname){
+
+    // Read keyframe to database
+    Keyframe
+      .create({
+        filename: filepath,
+        text_state: text,
+        event_type: event,
+        last_commit: lastcommit,
+        prev_keyframe: ""prev keyframe placeholder"",
+        next_keyframe: null,
+        branch_name: branchname
+      })
+      .then(function(keyframe) {
+        console.log(""keyframe create successful: "", keyframe.get({plain: true})); 
+        addToTail(keyframe);
+      }).catch(function(err) {
+        console.log(""keyframe create error: "", err);
+      });
+
+    }); 
+  }); 
+})}; 
+
+var addToTail = function (newKeyframe) {
+  // find the last chronological keyframe  --> query the latest...
+  // var = oldKeyFrame is result of first line --> createKeyframe()
+  // update oldKeyFrame.next_keyframe = newKeyFrame.ID
+  // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
+  console.log('newkf id?', newKeyframe.id);
+  Keyframe
+    .update({nextKeyframeId: 33}, { where: { id: newKeyframe.id - 1 }})
+    .then(function(oldKeyFrame) {
+      console.log(""oldKeyFrame retrieved: "", oldKeyFrame);
+      // oldKeyframe.next_keyframe = newKeyframe.id;
+      console.log(""Add to Tail successful""); 
+    })
+    .catch(function(err) {
+      console.log(""Add to Tail error: "", err);
+    });
+
+};
+
+var insertKeyframe = function (revertKeyframe, newKeyframe) {
+  // newKeyframe.prev_keyframe = revertKeyframe.ID
+}; 
+
+// No crappy logs!!! *smiley*.quit
+",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+",yoyoyo,"2015-06-06 22:01:15.571 +00:00","2015-06-06 22:01:30.491 +00:00",,,,
+23,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+}   ",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 22:01:30.487 +00:00","2015-06-06 22:01:30.526 +00:00",,,33,
+24,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+}   ",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+",yoyoyo,"2015-06-06 22:01:30.500 +00:00","2015-06-06 22:02:37.683 +00:00",,,,
+25,/Users/panagiotis/dev/projects/gitplayback/db/testdb.js,"var fs = require(""fs"");
+var chokidar = require('chokidar');
+
+// Allows command line to be executed with node
+var nodeCLI = require(""shelljs-nodecli"");
+
+var models = require('./models'),
+    Author = models.Author,
+    Keyframe = models.Keyframe,
+    Repo = models.Repo;
+
+console.log(""something ran"");
+
+  // Watches from db for now as root
+  // Fix for later - whole gitplayback directory
+  chokidar.watch(__dirname, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
+    // console.log(event, path);
+    readFile(event, path); 
+  });
+
+function readFile (event, filepath) {
+  fs.readFile(filepath, ""utf-8"", function(err, text) {
+  
+    // Reads last commit hash for current branch
+    var lastCommit = nodeCLI.exec(""git"", ""rev-parse"",""head"", {async:true});
+    lastCommit.stdout.on('data', function(lastcommit){
+
+    // Reads current branch name
+    var currBranch = nodeCLI.exec(""git"", ""rev-parse"", ""--abbrev-ref"", ""HEAD"", {async: true});
+    currBranch.stdout.on('data', function(branchname){
+
+    // Read keyframe to database
+    Keyframe
+      .create({
+        filename: filepath,
+        text_state: text,
+        event_type: event,
+        last_commit: lastcommit,
+        prev_keyframe: ""prev keyframe placeholder"",
+        next_keyframe: null,
+        branch_name: branchname
+      })
+      .then(function(keyframe) {
+        console.log(""keyframe create successful: "", keyframe.get({plain: true})); 
+        addToTail(keyframe);
+      }).catch(function(err) {
+        console.log(""keyframe create error: "", err);
+      });
+
+    }); 
+  }); 
+})}; 
+
+var addToTail = function (newKeyframe) {
+  // find the last chronological keyframe  --> query the latest...
+  // var = oldKeyFrame is result of first line --> createKeyframe()
+  // update oldKeyFrame.next_keyframe = newKeyFrame.ID
+  // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
+  console.log('newkf id?', newKeyframe.id);
+  Keyframe
+    .update({nextKeyframeId: newKeyframe.id}, { where: { id: newKeyframe.id - 1 }})
+    .then(function(oldKeyFrame) {
+      console.log(""oldKeyFrame retrieved: "", oldKeyFrame);
+      // oldKeyframe.next_keyframe = newKeyframe.id;
+      console.log(""Add to Tail successful""); 
+    })
+    .catch(function(err) {
+      console.log(""Add to Tail error: "", err);
+    });
+
+};
+
+var insertKeyframe = function (revertKeyframe, newKeyframe) {
+  // newKeyframe.prev_keyframe = revertKeyframe.ID
+}; 
+
+// No crappy logs!!! *smiley*.quit
+",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 22:02:37.676 +00:00","2015-06-06 22:02:52.594 +00:00",,,26,
+26,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+}",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 22:02:52.567 +00:00","2015-06-06 22:03:04.722 +00:00",,,27,
+27,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+} ",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 22:03:04.714 +00:00","2015-06-06 22:03:08.533 +00:00",,,28,
+28,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+}  ",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 22:03:08.521 +00:00","2015-06-06 22:03:22.823 +00:00",,,29,
+29,/Users/panagiotis/dev/projects/gitplayback/db/testdb.js,"var fs = require(""fs"");
+var chokidar = require('chokidar');
+
+// Allows command line to be executed with node
+var nodeCLI = require(""shelljs-nodecli"");
+
+var models = require('./models'),
+    Author = models.Author,
+    Keyframe = models.Keyframe,
+    Repo = models.Repo;
+
+console.log(""something ran"");
+
+  // Watches from db for now as root
+  // Fix for later - whole gitplayback directory
+  chokidar.watch(__dirname, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
+    // console.log(event, path);
+    readFile(event, path); 
+  });
+
+function readFile (event, filepath) {
+  fs.readFile(filepath, ""utf-8"", function(err, text) {
+  
+    // Reads last commit hash for current branch
+    var lastCommit = nodeCLI.exec(""git"", ""rev-parse"",""head"", {async:true});
+    lastCommit.stdout.on('data', function(lastcommit){
+
+    // Reads current branch name
+    var currBranch = nodeCLI.exec(""git"", ""rev-parse"", ""--abbrev-ref"", ""HEAD"", {async: true});
+    currBranch.stdout.on('data', function(branchname){
+
+    // Read keyframe to database
+    Keyframe
+      .create({
+        filename: filepath,
+        text_state: text,
+        event_type: event,
+        last_commit: lastcommit,
+        prev_keyframe: ""prev keyframe placeholder"",
+        next_keyframe: null,
+        branch_name: branchname
+      })
+      .then(function(keyframe) {
+        console.log(""keyframe create successful: "", keyframe.get({plain: true})); 
+        addToTail(keyframe);
+      }).catch(function(err) {
+        console.log(""keyframe create error: "", err);
+      });
+
+    }); 
+  }); 
+})}; 
+
+var addToTail = function (newKeyframe) {
+  // find the last chronological keyframe  --> query the latest...
+  // var = oldKeyFrame is result of first line --> createKeyframe()
+  // update oldKeyFrame.next_keyframe = newKeyFrame.ID
+  // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
+  console.log('newkf id?', newKeyframe.id);
+  Keyframe
+    .update({nextKeyframeId: newKeyframe.id}, { where: { id: newKeyframe.id - 1 }})
+    .then(function() {
+      console.log(""Add to Tail successful""); 
+    })
+    .catch(function(err) {
+      console.log(""Add to Tail error: "", err);
+    });
+
+};
+
+var insertKeyframe = function (revertKeyframe, newKeyframe) {
+  // newKeyframe.prev_keyframe = revertKeyframe.ID
+}; 
+
+// No crappy logs!!! *smiley*.quit
+",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 22:03:22.811 +00:00","2015-06-06 22:07:00.539 +00:00",,,30,
+30,/Users/panagiotis/dev/projects/gitplayback/db/testdb.js,"var fs = require(""fs"");
+var chokidar = require('chokidar');
+
+// Allows command line to be executed with node
+var nodeCLI = require(""shelljs-nodecli"");
+
+var models = require('./models'),
+    Author = models.Author,
+    Keyframe = models.Keyframe,
+    Repo = models.Repo;
+
+console.log(""something ran"");
+
+  // Watches from db for now as root
+  // Fix for later - whole gitplayback directory
+  chokidar.watch(__dirname, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
+    // console.log(event, path);
+    readFile(event, path); 
+  });
+
+function readFile (event, filepath) {
+  fs.readFile(filepath, ""utf-8"", function(err, text) {
+  
+    // Reads last commit hash for current branch
+    var lastCommit = nodeCLI.exec(""git"", ""rev-parse"",""head"", {async:true});
+    lastCommit.stdout.on('data', function(lastcommit){
+
+    // Reads current branch name
+    var currBranch = nodeCLI.exec(""git"", ""rev-parse"", ""--abbrev-ref"", ""HEAD"", {async: true});
+    currBranch.stdout.on('data', function(branchname){
+
+    // Read keyframe to database
+    Keyframe
+      .create({
+        filename: filepath,
+        text_state: text,
+        event_type: event,
+        last_commit: lastcommit,
+        prev_keyframe: ""prev keyframe placeholder"",
+        next_keyframe: null,
+        branch_name: branchname
+      })
+      .then(function(keyframe) {
+        console.log(""keyframe create successful: "", keyframe.get({plain: true})); 
+        addToTail(keyframe);
+      }).catch(function(err) {
+        console.log(""keyframe create error: "", err);
+      });
+
+    }); 
+  }); 
+})}; 
+
+var addToTail = function (newKeyframe) {
+  // find the last chronological keyframe  --> query the latest...
+  // var = oldKeyFrame is result of first line --> createKeyframe()
+  // update oldKeyFrame.next_keyframe = newKeyFrame.ID
+  // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
+  console.log('newkf id?', newKeyframe.id);
+  Keyframe
+    .update({nextKeyframeId: newKeyframe.id}, { where: { id: newKeyframe.id - 1 }})
+    .then(function() {
+      Keyframe.update({prevKeyframeId: newKeyframe.id-1}, { where: { id: newKeyframe.id }})
+    })
+    .then(function() {
+      console.log(""Add to Tail successful""); 
+    })
+    .catch(function(err) {
+      console.log(""Add to Tail error: "", err);
+    });
+
+};
+
+var insertKeyframe = function (revertKeyframe, newKeyframe) {
+  // newKeyframe.prev_keyframe = revertKeyframe.ID
+}; 
+
+// No crappy logs!!! *smiley*.quit
+",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 22:07:00.525 +00:00","2015-06-06 22:07:08.189 +00:00",,,31,
+31,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+}   ",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 22:07:08.168 +00:00","2015-06-06 22:07:15.491 +00:00",,30,32,
+32,"/Users/panagiotis/dev/projects/gitplayback/db/sample file.js","function anon () {
+	var x = ""sample file"";
+}  ",change,"f438328b30134abd2068283b1ca506cb4ddbf0a3
+","master
+","2015-06-06 22:07:15.487 +00:00","2015-06-06 22:07:15.497 +00:00",,31,,

@@ -2,7 +2,7 @@
   "name": "gitplayback",
   "version": "1.0.0",
   "description": "A tool to help people better understand others' code",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,7 +19,6 @@
   "dependencies": {
     "chokidar": "^1.0.2",
     "sequelize": "^3.2.0",
-    "shelljs-nodecli": "^0.1.1",
-    "sqlite3": "^3.0.8"
+    "shelljs-nodecli": "^0.1.1"
   }
 }
