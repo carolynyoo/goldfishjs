@@ -4,5 +4,6 @@ db/test.db
 db/storage.db
 .bin
 *.DS_Store
-app/app.nw
+app.nw
 db/datadump.csv
+db/dumpdbtocsv

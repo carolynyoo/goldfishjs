@@ -1,12 +1,19 @@
+// var index = require('./db/models/index.js');
+var fs = require('fs');
+
 var app = angular.module('gitplayback', ['ui.router']);
 
 var path = require('path');
 var appPath = process.env.PWD;
-//console.log("apppath:", appPath);
+console.log("apppath:", appPath);
 
 // Path to database
-var dbPath = path.join(appPath, '..', 'db/models');
-//console.log("dbpath:", dbPath);
+var dbPath = path.join(appPath, 'db/models');
+console.log("dbpath:", dbPath);
+
+// fs.readFile('./db/models/keyframe.js', function(err, file) {
+// 	console.log('keyframe file', file);
+// });
 
 /// Require models
 var models = require(dbPath);
@@ -29,10 +36,10 @@ $scope.getall = KeyframeFactory.getAllKeyframes();
 $scope.framesArray = "empty";
 
 $scope.firstFrame = $scope.getall.then(function (data) {
-	// console.log("data in firstFrame:", data)
+	 console.log("data in firstFrame:", data)
 	// console.log("data[0]:", data[0]);
 	// console.log("data[dataValues]:", data[0]["dataValues"]);
-	// console.log("data[dataValues][text_state]:", data[0]["dataValues"]["text_state"]);
+	 console.log("data[dataValues][text_state]:", data[0]["dataValues"]["text_state"]);
 
 
 	//data[0]["dataValues"]["text_state"];

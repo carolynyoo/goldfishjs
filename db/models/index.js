@@ -2,6 +2,7 @@ var path = require('path');
 var storagePath = path.join(process.env.PWD, "db","storage.db");
 // var storagePath = path.join(__dirname, "..", "storage.db");
 console.log("storagePath: ", storagePath);
+console.log("pwd: ", process.env.PWD);
 
 var nodeCLI = require("shelljs-nodecli");
 var fs = require("fs");
@@ -23,9 +24,9 @@ sequelize
     console.log('Unable to connect to the database:', err);
   });
 
-  var Keyframe = require('./db/models/keyframe')(sequelize);
-  var Author = require('./db/models/author')(sequelize);
-  var Repo = require('./db/models/repo')(sequelize);
+  var Keyframe = require(path.join(process.env.PWD, "db","models", "keyframe.js"))(sequelize);
+  var Author = require(path.join(process.env.PWD, "db","models", "author.js"))(sequelize);
+  var Repo = require(path.join(process.env.PWD, "db","models", "repo.js"))(sequelize);
 
 // Declare cardinality rules
 Author.hasMany(Keyframe);
@@ -114,9 +115,9 @@ sequelize
   var insertKeyframe = function (revertKeyframe, newKeyframe) {
     // newKeyframe.prev_keyframe = revertKeyframe.ID
   }; 
+ 
 
-
-global.module.exports = {
+module.exports = {
   Author: Author,
   Keyframe: Keyframe,
   Repo: Repo
