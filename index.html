@@ -31,6 +31,20 @@
 
     <h3>Click to Advance Frame</h3>
     <button type="button" id="advance" class="btn btn-danger" ng-click="advanceFrame(currentFrameID, currentFrame)">Next Frame</button>
+
+    <!-- refactor into ng-repeat later -->
+    <p>
+        filename: {{fileName}}
+    </p>
+    <p>
+        branchname: {{branchName}}
+    </p>
+    <p>
+        last commit: {{lastCommit}}
+    </p>
+    <p ng-filter>
+        committed at: {{lastCommitTime | datetime}}
+    </p>
     <p>
        frame id: {{currentFrameID}}
     </p>
