@@ -5,3 +5,4 @@ db/storage.db
 .bin
 *.DS_Store
 app/app.nw
+db/datadump.csv
