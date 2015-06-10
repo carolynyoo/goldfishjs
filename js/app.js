@@ -34,6 +34,34 @@ nwgui.Window.get().showDevTools();
 $scope.getall = KeyframeFactory.getAllKeyframes();
 
 $scope.framesArray = "empty";
+$scope.currentFrameID = 0;
+
+$scope.framesArray = $scope.getall.then(function (data) {
+	
+	//data[0]["dataValues"]["text_state"];
+	var AllFramesArray = [];
+
+	for (var i = 0; i < data.length; i++)
+	{ 
+	AllFramesArray.push(data[i].text_state);
+	}
+
+	console.log("AllFramesArray:", AllFramesArray);
+	$scope.framesArray = AllFramesArray;
+
+	// $scope.firstFrame = data[0]["dataValues"]["text_state"];
+ //   	$scope.$digest();
+});
+
+$scope.advanceFrame = function(frameID, currframe){
+	console.log("clicked and ran advanceFrame function");
+    console.log("frameID:", frameID);
+    console.log("currframe:", currframe);
+    $scope.currentFrame = $scope.framesArray[frameID+1];
+    $scope.currentFrameID += 1; 
+    console.log("currframe after assigned:", currframe);
+    $scope.$digest();
+};
 
 $scope.firstFrame = $scope.getall.then(function (data) {
 	 console.log("data in firstFrame:", data)
