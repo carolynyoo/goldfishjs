@@ -18,12 +18,14 @@ nwgui.Window.get().showDevTools();
 // Gets all keyframes
 $scope.getall = KeyframeFactory.getAllKeyframes();
 
+$scope.framesArray = "empty";
 
 $scope.firstFrame = $scope.getall.then(function (data) {
-	console.log("data in firstFrame:", data)
-	console.log("data[0]:", data[0]);
-	console.log("data[dataValues]:", data[0]["dataValues"]);
-	console.log("data[dataValues][text_state]:", data[0]["dataValues"]["text_state"]);
+	// console.log("data in firstFrame:", data)
+	// console.log("data[0]:", data[0]);
+	// console.log("data[dataValues]:", data[0]["dataValues"]);
+	// console.log("data[dataValues][text_state]:", data[0]["dataValues"]["text_state"]);
+
 
 	//data[0]["dataValues"]["text_state"];
 	data[0]["dataValues"]["text_state"];
@@ -31,13 +33,15 @@ $scope.firstFrame = $scope.getall.then(function (data) {
    	$scope.$digest();
 });
 
+$scope.playFrame = "empty";
+KeyframeFactory.playKeyframes();
 
 
 window.setTimeout(function(){
 			
 			//console.log("first frame:", $scope.firstFrame);
 			console.log("first frame:", $scope.firstFrame);
-			}, 10000)
+			}, 1000)
 
  });
 
@@ -79,6 +83,10 @@ app.factory('KeyframeFactory', function () {
 			// console.log("")
 			// }, 2000)
 		
+
+		},
+		playKeyframes: function(){
+		console.log("playframe: XXXXXXXXXX");
 
 		}
 	}
