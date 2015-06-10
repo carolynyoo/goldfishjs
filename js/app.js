@@ -81,6 +81,20 @@ $scope.advanceFrame = function(frameID, currframe){
 
 };
 
+
+$scope.backTenFrames = function(frameID){
+	
+	$scope.currentFrameID -= 10;
+    $scope.currentFrame = $scope.framesArray[frameID].text_state;
+    $scope.branchName = $scope.framesArray[frameID].branch_name;
+    $scope.fileName = $scope.framesArray[frameID].filename;
+    $scope.lastCommit = $scope.framesArray[frameID].last_commit;
+    $scope.lastCommitTime = $scope.framesArray[frameID].last_commit_time;
+    
+    $scope.$digest();	
+
+};
+
 $scope.firstFrame = $scope.getall.then(function (data) {
 	 console.log("data in firstFrame:", data)
 	// console.log("data[0]:", data[0]);
