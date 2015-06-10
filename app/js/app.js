@@ -9,28 +9,35 @@ app.controller('MainController', function ($scope, KeyframeFactory, nwguiFactory
 $scope.framesArray = ['nothing'];
 $scope.currentFrame = "no current frame";
 
-
+// Opens debugger window
 var nwgui = nwguiFactory;
-//var folder_view = folderviewFactory;
-
 nwgui.Window.get().showDevTools();
 
+//var folder_view = folderviewFactory;
 
-$scope.getall = KeyframeFactory.getKeyframe();
+// Gets all keyframes
+$scope.getall = KeyframeFactory.getAllKeyframes();
 
-// Keyframe
-//     .findAll()
-//     .then(function() {
-      
-//     })
-//     .then(function(keyframes) {
-//       console.log("Fetched all keyframes succesfully");
-//       console.log("keyframes:", keyframes);
-//     })
-//     .catch(function(err) {
-//       console.log("Error retrieving keyframes: ", err);
-//     });
 
+$scope.firstFrame = $scope.getall.then(function (data) {
+	console.log("data in firstFrame:", data)
+	console.log("data[0]:", data[0]);
+	console.log("data[dataValues]:", data[0]["dataValues"]);
+	console.log("data[dataValues][text_state]:", data[0]["dataValues"]["text_state"]);
+
+	//data[0]["dataValues"]["text_state"];
+	data[0]["dataValues"]["text_state"];
+	$scope.firstFrame = data[0]["dataValues"]["text_state"];
+   	$scope.$digest();
+});
+
+
+
+window.setTimeout(function(){
+			
+			//console.log("first frame:", $scope.firstFrame);
+			console.log("first frame:", $scope.firstFrame);
+			}, 10000)
 
  });
 
@@ -47,10 +54,22 @@ app.factory('nwguiFactory', function(){
 
 app.factory('KeyframeFactory', function () {
 	return {
-		getKeyframe: function(){
-			// sequelize query goes here
+		getAllKeyframes: function(){
 
-			// this will eventually be an array, but just setting 1 for now
+		// Sequelize query retrieves all Keyframes
+		return Keyframe
+		    .findAll()
+		    .then(function(keyframes) {
+		      console.log("Fetched all keyframes succesfully");
+		      console.log("keyframes:", keyframes);
+		      return keyframes; 
+		    })
+		    .catch(function(err) {
+		      console.log("Error retrieving keyframes: ", err);
+		    });
+
+
+// this will eventually be an array, but just setting 1 for now
 			// var next = "next keyframe";
 			// console.log("got keyframe?");
 
@@ -59,29 +78,8 @@ app.factory('KeyframeFactory', function () {
 			// console.log("set timeout");
 			// console.log("")
 			// }, 2000)
-
-
-
-
-Keyframe
-    .findAll()
-    .then(function(keyframes) {
-      console.log("keyframes:", keyframes); 
-    })
-    .then(function() {
-      console.log("Fetched all keyframes succesfully");
-
-    })
-    .catch(function(err) {
-      console.log("Error retrieving keyframes: ", err);
-    });
-
-
+		
 
 		}
 	}
 });
-
-// Pulled this from local db :p
-// select id, filename, text_state from Keyframes where id = 68;
-//require('/Users/randallwong/Desktop/FoundationsPrework/gitplayback/db/models/')(sequelize);
