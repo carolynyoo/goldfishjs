@@ -1,7 +1,15 @@
 var app = angular.module('gitplayback', ['ui.router']);
 
+var path = require('path');
+var appPath = process.env.PWD;
+//console.log("apppath:", appPath);
 
-var models = require('/Users/panagiotis/dev/projects/gitplayback/db/models');
+// Path to database
+var dbPath = path.join(appPath, '..', 'db/models');
+//console.log("dbpath:", dbPath);
+
+/// Require models
+var models = require(dbPath);
 var Keyframe = models.Keyframe;
 
 app.controller('MainController', function ($scope, KeyframeFactory, nwguiFactory) {
