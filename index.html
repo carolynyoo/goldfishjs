@@ -20,6 +20,7 @@
  //    win.menu.insert(new gui.MenuItem({ label: 'File', submenu: file}), 1);
  //    win.menu.append(new gui.MenuItem({ label: 'Help', submenu: help}));
 
+    // First save to db after restructure - test if wrote to db
     
     </script>
 </head>
@@ -28,10 +29,16 @@
 <div ng-app="gitplayback">
 	<div ng-controller="MainController">
 	{{2+2}}
+    <p>
+       frame id: {{currentFrameID}}
+    </p>
+    <em>Current Frame</em>
 	<p>
 		{{currentFrame}}
 	</p>
-	<p>
+    <button type="button" id="advance" class="btn btn-danger" ng-click="advanceFrame(currentFrameID, currentFrame)">Next Frame</button>
+	<em>First Frame</em>
+    <p>
 	{{firstFrame}}
 	</p>
 	</div>
