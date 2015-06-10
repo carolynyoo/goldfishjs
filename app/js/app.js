@@ -1,7 +1,7 @@
 var app = angular.module('gitplayback', ['ui.router']);
 
 
-var models = require('/Users/randallwong/Desktop/FoundationsPrework/gitplayback/db/models/');
+var models = require('/Users/panagiotis/dev/projects/gitplayback/db/models');
 var Keyframe = models.Keyframe;
 
 app.controller('MainController', function ($scope, KeyframeFactory, nwguiFactory) {
