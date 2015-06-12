@@ -1,6 +1,5 @@
 // var index = require('./db/models/index.js');
 var fs = require('fs');
-
 var app = angular.module('gitplayback', ['ui.router']);
 
 var path = require('path');
@@ -56,7 +55,7 @@ $scope.framesArray = $scope.getall.then(function (data) {
 
 	// $scope.firstFrame = data[0]["dataValues"]["text_state"];
  //   	$scope.$digest();
-});
+}); 
 
 $scope.advanceFrame = function(frameID, currframe){
 	console.log("clicked and ran advanceFrame function");
@@ -78,7 +77,6 @@ $scope.advanceFrame = function(frameID, currframe){
     console.log("currframe after assigned:", currframe);
     $scope.$digest();
 	}
-
 };
 
 
@@ -99,17 +97,17 @@ $scope.firstFrame = $scope.getall.then(function (data) {
 	 console.log("data in firstFrame:", data)
 	// console.log("data[0]:", data[0]);
 	// console.log("data[dataValues]:", data[0]["dataValues"]);
-	 console.log("data[dataValues][text_state]:", data[0]["dataValues"]["text_state"]);
+	 // console.log("data[dataValues][text_state]:", data[0]["dataValues"]["text_state"]);
 
 
 	//data[0]["dataValues"]["text_state"];
-	data[0]["dataValues"]["text_state"];
-	$scope.firstFrame = data[0]["dataValues"]["text_state"];
+	//data[0]["dataValues"]["text_state"];
+	$scope.firstFrame = data[0]["text_state"];
    	$scope.$digest();
 });
 
 $scope.playFrame = "empty";
-KeyframeFactory.playKeyframes();
+// KeyframeFactory.playKeyframes();
 
 
 window.setTimeout(function(){
@@ -133,21 +131,20 @@ app.factory('nwguiFactory', function(){
 
 app.factory('KeyframeFactory', function () {
 	return {
-		getAllKeyframes: function(){
-
-		// Sequelize query retrieves all Keyframes
-		return Keyframe
-		    .findAll()
-		    .then(function(keyframes) {
-		      console.log("Fetched all keyframes succesfully");
-		      console.log("keyframes:", keyframes);
-		      return keyframes; 
-		    })
-		    .catch(function(err) {
-		      console.log("Error retrieving keyframes: ", err);
-		    });
-
-
+		getAllKeyframes: function() {
+  		return Keyframe.find({}).exec()
+  		    .then(function(keyframes) {
+  		      console.log("Fetched all keyframes succesfully");
+  		      console.log("keyframes:", keyframes);
+  		      return keyframes; 
+  		    })
+  		    .fail(function(err) {
+  		      console.log("Error retrieving keyframes: ", err);
+  		    })
+      }
+    }
+  }
+);
 // this will eventually be an array, but just setting 1 for now
 			// var next = "next keyframe";
 			// console.log("got keyframe?");
@@ -157,15 +154,11 @@ app.factory('KeyframeFactory', function () {
 			// console.log("set timeout");
 			// console.log("")
 			// }, 2000)
-		
+		// },
+		// playKeyframes: function(){
+		// console.log("playframe: XXXXXXXXXX");
 
-		},
-		playKeyframes: function(){
-		console.log("playframe: XXXXXXXXXX");
-
-		}
-	}
-});
+		// }
 
 app.filter('datetime', function($filter)
 {
