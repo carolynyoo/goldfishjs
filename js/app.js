@@ -17,7 +17,7 @@ console.log("dbpath:", dbPath);
 
 app.config(function ($urlRouterProvider, $locationProvider) {
     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
-    $locationProvider.html5Mode(true);
+    // $locationProvider.html5Mode(true);
     // If we go to a URL that ui-router doesn't have registered, go to the "/" url.
     $urlRouterProvider.otherwise('/');
 });
@@ -28,41 +28,41 @@ var Keyframe = models.Keyframe;
 
 app.controller('MainController', function ($scope, KeyframeFactory, nwguiFactory) {
 
-$scope.framesArray = ['nothing'];
-$scope.currentFrame = "no current frame";
+	$scope.framesArray = ['nothing'];
+	$scope.currentFrame = "no current frame";
 
-// Opens debugger window
-var nwgui = nwguiFactory;
-nwgui.Window.get().showDevTools();
+	// Opens debugger window
+	var nwgui = nwguiFactory;
+	nwgui.Window.get().showDevTools();
 
-//var folder_view = folderviewFactory;
+	//var folder_view = folderviewFactory;
 
-// Gets all keyframes
-$scope.getall = KeyframeFactory.getAllKeyframes();
+	// Gets all keyframes
+	$scope.getall = KeyframeFactory.getAllKeyframes();
 
-$scope.framesArray = "empty";
-$scope.currentFrameID = 0;
+	$scope.framesArray = "empty";
+	$scope.currentFrameID = 0;
 
-$scope.branchName = "branch name goes here";
-$scope.fileName = "filename goes here";
-$scope.lastCommit = "last commit hash goes here";
-$scope.lastCommitTime = "which occurred at this time";
+	$scope.branchName = "branch name goes here";
+	$scope.fileName = "filename goes here";
+	$scope.lastCommit = "last commit hash goes here";
+	$scope.lastCommitTime = "which occurred at this time";
 
-$scope.framesArray = $scope.getall.then(function (data) {
-	
-	//data[0]["dataValues"]["text_state"];
-	var AllFramesArray = [];
+	$scope.framesArray = $scope.getall.then(function (data) {
+		
+		//data[0]["dataValues"]["text_state"];
+		var AllFramesArray = [];
 
-	for (var i = 0; i < data.length; i++)
-	{ 
-	AllFramesArray.push(data[i]);
-	}
+		for (var i = 0; i < data.length; i++)
+		{ 
+		AllFramesArray.push(data[i]);
+		}
 
-	console.log("AllFramesArray:", AllFramesArray);
-	$scope.framesArray = AllFramesArray;
+		console.log("AllFramesArray:", AllFramesArray);
+		$scope.framesArray = AllFramesArray;
 
-	// $scope.firstFrame = data[0]["dataValues"]["text_state"];
- //   	$scope.$digest();
+		// $scope.firstFrame = data[0]["dataValues"]["text_state"];
+	 //   	$scope.$digest();
 });
 
 $scope.advanceFrame = function(frameID, currframe){
