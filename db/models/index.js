@@ -21,7 +21,7 @@ var db = new DataStore({ filename: 'nedbstorage.db', autoload: true })
     // to do: gitignore glob path match 
     // also add .git to ignore 
     var globsToIgnore = gitignoreParse(gitIgnore);
-    globsToIgnore.push('.git');
+    globsToIgnore.push('**/.git/**');
     console.log('globs please', globsToIgnore);
     for (var i=0; i<globsToIgnore.length; i++) {
       if (minimatch(path.split(pwd)[1], globsToIgnore[i])) {
