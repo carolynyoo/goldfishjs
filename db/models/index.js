@@ -56,7 +56,8 @@ var db = new DataStore({ filename: 'nedbstorage.db', autoload: true })
             last_commit_time: committime, 
             prev_keyframe: null,
             next_keyframe: null,
-            branch_name: branchname
+            branch_name: branchname,
+            createdAt: new Date()
           }
           db.insert(doc)
             .then(function (newDoc) {
