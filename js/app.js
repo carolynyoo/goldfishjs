@@ -6,6 +6,8 @@ var path = require('path');
 var appPath = process.env.PWD;
 console.log("apppath:", appPath);
 
+var _ = require('lodash');
+
 // Path to database
 var dbPath = path.join(appPath, 'db/models');
 console.log("dbpath:", dbPath);
