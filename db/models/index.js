@@ -76,18 +76,6 @@ var db = new DataStore({ filename: 'nedbstorage.db', autoload: true })
     // var = oldKeyFrame is result of first line --> createKeyframe()
     // update oldKeyFrame.next_keyframe = newKeyFrame.ID
     // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
-    console.log('newkf id?', newKeyframe._id);
-    // Keyframe
-    //   .update({nextKeyframeId: newKeyframe.id}, { where: { id: newKeyframe.id - 1 }})
-    //   .then(function() {
-    //     Keyframe.update({prevKeyframeId: newKeyframe.id-1}, { where: { id: newKeyframe.id }})
-    //   })
-    //   .then(function() {
-    //     console.log("Add to Tail successful"); 
-    //   })
-    //   .catch(function(err) {
-    //     console.log("Add to Tail error: ", err);
-    //   });
 
     db.find({}).sort({ createdAt: -1 }).limit(2).exec(function (err, docs) {
       if (docs.length<2) {
@@ -100,8 +88,9 @@ var db = new DataStore({ filename: 'nedbstorage.db', autoload: true })
             db.update({_id: prevID}, {$set: {next_keyframe: newKeyframe._id}});
         })
         .then(function (numUpdated) {
-          console.log('Both entries updated?', numUpdated);
-          db.persistence.compactDatafile;
+          db.count().exec(function (err, count) {
+            console.log('count post update', count); 
+          })
         })
         .fail(function (err) {
           console.log(err); 

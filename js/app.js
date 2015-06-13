@@ -49,7 +49,6 @@ app.factory('GitDiffFactory', function(){
 			calculateDiff: function(text1, text2){
 			console.log("Text1:", text1);
 			console.log("Text2:", text2);
-			require('diff_match_patch_uncompressed.js');
 			
 			var dmp = new diff_match_patch();
 			var diffsCreated = dmp.diff_main(text1, text2);
