@@ -24,6 +24,7 @@ app.controller('MainController', function ($scope, KeyframeFactory, nwguiFactory
 
 $scope.framesArray = ['nothing'];
 $scope.currentFrame = "no current frame";
+$scope.firstFrame = "no current frame";
 
 $scope.diffsArray = "nothing";
 
@@ -46,21 +47,9 @@ $scope.fileName = "filename goes here";
 $scope.lastCommit = "last commit hash goes here";
 $scope.lastCommitTime = "which occurred at this time";
 
-$scope.framesArray = $scope.getall.then(function (data) {
-	
-	//data[0]["dataValues"]["text_state"];
-	var AllFramesArray = [];
-
-	for (var i = 0; i < data.length; i++)
-	{ 
-	AllFramesArray.push(data[i]);
-	}
-
-	console.log("AllFramesArray:", AllFramesArray);
-	$scope.framesArray = AllFramesArray;
-
-	// $scope.firstFrame = data[0]["dataValues"]["text_state"];
- //   	$scope.$digest();
+$scope.getall.then(function (data) {
+	// Puts data from promise in framesArray
+	$scope.framesArray = data;
 }); 
 
 $scope.advanceFrame = function(frameID, currframe){
@@ -84,7 +73,7 @@ $scope.advanceFrame = function(frameID, currframe){
     $scope.lastCommitTime = $scope.framesArray[frameID+1].last_commit_time;
     $scope.currentFrameID += 1;
     console.log("currframe after assigned:", currframe);
-    $scope.$digest();
+//    $scope.$digest();
 	}
 };
 
@@ -98,21 +87,13 @@ $scope.backTenFrames = function(frameID){
     $scope.lastCommit = $scope.framesArray[frameID].last_commit;
     $scope.lastCommitTime = $scope.framesArray[frameID].last_commit_time;
     
-    $scope.$digest();	
+//    $scope.$digest();	
 
 };
 
-$scope.firstFrame = $scope.getall.then(function (data) {
-	 console.log("data in firstFrame:", data)
-	// console.log("data[0]:", data[0]);
-	// console.log("data[dataValues]:", data[0]["dataValues"]);
-	 // console.log("data[dataValues][text_state]:", data[0]["dataValues"]["text_state"]);
-
-
-	//data[0]["dataValues"]["text_state"];
-	//data[0]["dataValues"]["text_state"];
-	$scope.firstFrame = data[0]["text_state"];
-   	$scope.$digest();
+$scope.getall.then(function (data) {
+	// Retrieves first frame
+	$scope.firstFrame = data[0]["text_state"];   	
 });
 
 $scope.playFrame = "empty";
@@ -156,15 +137,26 @@ app.factory('GitDiffFactory', function(){
 //			currdiff = {added: diffsCreated[0][0], removed: diffsCreated[0,1]};
 			// diff_main("Good dog", "Bad dog") => [(-1, "Goo"), (1, "Ba"), (0, "d dog")]
 
-			var semDiffs = dmp.diff_cleanupSemantic(diffsCreated); // makes diffs human readable
+			dmp.diff_cleanupSemantic(diffsCreated); // makes diffs human readable
 			console.log("Semantic Diffs:", diffsCreated);
 
-			// TODO: read into front end
-			// var semDiffsString = JSON.stringify(semDiffs);
-			// console.log("SemDiffsString:", semDiffsString);
-			// console.log("SemDiffs[0][0][1]:", semDiffs[0][0][1]);
-			// var firstElement = semDiffs[0][0][1];
-			// return firstElement;
+			// Splice to new array - think original data might be a tuple
+			var semDiffArray = [].splice.call(diffsCreated, 0);
+			console.log("spliced array:", semDiffArray);
+			
+			console.log("semDiffArray[0]:", semDiffArray[0]);
+			console.log("semDiffArray[0][0]:", semDiffArray[0][0]);
+
+			console.log("THE DIFF:", semDiffArray[1][1]);
+
+			// TODO: This will only get the first chunk
+			// of the diff and not all of the diffs contained in the array
+
+			// will later need to loop
+			var textAdded = semDiffArray[1][1];
+			var textRemoved = semDiffArray[1][1];
+
+			return textAdded;
 
 		}
 	}
