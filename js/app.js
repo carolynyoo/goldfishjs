@@ -173,7 +173,7 @@ app.factory('GitDiffFactory', function(){
 app.factory('KeyframeFactory', function () {
 	return {
 		getAllKeyframes: function() {
-  		return Keyframe.find({}).exec()
+  		return Keyframe.find({}).sort({createdAt:1}).exec()
   		    .then(function(keyframes) {
   		      console.log("Fetched all keyframes succesfully");
   		      console.log("keyframes:", keyframes);
