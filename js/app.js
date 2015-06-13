@@ -58,15 +58,26 @@ app.factory('GitDiffFactory', function(){
 //			currdiff = {added: diffsCreated[0][0], removed: diffsCreated[0,1]};
 			// diff_main("Good dog", "Bad dog") => [(-1, "Goo"), (1, "Ba"), (0, "d dog")]
 
-			var semDiffs = dmp.diff_cleanupSemantic(diffsCreated); // makes diffs human readable
+			dmp.diff_cleanupSemantic(diffsCreated); // makes diffs human readable
 			console.log("Semantic Diffs:", diffsCreated);
 
-			// TODO: read into front end
-			// var semDiffsString = JSON.stringify(semDiffs);
-			// console.log("SemDiffsString:", semDiffsString);
-			// console.log("SemDiffs[0][0][1]:", semDiffs[0][0][1]);
-			// var firstElement = semDiffs[0][0][1];
-			// return firstElement;
+			// Splice to new array - think original data might be a tuple
+			var semDiffArray = [].splice.call(diffsCreated, 0);
+			console.log("spliced array:", semDiffArray);
+			
+			console.log("semDiffArray[0]:", semDiffArray[0]);
+			console.log("semDiffArray[0][0]:", semDiffArray[0][0]);
+
+			console.log("THE DIFF:", semDiffArray[1][1]);
+
+			// TODO: This will only get the first chunk
+			// of the diff and not all of the diffs contained in the array
+
+			// will later need to loop
+			var textAdded = semDiffArray[1][1];
+			var textRemoved = semDiffArray[1][1];
+
+			return textAdded;
 
 		}
 	}
