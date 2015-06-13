@@ -22,7 +22,6 @@ var db = new DataStore({ filename: 'nedbstorage.db', autoload: true })
     // also add .git to ignore 
     var globsToIgnore = gitignoreParse(gitIgnore);
     globsToIgnore.push('**/.git/**');
-    console.log('globs please', globsToIgnore);
     for (var i=0; i<globsToIgnore.length; i++) {
       if (minimatch(path.split(pwd)[1], globsToIgnore[i])) {
         return;
@@ -62,6 +61,7 @@ var db = new DataStore({ filename: 'nedbstorage.db', autoload: true })
           db.insert(doc)
             .then(function (newDoc) {
               console.log("Keyframe create successful: ", newDoc);
+              addToTail(newDoc);
             })
             .fail(function(err) {
               console.error(err);
@@ -76,25 +76,33 @@ var db = new DataStore({ filename: 'nedbstorage.db', autoload: true })
     // var = oldKeyFrame is result of first line --> createKeyframe()
     // update oldKeyFrame.next_keyframe = newKeyFrame.ID
     // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
-    console.log('newkf id?', newKeyframe.id);
-    Keyframe
-      .update({nextKeyframeId: newKeyframe.id}, { where: { id: newKeyframe.id - 1 }})
-      .then(function() {
-        Keyframe.update({prevKeyframeId: newKeyframe.id-1}, { where: { id: newKeyframe.id }})
-      })
-      .then(function() {
-        console.log("Add to Tail successful"); 
-      })
-      .catch(function(err) {
-        console.log("Add to Tail error: ", err);
-      });
+
+    db.find({}).sort({ createdAt: -1 }).limit(2).exec(function (err, docs) {
+      if (docs.length<2) {
+        return;
+      }
+      console.log('Limit 2:',docs); 
+      var prevID = docs[1]._id;
+      db.update({_id: newKeyframe._id}, {$set: {prev_keyframe: prevID}})
+        .then(function (numUpdated) {
+            db.update({_id: prevID}, {$set: {next_keyframe: newKeyframe._id}});
+        })
+        .then(function (numUpdated) {
+          db.count().exec(function (err, count) {
+            console.log('count post update', count); 
+          })
+        })
+        .fail(function (err) {
+          console.log(err); 
+        })
+    });
 
   };
 
   var insertKeyframe = function (revertKeyframe, newKeyframe) {
     // newKeyframe.prev_keyframe = revertKeyframe.ID
   }; 
- 
+
 
 module.exports = {
   // Author: Author,
