@@ -23,9 +23,25 @@
 	    <p>
 	       frame id: {{currentFrameID}}
 	    </p>
+	    <HR>
+	    <div class="AddedChange">
 	    <pre>
-	        {{diffsArray}}
+	        {{diffsArray.textAdded}}
 	    </pre>
+	    <HR>
+		</div>
+		<div class="RemovedChange">
+	    <pre>
+	        {{diffsArray.textRemoved}}
+	    </pre>
+	    </div>
+	    <HR>
+		<div class="NoChange">
+	    <pre>
+	        {{diffsArray.textSame}}
+	    </pre>
+	    <HR>
+		</div>
 	    <em>Current Frame</em>
 	    <div ng-show="currentFrameID === 0">
 	    <em>First Frame</em>
