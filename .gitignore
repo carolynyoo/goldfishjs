@@ -1,9 +1,10 @@
+*.DS_Store
 node_modules/
 bower_components/
-db/test.db
-db/storage.db
+nedbstorage.db
+db/*.db
 .bin
-*.DS_Store
 app.nw
 db/datadump.csv
-db/dumpdbtocsv
+db/dumpdbtocsv.js
+*.swp
