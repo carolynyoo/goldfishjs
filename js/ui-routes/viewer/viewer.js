@@ -1,16 +1,31 @@
 /*jslint node: true */
 'use strict';
 
-app.config(function ($stateProvider) {
+app.directive('viewer', function($rootScope) {
+	return {
+		restrict: 'E',
+		scope: {},
+		templateUrl: 'js/ui-routes/viewer/viewer.html',
+		link: function (scope) {
+			scope.greeting = "the viewer has loaded";
 
-    $stateProvider.state('main.projectbrowser.scrubber.viewer', {
-        url: '/viewer',
-        controller: 'ViewerController',
-        templateUrl: 'js/ui-routes/viewer/viewer.html'
-    });
-
+			console.log("here's the greeting: ", scope.greeting);
+		}
+	};
 });
 
-app.controller('ViewerController', function($scope) {
-	//project browser logic
-});
+
+
+// app.config(function ($stateProvider) {
+
+//     $stateProvider.state('main.projectbrowser.scrubber.viewer', {
+//         url: '/viewer',
+//         controller: 'ViewerController',
+//         templateUrl: 'js/ui-routes/viewer/viewer.html'
+//     });
+
+// });
+
+// app.controller('ViewerController', function($scope) {
+// 	//project browser logic
+// });

@@ -1,16 +1,36 @@
 /*jslint node: true */
 'use strict';
 
-app.config(function ($stateProvider) {
+app.directive('scrubber', function($rootScope) {
+	return {
+		restrict: 'E',
+		scope: {},
+		templateUrl: 'js/ui-routes/scrubber/scrubber.html',
+		link: function (scope) {
+			scope.greeting = "the scrubber has loaded";
 
-    $stateProvider.state('main.projectbrowser.scrubber', {
-        url: '/scrubber',
-        controller: 'ScrubberController',
-        templateUrl: 'js/ui-routes/scrubber/scrubber.html'
-    });
-
+			console.log("here's the greeting: ", scope.greeting);
+		}
+	};
 });
 
-app.controller('ScrubberController', function($scope) {
-	//project browser logic
-});
+
+
+
+// app.config(function ($stateProvider) {
+
+//     $stateProvider.state('main.projectbrowser.scrubber', {
+//         url: '/scrubber',
+//         controller: 'ScrubberController',
+//         templateUrl: 'js/ui-routes/scrubber/scrubber.html'
+//     });
+
+// });
+
+// app.controller('ScrubberController', function($scope, $rootScope) {
+// 	//project browser logic
+// 	$rootScope.$on("$stateChangeSuccess", function(event, greeting) {
+// 		console.log(greeting);
+// 	});
+
+// });

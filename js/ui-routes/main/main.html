@@ -1,6 +1,7 @@
 <div>
-	<h3>Main (Root of Viewer)</h3>
-	<a ui-sref="main.projectbrowser">Project Timeline</a><br>
-	<!-- <a ui-sref="loader">Load from File...(not wired up yet)</a> -->
-	<div ui-view/>
+	<div layout="row" layout-wrap>
+		<div flex="30"><projectbrowser></projectbrowser></div>
+		<div flex="70"><viewer></viewer></div>
+		<div flex="100"><scrubber></scrubber></div>
+	</div>
 </div>
