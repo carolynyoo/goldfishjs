@@ -18,14 +18,18 @@ console.log("dbpath:", dbPath);
 var models = require(dbPath);
 var Keyframe = models.Keyframe;
 
-app.controller('MainController', function ($scope, KeyframeFactory, nwguiFactory) {
+app.controller('MainController', function ($scope, KeyframeFactory, nwguiFactory, GitDiffFactory) {
 
 $scope.framesArray = ['nothing'];
 $scope.currentFrame = "no current frame";
 
+$scope.diffsArray = "nothing";
+
+
 // Opens debugger window
 var nwgui = nwguiFactory;
 nwgui.Window.get().showDevTools();
+
 
 //var folder_view = folderviewFactory;
 
@@ -58,6 +62,9 @@ $scope.framesArray = $scope.getall.then(function (data) {
 }); 
 
 $scope.advanceFrame = function(frameID, currframe){
+
+	$scope.diffsArray = GitDiffFactory.calculateDiff($scope.framesArray[frameID].text_state, $scope.framesArray[frameID+1].text_state);
+
 	console.log("clicked and ran advanceFrame function");
     console.log("frameID:", frameID);
     console.log("currframe:", currframe);
@@ -128,6 +135,38 @@ app.factory('nwguiFactory', function(){
 // 	var folder_view = require('folder_view');
 // 	return 5;
 //  });
+
+app.factory('GitDiffFactory', function(){
+	
+	return {
+
+			// Returns an Array of Diffs
+
+			calculateDiff: function(text1, text2){
+			console.log("Text1:", text1);
+			console.log("Text2:", text2);
+			require('diff_match_patch_uncompressed.js');
+			
+			var dmp = new diff_match_patch();
+			var diffsCreated = dmp.diff_main(text1, text2);
+			console.log("Diffs Array Before:", diffsCreated);
+
+//			currdiff = {added: diffsCreated[0][0], removed: diffsCreated[0,1]};
+			// diff_main("Good dog", "Bad dog") => [(-1, "Goo"), (1, "Ba"), (0, "d dog")]
+
+			var semDiffs = dmp.diff_cleanupSemantic(diffsCreated); // makes diffs human readable
+			console.log("Semantic Diffs:", diffsCreated);
+
+			// TODO: read into front end
+			// var semDiffsString = JSON.stringify(semDiffs);
+			// console.log("SemDiffsString:", semDiffsString);
+			// console.log("SemDiffs[0][0][1]:", semDiffs[0][0][1]);
+			// var firstElement = semDiffs[0][0][1];
+			// return firstElement;
+
+		}
+	}
+});
 
 app.factory('KeyframeFactory', function () {
 	return {
