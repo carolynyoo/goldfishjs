@@ -1,12 +1,15 @@
 var path = require('path');
 var storagePath = path.join(process.env.PWD, "db","storage.db");
-// var storagePath = path.join(__dirname, "..", "storage.db");
-console.log("storagePath: ", storagePath);
+var storagePath = path.join(__dirname, "..", "storage.db");
 console.log("pwd: ", process.env.PWD); 
+var pwd = process.env.PWD+"/";
+var gitIgnore = path.join(process.env.PWD, ".gitignore"); 
 
 var nodeCLI = require("shelljs-nodecli");
 var fs = require("fs");
 var chokidar = require('chokidar');
+var gitignoreParse = require('gitignore-globs');
+var minimatch = require('minimatch'); 
 
 var PromisifyMe = require('promisify-me');
 var DataStore = PromisifyMe(require('nedb'), 'nedb');
@@ -16,9 +19,16 @@ var db = new DataStore({ filename: 'nedbstorage.db', autoload: true })
   chokidar.watch(process.env.PWD, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
     console.log('WATCHER: ', event, path);
     // to do: gitignore glob path match 
-    if(!path.match(/nedbstorage/)) {
-      readFile(event, path); 
+    // also add .git to ignore 
+    var globsToIgnore = gitignoreParse(gitIgnore);
+    globsToIgnore.push('.git');
+    console.log('globs please', globsToIgnore);
+    for (var i=0; i<globsToIgnore.length; i++) {
+      if (minimatch(path.split(pwd)[1], globsToIgnore[i])) {
+        return;
+      }
     }
+    readFile(event, path); 
   });
 
   function readFile (event, filepath) {
