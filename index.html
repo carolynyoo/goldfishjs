@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!-- <base href="/"> -->
 	    <title>Git Playback</title>
-	    <script type="text/javascript" src="node_modules/angular/angular.js"></script>
-	    <script type="text/javascript" src="node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+	    <script type="text/javascript" src="./node_modules/angular/angular.js"></script>
+	    <script type="text/javascript" src="./node_modules/angular-ui-router/release/angular-ui-router.js"></script>
 	    <!-- <script src="db/models/index.js" type="text/javascript"></script> -->
-	    <script type="text/javascript" src="js/app.js"></script>
-	    <script type="text/javascript" src="js/ui-routes/main/main.js"></script>
-	    <script type="text/javascript" src="js/ui-routes/projectbrowser/projectbrowser.js"></script>
-	    <script type="text/javascript" src="js/ui-routes/scrubber/scrubber.js"></script>
-	    <script type="text/javascript" src="js/ui-routes/viewer/viewer.js"></script>
+	    <script type="text/javascript" src="./js/app.js"></script>
+	    <script type="text/javascript" src="./js/ui-routes/main/main.js"></script>
+	    <script type="text/javascript" src="./js/ui-routes/projectbrowser/projectbrowser.js"></script>
+	    <script type="text/javascript" src="./js/ui-routes/scrubber/scrubber.js"></script>
+	    <script type="text/javascript" src="./js/ui-routes/viewer/viewer.js"></script>
 	    <script type="text/javascript">
 		    require('nw.gui').Window.get().showDevTools();
 		      
@@ -29,9 +30,7 @@
 	</head>
 	<body ng-app='gitplayback'>
 	    <h2>Welcome to Git Playback!</h2>
-		<a ui-sref="main">Project Timeline</a><br>
-		<a ui-sref="loader">Load from File...(not wired up yet)</a>
-		<!-- <div ui-view></div> -->
+		<div ui-view/>
 	</body>
 </html>
 

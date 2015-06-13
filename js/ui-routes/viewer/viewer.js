@@ -3,9 +3,8 @@
 
 app.config(function ($stateProvider) {
 
-    $stateProvider.state('viewer', {
+    $stateProvider.state('main.projectbrowser.scrubber.viewer', {
         url: '/viewer',
-        parent: 'scrubber',
         controller: 'ViewerController',
         templateUrl: 'js/ui-routes/viewer/viewer.html'
     });
