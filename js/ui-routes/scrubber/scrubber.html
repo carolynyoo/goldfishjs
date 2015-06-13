@@ -1,7 +1,10 @@
 <div>
 	<h3>Scrubber</h3>
-	<h4>Scrubber State</h4>
+	<label for=weight>Weight</label>
+	<input type=range id="weight" min=0 value=20 max=100 step=2>
+	<h3>Click to Advance Frame</h3>
 	    <button type="button" id="advance" class="btn btn-danger" ng-click="advanceFrame(currentFrameID, currentFrame)">Next Frame</button>
+
 	    <button type="button" id="advance" class="btn btn-danger" ng-click="backTenFrames(currentFrameID)">Back 10 Frames</button>
 
 	    <!-- refactor into ng-repeat later -->
@@ -20,14 +23,19 @@
 	    <p>
 	       frame id: {{currentFrameID}}
 	    </p>
+	    <pre>
+	        {{diffsArray}}
+	    </pre>
 	    <em>Current Frame</em>
 	    <div ng-show="currentFrameID === 0">
 	    <em>First Frame</em>
-	    <p>
+	    <pre>
 	    {{firstFrame}}
-	    </p>
+	    </pre>
 	    </div>
-		<p>
+		<pre>
 			{{currentFrame}}
-		</p>
+		</pre>
+
+		</div>
 </div>

@@ -4,7 +4,6 @@
 app.directive('viewer', function($rootScope) {
 	return {
 		restrict: 'E',
-		scope: {},
 		templateUrl: 'js/ui-routes/viewer/viewer.html',
 		link: function (scope) {
 			scope.greeting = "the viewer has loaded";
@@ -20,7 +19,7 @@ app.directive('viewer', function($rootScope) {
 
 //     $stateProvider.state('main.projectbrowser.scrubber.viewer', {
 //         url: '/viewer',
-//         controller: 'ViewerController',
+//         controller: 'ViewerController', 
 //         templateUrl: 'js/ui-routes/viewer/viewer.html'
 //     });
 

@@ -4,7 +4,6 @@
 app.directive('projectbrowser', function($rootScope) {
 	return {
 		restrict: 'E',
-		scope: {},
 		templateUrl: 'js/ui-routes/projectbrowser/projectbrowser.html',
 		link: function (scope) {
 			scope.greeting = "the file browser has loaded";

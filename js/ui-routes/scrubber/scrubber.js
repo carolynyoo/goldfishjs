@@ -4,7 +4,6 @@
 app.directive('scrubber', function($rootScope) {
 	return {
 		restrict: 'E',
-		scope: {},
 		templateUrl: 'js/ui-routes/scrubber/scrubber.html',
 		link: function (scope) {
 			scope.greeting = "the scrubber has loaded";
