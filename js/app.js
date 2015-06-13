@@ -75,9 +75,19 @@ app.factory('GitDiffFactory', function(){
 
 			// will later need to loop
 			var textAdded = semDiffArray[1][1];
-			var textRemoved = semDiffArray[1][1];
+			var textSame = semDiffArray[0][1];
 
-			return textAdded;
+			// console.log("THE REMOVED:", semDiffArray[2][1]);
+			// var textRemoved = semDiffArray[2][1];
+
+			// var object = {"textAdded": textAdded, "textSame": textSame, "textRemoved": textRemoved};
+
+			// TODO: This should eventually loop through array of diffs
+			// But for now, I am reading into object and accessing directly
+			// Array should run through and ng-repeat
+			var object = {"textAdded": textAdded, "textSame": textSame, "textRemoved": "empty- fix this later"};
+
+			return object;
 
 		}
 	}
@@ -99,21 +109,8 @@ app.factory('KeyframeFactory', function () {
     }
   }
 );
-// this will eventually be an array, but just setting 1 for now
-			// var next = "next keyframe";
-			// console.log("got keyframe?");
 
-			// window.setTimeout(function(){
-			// input = next;
-			// console.log("set timeout");
-			// console.log("")
-			// }, 2000)
-		// },
-		// playKeyframes: function(){
-		// console.log("playframe: XXXXXXXXXX");
-
-		// }
-
+// Filter to convert datetime to human-readable
 app.filter('datetime', function($filter)
 {
  return function(input)

@@ -16,3 +16,21 @@
 span.md-flex {
 	color: white;
 }
+
+.AddedChange {
+	color: green;
+	font-weight: bold;
+	font-size: large;
+}
+
+.RemovedChange {
+	color: red;
+	font-weight: bold;
+	font-size: large;
+}
+
+.NoChange {
+	color: purple;
+	font-weight: bold;
+	font-size: large;
+}
