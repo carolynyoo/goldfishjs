@@ -5,6 +5,7 @@ app.config(function ($stateProvider) {
 
     $stateProvider.state('scrubber', {
         url: '/scrubber',
+        abstract: true,
         parent: 'projectbrowser',
         controller: 'ScrubberController',
         templateUrl: 'js/ui-routes/scrubber/scrubber.html'

@@ -5,8 +5,9 @@ app.config(function ($stateProvider) {
 
     $stateProvider.state('main', {
         url: '/main',
+        abstract: true,
         controller: 'MainController',
-        templateUrl: 'js/ui-routes/main/main.html'
+        templateUrl: '<ui-view/>'
     });
 
 });
