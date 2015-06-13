@@ -1,72 +1,51 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Hello Node Webkit</title>
-    <script type="text/javascript" src="node_modules/angular/angular.js"></script>
-    <script type="text/javascript" src="node_modules/angular-ui-router/release/angular-ui-router.js"></script>
-    <!-- <script src="db/models/index.js" type="text/javascript"></script> -->
-    <script src="js/app.js"></script>
-    <script src="js/diff_match_patch_uncompressed.js"</script>
-    <script type="text/javascript">
-    require('nw.gui').Window.get().showDevTools();
-      
-    // menu logic goes here
+	<head>
+		<!-- <base href="/"> -->
+	    <title>Git Playback</title>
+	    <meta name="viewport" content="initial-scale=1" />
+	    <script type="text/javascript" src="./node_modules/angular/angular.js"></script>
+	    <script type="text/javascript" src="./node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+	    <link rel="stylesheet" href="./bower_components/angular-aria/angular-aria.js">
+	    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+	    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.min.css">
+	    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.js">
+		<link rel="stylesheet" type="text/css" href="./assets/style.css">
 
-	// var gui = require('nw.gui');
- //    var win = gui.Window.get();
- //    var menubar = new gui.Menu({ type: 'menubar' });
- //    var file = new gui.Menu();
- //    var help = new gui.Menu();
- //    win.menu = menubar;
- //    win.menu.insert(new gui.MenuItem({ label: 'File', submenu: file}), 1);
- //    win.menu.append(new gui.MenuItem({ label: 'Help', submenu: help}));
+	    <script type="text/javascript" src="./js/app.js"></script>
+    	<script type="text/javascript" src="./js/diff_match_patch_uncompressed.js"></script>
+	    <script type="text/javascript" src="./js/ui-routes/main/main.js"></script>
+	    <script type="text/javascript" src="./js/ui-routes/projectbrowser/projectbrowser.js"></script>
+	    <script type="text/javascript" src="./js/ui-routes/scrubber/scrubber.js"></script>
+	    <script type="text/javascript" src="./js/ui-routes/viewer/viewer.js"></script>
+	    <script type="text/javascript">
+		    require('nw.gui').Window.get().showDevTools();
+		      
+		    // menu logic goes here
 
-    // First save to db after restructure - test if wrote to db
-    
-    </script>
-</head>
-<body>
-    <h1>Welcome to Git Playback!</h1>
-<div ng-app="gitplayback">
-	<div ng-controller="MainController">
+			// var gui = require('nw.gui');
+		 //    var win = gui.Window.get();
+		 //    var menubar = new gui.Menu({ type: 'menubar' });
+		 //    var file = new gui.Menu();
+		 //    var help = new gui.Menu();
+		 //    win.menu = menubar;
+		 //    win.menu.insert(new gui.MenuItem({ label: 'File', submenu: file}), 1);
+		 //    win.menu.append(new gui.MenuItem({ label: 'Help', submenu: help}));
 
-    <h3>Click to Advance Frame</h3>
-    <button type="button" id="advance" class="btn btn-danger" ng-click="advanceFrame(currentFrameID, currentFrame)">Next Frame</button>
 
-    <button type="button" id="advance" class="btn btn-danger" ng-click="backTenFrames(currentFrameID)">Back 10 Frames</button>
-
-    <!-- refactor into ng-repeat later -->
-    <p>
-        filename: {{fileName}}
-    </p>
-    <p>
-        branchname: {{branchName}}
-    </p>
-    <p>
-        last commit: {{lastCommit}}
-    </p>
-    <p ng-filter>
-        committed at: {{lastCommitTime | datetime}}
-    </p>
-    <p>
-       frame id: {{currentFrameID}}
-    </p>
-    <pre>
-        {{diffsArray}}
-    </pre>
-    <em>Current Frame</em>
-    <div ng-show="currentFrameID === 0">
-    <em>First Frame</em>
-    <pre>
-    {{firstFrame}}
-    </pre>
-    </div>
-	<pre>
-		{{currentFrame}}
-	</pre>
-
-	</div>
-</div>
-</body>
+		    // First save to db after restructure - test if wrote to db  
+	    </script>
+	</head>
+	<body layout = "column" ng-app='gitplayback' style="-webkit-app-region: drag">
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+				<span class="md-flex">Git Playback</span>
+			</div>
+		<!-- 	<md-button class="md-icon-button" aria-label="More">
+			  <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
+			</md-button> -->
+		</md-toolbar>
+		<div ui-view/>
+	</body>
 </html>
 

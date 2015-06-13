@@ -2,9 +2,12 @@
 node_modules/
 bower_components/
 nedbstorage.db
+nedbstorage.db~
 db/*.db
 .bin
 app.nw
 db/datadump.csv
 db/dumpdbtocsv.js
 *.swp
+*~
+*.swo
