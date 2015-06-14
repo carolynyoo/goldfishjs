@@ -22,6 +22,15 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
 	$scope.editor = "nothing";
 
 
+	$scope.showFileTab = false;
+	$scope.toggleActive = function() {
+	console.log("scope.showFileTab", $scope.showFileTab);
+	console.log("NG CLICK");
+    $scope.showFileTab = $scope.showFileTab === false ? true: false;
+    console.log("scope.showFileTab", $scope.showFileTab);
+	};
+
+
 	// Opens debugger window
 	var nwgui = nwguiFactory;
 	nwgui.Window.get().showDevTools();
@@ -98,6 +107,8 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
 	$scope.aceLoaded = function(_editor) {
     // Options
     $scope.editor = _editor;
+    _editor.setTheme("ace/theme/solarized_light");
+ //   _editor.setMode("ace/mode/javascript"); // Will need to let user toggle this or sense file ext later
     _editor.setReadOnly(true);
     _editor.setValue($scope.currentFrame);
   	};
