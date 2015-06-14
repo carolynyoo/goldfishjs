@@ -5,10 +5,12 @@ app.directive('scrubber', function($rootScope) {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/ui-routes/scrubber/scrubber.html',
-		link: function (scope) {
+		link: function (scope, element, attr) {
 			scope.greeting = "the scrubber has loaded";
 
 			console.log("here's the greeting: ", scope.greeting);
+
+			
 		}
 	};
 });
