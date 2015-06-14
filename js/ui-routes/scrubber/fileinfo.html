@@ -1,0 +1,22 @@
+<div class="panel:active" ng-class="{'active': showFileTab}">
+	<!-- need to fix some bug with active show when click tab -->
+	<!-- for now forcing the active state -->
+    <div class="content">
+        <p>
+            filename: {{fileName}}
+        </p>
+        <p>
+            branchname: {{branchName}}
+        </p>
+        <p>
+            last commit: {{lastCommit}}
+        </p>
+        <p ng-filter>
+            committed at: {{lastCommitTime | datetime}}
+        </p>
+        <p>
+            frame id: {{currentFrameID}}
+        </p>
+    </div>
+</div>
+<a class="trigger" ng-click="toggleActive()">File Info</a>

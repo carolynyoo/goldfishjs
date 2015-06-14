@@ -1,13 +1,21 @@
 <div>
 	<h3>Scrubber</h3>
-	<label for=weight>Weight</label>
-	<input type=range id="weight" min=0 value=20 max=100 step=2>
+	
+	<label for=KeyframeScrubber>Adjust Playhead</label>
+	<input type=range id="KeyframeScrubber" min=0 value=20 max=$scope.framesArray.length step=1 ng-model="currentFrameID" ng-change="advanceFrame(currentFrameID, currentFrame)">
+	<output for=KeyframeScrubber id=playhead>{{currentFrameID}}</output>
+
+
 	<h3>Click to Advance Frame</h3>
 	    <button type="button" id="advance" class="btn btn-danger" ng-click="advanceFrame(currentFrameID, currentFrame)">Next Frame</button>
 
 	    <button type="button" id="advance" class="btn btn-danger" ng-click="backTenFrames(currentFrameID)">Back 10 Frames</button>
 
+	    <fileinfo></fileinfo>
+
 	    <!-- refactor into ng-repeat later -->
+<!-- 	    <div class="panel">
+	    <div class="content">
 	    <p>
 	        filename: {{fileName}}
 	    </p>
@@ -23,6 +31,10 @@
 	    <p>
 	       frame id: {{currentFrameID}}
 	    </p>
+	    </div>
+	    </div>
+	    <a class="trigger" href="#">File Info</a> -->
+
 	    <HR>
 	    <div class="AddedChange">
 	    <pre>
