@@ -17,6 +17,13 @@ span.md-flex {
 	color: white;
 }
 
+/* Ace Editor */
+.ace_editor { 
+	height: 200px; 
+}
+
+/* Diff Styling */
+
 .AddedChange {
 	color: green;
 	font-weight: bold;
