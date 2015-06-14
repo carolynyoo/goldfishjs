@@ -92,22 +92,23 @@ app.factory('GitDiffFactory', function(){
 	}
 });
 
-app.factory('KeyframeFactory', function () {
+app.factory('KeyframeFactory', function (CommLinkFactory) {
+	var getAllKeyframes = function() {
+		return Keyframe.find({}).sort({createdAt:1}).exec()
+		    .then(function(keyframes) {
+		      console.log("Fetched all keyframes succesfully");
+		      console.log("keyframes:", keyframes);
+		      return keyframes; 
+		    })
+		    .fail(function(err) {
+		      console.log("Error retrieving keyframes: ", err);
+			});
+		};
+
 	return {
-		getAllKeyframes: function() {
-  		return Keyframe.find({}).sort({createdAt:1}).exec()
-  		    .then(function(keyframes) {
-  		      console.log("Fetched all keyframes succesfully");
-  		      console.log("keyframes:", keyframes);
-  		      return keyframes; 
-  		    })
-  		    .fail(function(err) {
-  		      console.log("Error retrieving keyframes: ", err);
-  		    })
-      }
-    }
-  }
-);
+		getAllKeyframes: getAllKeyframes
+    };
+});
 
 // Filter to convert datetime to human-readable
 app.filter('datetime', function($filter)

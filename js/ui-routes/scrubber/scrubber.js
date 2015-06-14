@@ -5,11 +5,25 @@ app.directive('scrubber', function($rootScope) {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/ui-routes/scrubber/scrubber.html',
-		link: function (scope, element, attr) {
+		link: function (scope, element, attr, CommLinkFactory, KeyframeFactory) {
 			scope.greeting = "the scrubber has loaded";
-
 			console.log("here's the greeting: ", scope.greeting);
 
+			scope.keyframes = KeyframeFactory.getAllKeyframes();
+
+			var onKeyframeUpdateHandler = function() {
+	            scope.keyframes = KeyframeFactory.getAllKeyframes();
+	        };
+
+	        CommLinkFactory.onDataUpdated(scope, onKeyframeUpdateHandler);
+
+	        scope.onEditData = function (keyframe) {
+	        	CommLinkFactory.editData(keyframe);
+	        };
+
+	        scope.onDelete = function (keyframe) {
+	        	KeyframeFactory.deleteKeyframe(keyframe);
+	        };
 			
 		}
 	};
