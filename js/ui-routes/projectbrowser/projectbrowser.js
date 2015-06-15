@@ -15,6 +15,7 @@ app.directive('projectbrowser', function($rootScope) {
 
 			$scope.sendFileSelected = function () {
 				console.log("Directive: file selected button clicked: ");
+				CommLinkFactory.editData(dummyFile);
 			};
 		}
 	};

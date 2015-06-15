@@ -25,6 +25,14 @@ app.directive('scrubber', function() {
 	        	KeyframeFactory.deleteKeyframe(keyframe);
 	        };
 			
+	        // CommLink Test
+
+	        var onDataUpdatedHandler = function (file) {
+	        	console.log("Pinged from the file browser!", file);
+	        };
+
+	        CommLinkFactory.onEditData($scope, onDataUpdatedHandler);
+
 		}
 	};
 });
