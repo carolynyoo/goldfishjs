@@ -105,9 +105,20 @@ app.factory('KeyframeFactory', function (CommLinkFactory) {
 			});
 		};
 
+	var updateKeyframe = function () {
+		// placeholder for future use
+	};
+
+	var deleteKeyframe = function () {
+		// placeholder for future use
+	};
+
 	return {
-		getAllKeyframes: getAllKeyframes
+		getAllKeyframes: getAllKeyframes,
+		updateKeyframe: updateKeyframe,
+		deleteKeyframe: deleteKeyframe
     };
+    
 });
 
 // Filter to convert datetime to human-readable
