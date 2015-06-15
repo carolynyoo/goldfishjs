@@ -5,10 +5,17 @@ app.directive('projectbrowser', function($rootScope) {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/ui-routes/projectbrowser/projectbrowser.html',
-		link: function (scope) {
-			scope.greeting = "the file browser has loaded";
+		controller: function ($scope, CommLinkFactory) {
+			$scope.greeting = "the file browser has loaded";
+			console.log("here's the greeting: ", $scope.greeting);
 
-			console.log("here's the greeting: ", scope.greeting);
+			var dummyFile = {
+				filename: "Users/omri/foobar.js"
+			};
+
+			$scope.sendFileSelected = function () {
+				console.log("Directive: file selected button clicked: ");
+			};
 		}
 	};
 });

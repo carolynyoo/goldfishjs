@@ -4,24 +4,24 @@ app.factory('CommLinkFactory', function ($rootScope) {
         var editDataEvent = 'edit data';
         var updateDataEvent = 'update data';
 
-        // publish edit data notification
+        // PUBLISH edit data notification
         var editData = function (item) {
             $rootScope.$broadcast(editDataEvent, {item: item});
         };
 
-        //subscribe to edit data notification
+        // SUBSCRIBE to edit data notification
         var onEditData = function($scope, handler) {
             $scope.$on(editDataEvent, function(event, args) {
                handler(args.item);
             });
         };
 
-        // publish data changed notification
+        // PUBLISH data changed notification
         var dataUpdated = function () {
             $rootScope.$broadcast(updateDataEvent);
         };
 
-        // subscribe to data changed notification
+        // SUBSCRIBE to data changed notification
         var onDataUpdated = function ($scope, handler) {
             $scope.$on(updateDataEvent, function (event) {
                 handler();
