@@ -70,6 +70,7 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
 	    else{
 	    $scope.currentFrame = $scope.framesArray[frameID+1].text_state;
 	    $scope.editor.setValue($scope.currentFrame); // update editor
+	    $scope.editor.navigateFileStart(); // return to top of file
 	    $scope.branchName = $scope.framesArray[frameID+1].branch_name;
 	    $scope.fileName = $scope.framesArray[frameID+1].filename;
 	    $scope.lastCommit = $scope.framesArray[frameID+1].last_commit;
@@ -111,6 +112,7 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
  //   _editor.setMode("ace/mode/javascript"); // Will need to let user toggle this or sense file ext later
     _editor.setReadOnly(true);
     _editor.setValue($scope.currentFrame);
+    _editor.navigateFileStart();
   	};
 
  	$scope.aceChanged = function(e) {

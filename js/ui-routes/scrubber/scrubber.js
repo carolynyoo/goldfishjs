@@ -1,7 +1,7 @@
 /*jslint node: true */
 'use strict';
 
-app.directive('scrubber', function($rootScope) {
+app.directive('scrubber', function() {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/ui-routes/scrubber/scrubber.html',

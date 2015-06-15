@@ -20,9 +20,6 @@ app.config(function ($urlRouterProvider, $locationProvider) {
     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
     // $locationProvider.html5Mode(true);
     // If we go to a URL that ui-router doesn't have registered, go to the "/" url.
-    // $urlRouterProvider.when('/', '/main/projectbrowser/scrubber/viewer');
-    // $urlRouterProvider.when('/projectbrowser', '/main/projectbrowser/scrubber/viewer');
-    // $urlRouterProvider.when('/projectbrowser/scrubber', '/main/projectbrowser/scrubber/viewer');
     $urlRouterProvider.otherwise('/');
 });
 
@@ -105,8 +102,10 @@ app.factory('KeyframeFactory', function (CommLinkFactory) {
 			});
 		};
 
-	var updateKeyframe = function () {
+	var insertKeyframe = function () {
 		// placeholder for future use
+		// an example of when we might use this:
+		// User edits text in our application
 	};
 
 	var deleteKeyframe = function () {
@@ -115,10 +114,10 @@ app.factory('KeyframeFactory', function (CommLinkFactory) {
 
 	return {
 		getAllKeyframes: getAllKeyframes,
-		updateKeyframe: updateKeyframe,
+		insertKeyframe: insertKeyframe,
 		deleteKeyframe: deleteKeyframe
     };
-    
+
 });
 
 // Filter to convert datetime to human-readable
