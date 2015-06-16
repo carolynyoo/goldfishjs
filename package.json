@@ -9,7 +9,9 @@
   },
   "window": {
     "frame": true,
-    "toolbar": true
+    "toolbar": true,
+    "width": 1000,
+    "height": 800
   },
   "repository": {
     "type": "git",

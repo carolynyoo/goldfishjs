@@ -19,6 +19,17 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
 
 	$scope.diffsArray = "nothing";
 
+	$scope.editor = "nothing";
+
+
+	$scope.showFileTab = false;
+	$scope.toggleActive = function() {
+	console.log("scope.showFileTab", $scope.showFileTab);
+	console.log("NG CLICK");
+    $scope.showFileTab = $scope.showFileTab === false ? true: false;
+    console.log("scope.showFileTab", $scope.showFileTab);
+	};
+
 
 	// Opens debugger window
 	var nwgui = nwguiFactory;
@@ -58,6 +69,8 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
 	    }
 	    else{
 	    $scope.currentFrame = $scope.framesArray[frameID+1].text_state;
+	    $scope.editor.setValue($scope.currentFrame); // update editor
+	    $scope.editor.navigateFileStart(); // return to top of file
 	    $scope.branchName = $scope.framesArray[frameID+1].branch_name;
 	    $scope.fileName = $scope.framesArray[frameID+1].filename;
 	    $scope.lastCommit = $scope.framesArray[frameID+1].last_commit;
@@ -88,6 +101,25 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
 
 	$scope.playFrame = "empty";
 	// KeyframeFactory.playKeyframes();
+
+
+	// Ace Editor Scope Variables
+	
+	$scope.aceLoaded = function(_editor) {
+    // Options
+    $scope.editor = _editor;
+    // _editor.setTheme("ace/theme/solarized_light");
+    _editor.setTheme("../../../bower_components/ace-builds/src-min-noconflict/theme-solarized_light.js");
+ //   _editor.setMode("ace/mode/javascript"); // Will need to let user toggle this or sense file ext later
+    _editor.setReadOnly(true);
+    _editor.setValue($scope.currentFrame);
+    _editor.navigateFileStart();
+  	};
+
+ 	$scope.aceChanged = function(e) {
+    //
+  	};
+
 
 
 	window.setTimeout(function(){
