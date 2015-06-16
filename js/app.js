@@ -20,9 +20,6 @@ app.config(function ($urlRouterProvider, $locationProvider) {
     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
     // $locationProvider.html5Mode(true);
     // If we go to a URL that ui-router doesn't have registered, go to the "/" url.
-    // $urlRouterProvider.when('/', '/main/projectbrowser/scrubber/viewer');
-    // $urlRouterProvider.when('/projectbrowser', '/main/projectbrowser/scrubber/viewer');
-    // $urlRouterProvider.when('/projectbrowser/scrubber', '/main/projectbrowser/scrubber/viewer');
     $urlRouterProvider.otherwise('/');
 });
 
@@ -92,22 +89,36 @@ app.factory('GitDiffFactory', function(){
 	}
 });
 
-app.factory('KeyframeFactory', function () {
+app.factory('KeyframeFactory', function (CommLinkFactory) {
+	var getAllKeyframes = function() {
+		return Keyframe.find({}).sort({createdAt:1}).exec()
+		    .then(function(keyframes) {
+		      console.log("Fetched all keyframes succesfully");
+		      console.log("keyframes:", keyframes);
+		      return keyframes; 
+		    })
+		    .fail(function(err) {
+		      console.log("Error retrieving keyframes: ", err);
+			});
+		};
+
+	var insertKeyframe = function () {
+		// placeholder for future use
+		// an example of when we might use this:
+		// User edits text in our application
+	};
+
+	var deleteKeyframe = function () {
+		// placeholder for future use
+	};
+
 	return {
-		getAllKeyframes: function() {
-  		return Keyframe.find({}).sort({createdAt:1}).exec()
-  		    .then(function(keyframes) {
-  		      console.log("Fetched all keyframes succesfully");
-  		      console.log("keyframes:", keyframes);
-  		      return keyframes; 
-  		    })
-  		    .fail(function(err) {
-  		      console.log("Error retrieving keyframes: ", err);
-  		    })
-      }
-    }
-  }
-);
+		getAllKeyframes: getAllKeyframes,
+		insertKeyframe: insertKeyframe,
+		deleteKeyframe: deleteKeyframe
+    };
+
+});
 
 // Filter to convert datetime to human-readable
 app.filter('datetime', function($filter)

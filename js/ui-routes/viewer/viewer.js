@@ -1,25 +1,28 @@
 /*jslint node: true */
 'use strict';
 
-app.directive('viewer', function($rootScope) {
+app.directive('viewer', function() {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/ui-routes/viewer/viewer.html',
-		link: function (scope) {
-			scope.greeting = "the viewer has loaded";
+		controller: function ($scope, CommLinkFactory, KeyframeFactory) {
 
-			console.log("here's the greeting: ", scope.greeting);
+			var onScrubberUpdateHandler = function (keyframe) {
+				console.log("Pinged from the scrubber", keyframe);
+			};
+
+			CommLinkFactory.onScrubberUpdate($scope, onScrubberUpdateHandler);
+
 		}
 	};
 });
-
 
 
 // app.config(function ($stateProvider) {
 
 //     $stateProvider.state('main.projectbrowser.scrubber.viewer', {
 //         url: '/viewer',
-//         controller: 'ViewerController', 
+//         controller: 'ViewerController',
 //         templateUrl: 'js/ui-routes/viewer/viewer.html'
 //     });
 
