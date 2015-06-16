@@ -9,10 +9,10 @@ window.ondrop = function(e) {
 	return false; 
 };
 
-var holder = document.getElementById('holder');
-holder.ondragover = function () { this.className = 'hover'; return false; };
-holder.ondragleave = function () { this.className = ''; return false; };
-holder.ondrop = function (e) {
+var dropbox = document.getElementById('dropbox');
+dropbox.ondragover = function () { this.className = 'hover'; return false; };
+dropbox.ondragleave = function () { this.className = ''; return false; };
+dropbox.ondrop = function (e) {
   e.preventDefault();
 
   for (var i = 0; i < e.dataTransfer.files.length; ++i) {
