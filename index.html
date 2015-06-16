@@ -8,17 +8,34 @@
 	    <link rel="stylesheet" href="./bower_components/angular-aria/angular-aria.js">
 	    <link rel="stylesheet" href="./bower_components/angular-animate/angular-animate.js">
 	    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
-        <script type="text/javascript" src="./bower_components/ace-builds/src-min-noconflict/ace.js"></script>
-        <script type="text/javascript" src="./bower_components/ace-builds/src-min-noconflict/theme-solarized-light.js"></script>
-        <script type="text/javascript" src="./bower_components/angular-ui-ace/ui-ace.js"></script>
 	    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.min.css">
 	    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.js">
 	    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	    <link rel="import" href="/bower_components/core-icons/core-icons.html">
 		<link rel="stylesheet" type="text/css" href="./assets/style.css">
 
+	    
+	</head>
+	<body layout = "column" ng-app='gitplayback' style="-webkit-app-region: drag">
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+				<span class="md-flex">Playback</span>
+				<md-button class="md-icon-button" aria-label="More">
+					<core-icon icon="expand-more"></core-icon>
+				</md-button>
+			</div>
+		<!-- 	<md-button class="md-icon-button" aria-label="More">
+			  <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
+			</md-button> -->
+		</md-toolbar>
+		<div ui-view/>
+
+
 	    <script type="text/javascript" src="./node_modules/angular/angular.js"></script>
 	    <script type="text/javascript" src="./node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+	    <script type="text/javascript" src="./bower_components/ace-builds/src-min-noconflict/ace.js"></script>
+	    <script type="text/javascript" src="./bower_components/ace-builds/src-min-noconflict/theme-solarized-light.js"></script>
+	    <script type="text/javascript" src="./bower_components/angular-ui-ace/ui-ace.js"></script>
 	    <script type="text/javascript" src="./js/app.js"></script>
     	<script type="text/javascript" src="./js/diff_match_patch_uncompressed.js"></script>
 	    <script type="text/javascript" src="./js/ui-routes/main/main.js"></script>
@@ -44,20 +61,6 @@
 
 		    // First save to db after restructure - test if wrote to db  
 	    </script>
-	</head>
-	<body layout = "column" ng-app='gitplayback' style="-webkit-app-region: drag">
-		<md-toolbar>
-			<div class="md-toolbar-tools">
-				<span class="md-flex">Playback</span>
-				<md-button class="md-icon-button" aria-label="More">
-					<core-icon icon="expand-more"></core-icon>
-				</md-button>
-			</div>
-		<!-- 	<md-button class="md-icon-button" aria-label="More">
-			  <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
-			</md-button> -->
-		</md-toolbar>
-		<div ui-view/>
 	</body>
 </html>
 
