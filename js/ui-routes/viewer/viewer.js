@@ -11,7 +11,7 @@ app.directive('viewer', function() {
 				console.log("Pinged from the scrubber", keyframe);
 			};
 
-			CommLinkFactory.onEditData($scope, onScrubberUpdateHandler);
+			CommLinkFactory.onScrubberUpdate($scope, onScrubberUpdateHandler);
 
 		}
 	};

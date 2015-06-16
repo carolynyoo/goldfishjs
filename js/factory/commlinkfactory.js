@@ -1,9 +1,10 @@
 app.factory('CommLinkFactory', function ($rootScope) {
         
-    // private notification messages
+    // private generic notification messages
     var editDataEvent = 'edit data';
     var updateDataEvent = 'update data';
 
+    // private targeted notification messages
     var browerUpdateEvent = 'browser updated';
     var scrubberUpdateEvent = 'scrubber updated';
     var viewerUpdateEvent = 'viewer updated';
