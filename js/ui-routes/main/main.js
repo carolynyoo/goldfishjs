@@ -108,8 +108,8 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
 	$scope.aceLoaded = function(_editor) {
     // Options
     $scope.editor = _editor;
-    // _editor.setTheme("ace/theme/solarized_light");
-    _editor.setTheme("../../../bower_components/ace-builds/src-min-noconflict/theme-solarized_light.js");
+    _editor.setTheme("ace/theme/solarized_light");
+    // _editor.setTheme("../../../bower_components/ace-builds/src-min-noconflict/theme-solarized_light.js");
  //   _editor.setMode("ace/mode/javascript"); // Will need to let user toggle this or sense file ext later
     _editor.setReadOnly(true);
     _editor.setValue($scope.currentFrame);
