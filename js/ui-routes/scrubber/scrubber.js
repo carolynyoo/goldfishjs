@@ -11,6 +11,7 @@ app.directive('scrubber', function() {
 
 			$scope.keyframes = KeyframeFactory.getAllKeyframes();
 			$scope.dummyKeyframe = {
+				source: "scrubber",
 				filename: "User/pete/keyframe",
 				text_state: "(function () {})()",
 				event_type: "changed",

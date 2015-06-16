@@ -10,6 +10,7 @@ app.directive('projectbrowser', function($rootScope) {
 			console.log("here's the greeting: ", $scope.greeting);
 
 			var dummyFile = {
+				source: "projectbrowser",
 				filename: "Users/omri/foobar.js"
 			};
 
