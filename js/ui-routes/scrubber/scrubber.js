@@ -11,6 +11,7 @@ app.directive('scrubber', function() {
 
 			$scope.keyframes = KeyframeFactory.getAllKeyframes();
 			$scope.dummyKeyframe = {
+				source: "scrubber",
 				filename: "User/pete/keyframe",
 				text_state: "(function () {})()",
 				event_type: "changed",
@@ -31,7 +32,7 @@ app.directive('scrubber', function() {
 	        // On scrubber click, will broadcast the selected keyframe via commLink to other directives that are listening.
 			$scope.broadcastKeyframeSelected = function () {
 				console.log("Directive: scrubber keyframe select button clicked: ");
-				CommLinkFactory.editData($scope.dummyKeyframe);
+				CommLinkFactory.updateScrubber($scope.dummyKeyframe);
 			};
 			
 	        // Listener registers when the file browser is updated.
@@ -39,7 +40,7 @@ app.directive('scrubber', function() {
 	        	console.log("Pinged from the file browser:", file);
 	        };
 
-	        CommLinkFactory.onEditData($scope, onFilebrowserUpdateHandler);
+	        CommLinkFactory.onBrowserUpdate($scope, onFilebrowserUpdateHandler);
 
 		}
 	};

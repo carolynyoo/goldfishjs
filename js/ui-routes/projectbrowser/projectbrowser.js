@@ -10,13 +10,14 @@ app.directive('projectbrowser', function($rootScope) {
 			console.log("here's the greeting: ", $scope.greeting);
 
 			var dummyFile = {
+				source: "projectbrowser",
 				filename: "Users/omri/foobar.js"
 			};
 
 			// On click, will broadcast via commLink to other directives that are listening.
-			$scope.sendFileSelected = function () {
+			$scope.selectFile = function () {
 				console.log("Directive: file selected button clicked: ");
-				CommLinkFactory.editData(dummyFile);
+				CommLinkFactory.updateBrowser(dummyFile);
 			};
 		}
 	};
