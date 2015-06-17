@@ -10,8 +10,8 @@
   "window": {
     "frame": true,
     "toolbar": true,
-    "width": 1000,
-    "height": 800
+    "width": 900,
+    "height": 555
   },
   "repository": {
     "type": "git",
