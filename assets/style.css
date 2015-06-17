@@ -1,5 +1,5 @@
 .header-bar {
-	height: 25px;
+	min-height: 25px;
 }
 
 .md-icon-button {

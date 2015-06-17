@@ -11,7 +11,11 @@
     "frame": true,
     "toolbar": true,
     "width": 900,
-    "height": 555
+    "height": 555,
+    "min_width": 600,
+    "min_height": 370,
+    "max_width": 1000,
+    "max_height": 618
   },
   "repository": {
     "type": "git",
