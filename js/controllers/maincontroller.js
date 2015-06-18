@@ -8,11 +8,11 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
 	$scope.showFileTab = false;
 
 	$scope.toggleActive = function() {
-		console.log("scope.showFileTab", $scope.showFileTab);
-		console.log("NG CLICK");
+		// console.log("scope.showFileTab", $scope.showFileTab);
+		// console.log("NG CLICK");
 	    
 	    $scope.showFileTab = $scope.showFileTab === false ? true: false;
-	    console.log("scope.showFileTab", $scope.showFileTab);
+	    // console.log("scope.showFileTab", $scope.showFileTab);
 	};
 
 	$scope.example = function () {
@@ -94,14 +94,15 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
 	// Ace Editor Scope Variables
 	
 	$scope.aceLoaded = function(_editor) {
-    // Options
-    $scope.editor = _editor;
-    _editor.setTheme("ace/theme/solarized_light");
-    // _editor.setTheme("../../../bower_components/ace-builds/src-min-noconflict/theme-solarized_light.js");
- //   _editor.setMode("ace/mode/javascript"); // Will need to let user toggle this or sense file ext later
-    _editor.setReadOnly(true);
-    _editor.setValue($scope.currentFrame);
-    _editor.navigateFileStart();
+	    // Options
+	    $scope.editor = _editor;
+	    $scope.editor.setTheme("ace/theme/solarized_light");
+	    // $scope.editor.setTheme("../../../bower_components/ace-builds/src-min-noconflict/theme-solarized_light.js");
+	 //   $scope.editor.setMode("ace/mode/javascript"); // Will need to let user toggle this or sense file ext later
+	    $scope.editor.setReadOnly(true);
+	    $scope.editor.setValue($scope.currentFrame);
+	    $scope.editor.blockScrolling = Infinity;
+	    $scope.editor.navigateFileStart();
   	};
 
  	$scope.aceChanged = function(e) {

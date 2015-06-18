@@ -11,7 +11,6 @@ app.directive('projectbrowser', function($rootScope) {
 			// console.log("here's the greeting: ", $scope.greeting);
 			
 			var filename = path.join(process.env.PWD, "index.html");
-			console.log("file browser filename: ", filename);
 
 			var dummyFile = {
 				source: "projectbrowser",
