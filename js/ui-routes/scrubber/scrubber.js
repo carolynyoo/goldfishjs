@@ -6,13 +6,19 @@ app.directive('scrubber', function() {
 		restrict: 'E',
 		templateUrl: 'js/ui-routes/scrubber/scrubber.html',
 		scope: {
-			advanceFrame: '='
+			advance: '&'
 		},
 		controller: function ($scope, CommLinkFactory, KeyframeFactory) {
 			$scope.greeting = "the scrubber has loaded";
 			console.log("here's the greeting: ", $scope.greeting);
 
-			$scope.keyframes = KeyframeFactory.getAllKeyframes();
+			$scope.keyframes = KeyframeFactory.getAllKeyframes()
+								.then(function(keyframes) {
+									console.log("keyframes in the scrubber", keyframes);
+								}).catch(function (err) {
+									console.log("err in the scrubber", err);
+								});
+
 			$scope.dummyKeyframe = {
 				source: "scrubber",
 				filename: "User/pete/keyframe",
@@ -41,6 +47,12 @@ app.directive('scrubber', function() {
 	        // Listener registers when the file browser is updated.
 	        var onFilebrowserUpdateHandler = function (file) {
 	        	console.log("Pinged from the file browser:", file);
+	        	$scope.keyframes = KeyframeFactory.getFileKeyframes(file.filename)
+	        						.then(function(keyframes) {
+	        							console.log("Scrubber: Single File Keyframes: ", keyframes);
+	        						}).catch(function (err) {
+	        							console.log("Scrubber: Single File Keyframe error in retrieval: ", err);
+	        						});
 	        };
 
 	        CommLinkFactory.onBrowserUpdate($scope, onFilebrowserUpdateHandler);

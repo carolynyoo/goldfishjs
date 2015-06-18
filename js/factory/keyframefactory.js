@@ -5,11 +5,16 @@ app.factory('KeyframeFactory', function (CommLinkFactory) {
 		      console.log("Fetched all keyframes succesfully");
 		      console.log("keyframes:", keyframes);
 		      return keyframes; 
-		    })
-		    .fail(function(err) {
-		      console.log("Error retrieving keyframes: ", err);
-			});
+		    });
 		};
+
+	var getFileKeyframes = function (filename) {
+		return Keyframe.find({ filename: filename }).sort({createdAt:1}).exec()
+			.then(function(fileKeyframes) {
+				console.log("Keyframes from the single file: ", fileKeyframes);
+				return fileKeyframes;
+			});
+	};
 
 	var insertKeyframe = function () {
 		// placeholder for future use
@@ -23,6 +28,7 @@ app.factory('KeyframeFactory', function (CommLinkFactory) {
 
 	return {
 		getAllKeyframes: getAllKeyframes,
+		getFileKeyframes: getFileKeyframes,
 		insertKeyframe: insertKeyframe,
 		deleteKeyframe: deleteKeyframe
     };
