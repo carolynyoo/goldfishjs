@@ -1,6 +1,7 @@
 // var index = require('./db/models/index.js');
 var fs = require('fs');
 var path = require('path');
+
 // var _ = require('lodash');
 
 // Database...and Models (Is this still needed?)
@@ -11,7 +12,9 @@ var models = require(dbPath);
 var Keyframe = models.Keyframe;
 
 // Boot up the Angular App
-var app = angular.module('gitplayback', ['ui.router', 'ui.ace']);
+// var app = angular.module('gitplayback', ['ui.router', 'ui.ace']);
+
+var app = angular.module('gitplayback', ['ui.router', 'ui.ace', 'ngAnimate', 'ngAria', 'ngMaterial']);
 app.config(function ($urlRouterProvider, $locationProvider) {
     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
     // $locationProvider.html5Mode(true);

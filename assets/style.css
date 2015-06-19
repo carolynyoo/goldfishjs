@@ -1,5 +1,5 @@
-.md-toolbar {
-	height: 25px;
+.header-bar {
+	min-height: 25px;
 }
 
 .md-icon-button {
@@ -49,6 +49,10 @@ span.md-flex {
 	color: purple;
 	font-weight: bold;
 	font-size: large;
+}
+
+.keyframe-scrubber {
+	width: 100%;
 }
 
 /* Info Panel */
