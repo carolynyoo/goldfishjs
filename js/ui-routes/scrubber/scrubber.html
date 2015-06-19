@@ -7,76 +7,70 @@
 	
 	<md-content style="margin: 16px; padding:16px">
 		<div layout>
-		  <md-input-container flex>
-		                <label>Enter text here</label>
-		                <input ng-model="quiz.answer">
-		              </md-input-container>
 	      <div flex="10" layout layout-align="center center">
-	        <span class="md-body-1">keyframe slider</span>
+	        <span class="md-body-1">file history</span>
 	      </div>
 	      <md-slider flex class="md-primary" md-discrete ng-model="keyframe" step="1" min="1" max="100" aria-label="keyframe">
 	      </md-slider>
 		</div>
 	</md-content>
 
-	<h3>Click to Advance Frame</h3>
-	    <button type="button" id="advance" class="btn btn-danger" ng-click="advanceFrame(currentFrameID, currentFrame)">Next Frame</button>
+    <button type="button" id="advance" class="btn btn-danger" ng-click="advanceFrame(currentFrameID, currentFrame)">Next Frame</button>
+    <button type="button" id="advance" class="btn btn-danger" ng-click="backTenFrames(currentFrameID)">Back 10 Frames</button>
 
-	    <button type="button" id="advance" class="btn btn-danger" ng-click="backTenFrames(currentFrameID)">Back 10 Frames</button>
+    <fileinfo></fileinfo>
 
-	    <fileinfo></fileinfo>
-
-	    <!-- refactor into ng-repeat later -->
+    <!-- refactor into ng-repeat later -->
 <!-- 	    <div class="panel">
-	    <div class="content">
-	    <p>
-	        filename: {{fileName}}
-	    </p>
-	    <p>
-	        branchname: {{branchName}}
-	    </p>
-	    <p>
-	        last commit: {{lastCommit}}
-	    </p>
-	    <p ng-filter>
-	        committed at: {{lastCommitTime | datetime}}
-	    </p>
-	    <p>
-	       frame id: {{currentFrameID}}
-	    </p>
-	    </div>
-	    </div>
-	    <a class="trigger" href="#">File Info</a> -->
+    <div class="content">
+    <p>
+        filename: {{fileName}}
+    </p>
+    <p>
+        branchname: {{branchName}}
+    </p>
+    <p>
+        last commit: {{lastCommit}}
+    </p>
+    <p ng-filter>
+        committed at: {{lastCommitTime | datetime}}
+    </p>
+    <p>
+       frame id: {{currentFrameID}}
+    </p>
+    </div>
+    </div>
+    <a class="trigger" href="#">File Info</a> -->
 
-	    <HR>
-	    <div class="AddedChange">
-	    <pre>
-	        {{diffsArray.textAdded}}
-	    </pre>
-	    <HR>
-		</div>
-		<div class="RemovedChange">
-	    <pre>
-	        {{diffsArray.textRemoved}}
-	    </pre>
-	    </div>
-	    <HR>
-		<div class="NoChange">
-	    <pre>
-	        {{diffsArray.textSame}}
-	    </pre>
-	    <HR>
-		</div>
-	    <em>Current Frame</em>
-	    <div ng-show="currentFrameID === 0">
-	    <em>First Frame</em>
-	    <pre>
-	    {{firstFrame}}
-	    </pre>
-	    </div>
-		<pre>
-			{{currentFrame}}
-		</pre>
+    <HR>
+    <div class="AddedChange">
+    <pre>
+        {{diffsArray.textAdded}}
+    </pre>
+    <HR>
+	</div>
+	<div class="RemovedChange">
+    <pre>
+        {{diffsArray.textRemoved}}
+    </pre>
+    </div>
+    <HR>
+	<div class="NoChange">
+    <pre>
+        {{diffsArray.textSame}}
+    </pre>
+    <HR>
+	</div>
+    <em>Current Frame</em>
+    <div ng-show="currentFrameID === 0">
+    <em>First Frame</em>
+    <pre>
+    {{firstFrame}}
+    </pre>
+    </div>
+	<pre>
+		{{currentFrame}}
+	</pre>
 
-		</div>
+	</div>
 </div>
