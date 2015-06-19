@@ -1,9 +1,9 @@
 <div>
 	<h3>Scrubber</h3>
 	
-	<label for=KeyframeScrubber>Adjust Playhead</label>
-	<input type=range id="KeyframeScrubber" min=0 value=20 max=$scope.framesArray.length step=1 ng-model="currentFrameID" ng-change="$parent.advanceFrame(currentFrameID, currentFrame)">
-	<output for=KeyframeScrubber id=playhead>{{currentFrameID}}</output>
+	<!-- <label for=KeyframeScrubber>Adjust Playhead</label>
+	<input type=range id="KeyframeScrubber" min=0 value=20 max=$scope.framesArray.length step=1 ng-model="currentFrameID" ng-change="advanceFrame(currentFrameID, currentFrame)">
+	<output for=KeyframeScrubber id=playhead>{{currentFrameID}}</output> -->
 	<button ng-click="broadcastKeyframeSelected()">Simulate Keyframe Click</button>
 
 	<h3>Click to Advance Frame</h3>
