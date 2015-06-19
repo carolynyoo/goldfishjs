@@ -5,10 +5,8 @@ app.directive('scrubber', function() {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/ui-routes/scrubber/scrubber.html',
-		scope: {
-			advance: '&'
-		},
-		controller: function ($scope, CommLinkFactory, KeyframeFactory) {
+		scope: {},
+		controller: function ($scope, CommLinkFactory, KeyframeFactory, GitDiffFactory) {
 			$scope.greeting = "the scrubber has loaded";
 			console.log("here's the greeting: ", $scope.greeting);
 
@@ -31,6 +29,7 @@ app.directive('scrubber', function() {
 				branch_name: "pubsub",
 				createdAt: new Date()
 			};
+
 
 			var onKeyframeUpdateHandler = function() {
 	            $scope.keyframes = KeyframeFactory.getAllKeyframes();
@@ -56,6 +55,48 @@ app.directive('scrubber', function() {
 	        };
 
 	        CommLinkFactory.onBrowserUpdate($scope, onFilebrowserUpdateHandler);
+			
+			$scope.advanceFrame = function(frameID, currframe){
+
+				$scope.diffsArray = GitDiffFactory.calculateDiff($scope.framesArray[frameID].text_state, $scope.framesArray[frameID+1].text_state);
+
+				console.log("clicked and ran advanceFrame function");
+			    console.log("frameID:", frameID);
+			    console.log("currframe:", currframe);
+			    console.log("framesArrayLength: ",$scope.framesArray.length);
+			    
+			    if (frameID == $scope.framesArray.length - 1){
+			    	console.log("Got to last frame");
+					$scope.currentFrame = "Frame " + frameID + " is the last frame!";
+					$scope.$digest();
+			    }
+
+			    else{
+				    $scope.currentFrame = $scope.framesArray[frameID+1].text_state;
+				    $scope.editor.setValue($scope.currentFrame); // update editor
+				    $scope.editor.navigateFileStart(); // return to top of file
+				    $scope.branchName = $scope.framesArray[frameID+1].branch_name;
+				    $scope.fileName = $scope.framesArray[frameID+1].filename;
+				    $scope.lastCommit = $scope.framesArray[frameID+1].last_commit;
+				    $scope.lastCommitTime = $scope.framesArray[frameID+1].last_commit_time;
+				    $scope.currentFrameID += 1;
+				    console.log("currframe after assigned:", currframe);
+					// $scope.$digest();
+				}
+			};
+
+	        $scope.backTenFrames = function(frameID){
+	        	
+	        	$scope.currentFrameID -= 10;
+	            $scope.currentFrame = $scope.framesArray[frameID].text_state;
+	            $scope.branchName = $scope.framesArray[frameID].branch_name;
+	            $scope.fileName = $scope.framesArray[frameID].filename;
+	            $scope.lastCommit = $scope.framesArray[frameID].last_commit;
+	            $scope.lastCommitTime = $scope.framesArray[frameID].last_commit_time;
+	            
+	        //    $scope.$digest();	
+
+	        };
 
 		}
 	};
