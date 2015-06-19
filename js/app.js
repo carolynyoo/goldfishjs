@@ -1,6 +1,6 @@
 // var index = require('./db/models/index.js');
 var fs = require('fs');
-var app = angular.module('gitplayback', ['ui.router', 'ui.ace']);
+var app = angular.module('gitplayback', ['ui.router', 'ui.ace', 'ngAnimate', 'ngAria', 'ngMaterial']);
 
 var path = require('path');
 var appPath = process.env.PWD;
