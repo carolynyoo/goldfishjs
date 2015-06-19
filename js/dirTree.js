@@ -22,8 +22,10 @@ function dirTree(filename) {
     return info;
 }
 
-if (module.parent == undefined) {
+// if (module.parent == undefined) {
     // node dirTree.js ~/foo/bar
     var util = require('util');
-    console.log(util.inspect(dirTree(process.env.PWD), false, null));
-}
+    var data = util.inspect(dirTree(process.env.PWD), false, null);
+// }
+
+module.exports = data;

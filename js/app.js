@@ -1,6 +1,6 @@
 // var index = require('./db/models/index.js');
 var fs = require('fs');
-var app = angular.module('gitplayback', ['ui.router', 'ui.ace']);
+var app = angular.module('gitplayback', ['angularTreeview', 'ui.router', 'ui.ace']);
 
 var path = require('path');
 var appPath = process.env.PWD;
@@ -130,7 +130,7 @@ app.filter('datetime', function($filter)
   var _date = $filter('date')(new Date(input),
                               'MMM dd yyyy - HH:mm:ss');
  
-  return _date.toUpperCase();
+  return _date;
 
  };
 });
