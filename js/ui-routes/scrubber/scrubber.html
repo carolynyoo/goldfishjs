@@ -25,20 +25,20 @@
     </section> -->
 
     <section layout="row" layout-sm="column" layout-align="center center">
-        <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="fast_rewind">
-           	<ng-md-icon icon="fast_rewind" style="fill: #fff" size="32"></ng-md-icon>
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isFirstFrame" aria-label="skip_previous">
+           	<ng-md-icon icon="skip_previous" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
-        <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="play_reverse">
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isFirstFrame" aria-label="play_reverse">
         	<ng-md-icon icon="keyboard_arrow_left" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
         <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="pause">
         	<ng-md-icon icon="pause" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
-        <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="play_arrow">
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" aria-label="play_arrow">
         	<ng-md-icon icon="play_arrow" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
-        <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="fast_forward">
-        	<ng-md-icon icon="fast_forward" style="fill: #fff" size="32"></ng-md-icon>
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" aria-label="skip_next">
+        	<ng-md-icon icon="skip_next" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
     </section>
 

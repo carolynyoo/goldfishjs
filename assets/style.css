@@ -194,6 +194,11 @@ a.active.trigger {
 	background:#222222 85% 55% no-repeat;
 }
 
+ng-md-icon svg {
+	padding-bottom: 10px;
+	padding-right: 7px;
+}
+
 .buttondemoBasicUsage section {
   background: #f7f7f7;
   border-radius: 3px;
