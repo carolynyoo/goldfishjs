@@ -14,7 +14,8 @@ app.directive('projectbrowser', function($rootScope) {
 
 			var dummyFile = {
 				source: "projectbrowser",
-				filename: filename
+				filename: filename,
+				text_state: "this is the keyframe's text state"
 			};
 
 			// On click, will broadcast via commLink to other directives that are listening.

@@ -7,8 +7,8 @@ app.directive('scrubber', function() {
 		templateUrl: 'js/ui-routes/scrubber/scrubber.html',
 		scope: {},
 		controller: function ($scope, CommLinkFactory, KeyframeFactory, GitDiffFactory) {
-			$scope.greeting = "the scrubber has loaded";
-			console.log("here's the greeting: ", $scope.greeting);
+			// $scope.greeting = "the scrubber has loaded";
+			// console.log("here's the greeting: ", $scope.greeting);
 
 			$scope.keyframes = [];
 			$scope.diffsArray = [];
