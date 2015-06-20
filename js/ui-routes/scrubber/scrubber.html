@@ -18,7 +18,7 @@
         <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isFirstFrame" aria-label="play_reverse">
         	<ng-md-icon icon="keyboard_arrow_left" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
-        <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="play_arrow">
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" aria-label="play_arrow">
         	<ng-md-icon icon="play_arrow" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
         <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" ng-click="nextKeyframe(currentKeyframe)" aria-label="keyboard_arrow_right">
@@ -36,7 +36,7 @@
 	<output for=KeyframeScrubber id=playhead>{{currentFrameID}}</output>
 
 	<button ng-click="broadcastKeyframeSelected()">Simulate Keyframe Click</button>
-
+	<br><br><br>
     <fileinfo></fileinfo>
 
     <!-- refactor into ng-repeat later -->

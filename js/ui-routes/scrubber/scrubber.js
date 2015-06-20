@@ -1,25 +1,22 @@
 /*jslint node: true */
 'use strict';
 
+var _ = require('lodash');
+
 app.directive('scrubber', function() {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/ui-routes/scrubber/scrubber.html',
 		scope: {},
 		controller: function ($scope, CommLinkFactory, KeyframeFactory, GitDiffFactory) {
-			// $scope.greeting = "the scrubber has loaded";
-			// console.log("here's the greeting: ", $scope.greeting);
 
 			$scope.keyframes = [];
 			$scope.diffsArray = [];
-			$scope.currentKeyframe = "";
+			$scope.currentKeyframe = {};
 
-			// $scope.keyframes = KeyframeFactory.getAllKeyframes()
-			// 					.then(function(keyframes) {
-			// 						console.log("keyframes in the scrubber", keyframes);
-			// 					}).catch(function (err) {
-			// 						console.log("err in the scrubber", err);
-			// 					});
+			// Variables used to enable/disable scrubber buttons
+			$scope.isFirstFrame = false;
+			$scope.isLastFrame = false;
 
 			$scope.dummyKeyframe = {
 				source: "scrubber",
@@ -33,7 +30,6 @@ app.directive('scrubber', function() {
 				branch_name: "pubsub",
 				createdAt: new Date()
 			};
-
 
 			var onKeyframeUpdateHandler = function() {
 	            $scope.keyframes = KeyframeFactory.getAllKeyframes();
@@ -50,44 +46,58 @@ app.directive('scrubber', function() {
 	        // Listener registers when the file browser is updated.
 	        var onFilebrowserUpdateHandler = function (file) {
 	        	console.log("Pinged from the file browser:", file);
-	        	$scope.keyframes = KeyframeFactory.getFileKeyframes(file.filename)
-	        						.then(function(keyframes) {
-							        	$scope.currentKeyframe = keyframes[keyframes.length - 1];
-	        						}).catch(function (err) {
-	        							console.log("Scrubber: Single File Keyframe error in retrieval: ", err);
-	        						});
+	        	KeyframeFactory.getFileKeyframes(file.filename)
+					.then(function(keyframes) {
+			        	$scope.currentKeyframe = keyframes[keyframes.length - 1];
+			        	$scope.keyframes = keyframes;
+					}).catch(function (err) {
+						console.log("Scrubber: Single File Keyframe error in retrieval: ", err);
+					});
 	        };
 
 	        CommLinkFactory.onBrowserUpdate($scope, onFilebrowserUpdateHandler);
 
 			
-			$scope.nextKeyframe = function(frameID){
+			$scope.nextKeyframe = function(keyframe){
 
-				$scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[frameID].text_state, $scope.keyframes[frameID+1].text_state);
+				// var keyframeIndex = _.findIndex($scope.keyframes, function(kf) {
+				// 	return kf._id == keyframe._id;
+				// });
 
-				console.log("clicked and ran nextKeyframe function");
-			    console.log("frameID:", frameID);
-			    console.log("currframe:", currframe);
-			    console.log("keyframesLength: ",$scope.keyframes.length);
+				var keyframeIndex = $scope.getKeyframeIndex(keyframe);
+				console.log("The keyframe index is: ", keyframeIndex);
+				console.log("all frames @ nextKeyframe Call are:  ", $scope.keyframes);
+
+
+				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
+
+				console.log("nextKeyframe executed");
+			    console.log("keyframe:", keyframe);
+			    console.log("keyframeIndex:", keyframeIndex);
+			    console.log("$scope.diffsArray : ", $scope.diffsArray);
 			    
-			    if (frameID == $scope.keyframes.length - 1){
-			    	console.log("Got to last frame");
-					$scope.currentKeyframe = "Frame " + frameID + " is the last frame!";
-					$scope.$digest();
+			    if (keyframeIndex === $scope.keyframes.length - 1){
+			    	console.log("@ Last Keyframe");
+					$scope.currentKeyframe = $scope.keyframes[$scope.keyframes.length - 1];
+					$scope.isLastFrame = true;
 			    }
 
-			    else{
-				    $scope.currentKeyframe = $scope.keyframes[frameID+1].text_state;
-				    $scope.editor.setValue($scope.currentKeyframe); // update editor
-				    $scope.editor.navigateFileStart(); // return to top of file
-				    $scope.branchName = $scope.keyframes[frameID+1].branch_name;
-				    $scope.fileName = $scope.keyframes[frameID+1].filename;
-				    $scope.lastCommit = $scope.keyframes[frameID+1].last_commit;
-				    $scope.lastCommitTime = $scope.keyframes[frameID+1].last_commit_time;
-				    $scope.currentKeyframeId += 1;
-				    console.log("currframe after assigned:", currframe);
+			    else {
+				    $scope.currentKeyframe = $scope.keyframes[keyframeIndex+1].text_state;
+				    // $scope.editor.setValue($scope.currentKeyframe); // update editor
+				    // $scope.editor.navigateFileStart(); // return to top of file
+				    // $scope.branchName = $scope.keyframes[keyframeIndex+1].branch_name;
+				    // $scope.fileName = $scope.keyframes[keyframeIndex+1].filename;
+				    // $scope.lastCommit = $scope.keyframes[keyframeIndex+1].last_commit;
+				    // $scope.lastCommitTime = $scope.keyframes[keyframeIndex+1].last_commit_time;
+				    // $scope.currentKeyframe = $scope.keyframes[keyframeIndex+1];
+				    console.log("New Current Keyframe:", $scope.currentKeyframe);
 					// $scope.$digest();
 				}
+			};
+
+			$scope.previousKeyframe = function(keyframe) {
+
 			};
 
 	        $scope.backTenFrames = function(frameID){
@@ -101,6 +111,10 @@ app.directive('scrubber', function() {
 	            
 	        //    $scope.$digest();	
 
+	        };
+
+	        $scope.getKeyframeIndex = function (keyframe) {
+	        	return _.findIndex($scope.keyframes, {_id: keyframe._id});
 	        };
 
 		}
