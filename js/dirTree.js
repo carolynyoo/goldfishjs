@@ -1,11 +1,23 @@
 var fs = require('fs'),
-    path = require('path')
+    path = require('path'),
+    gitignoreParse = require('gitignore-globs'),
+    minimatch = require('minimatch'); 
 
 function dirTree(filename) {
+
+    var gitIgnore = path.join(process.env.PWD, ".gitignore"); 
+    var globsToIgnore = gitignoreParse(gitIgnore);
+    globsToIgnore.push('**/.git/**');
+
+    for (var i=0; i<globsToIgnore.length; i++) {
+      if (minimatch(filename, globsToIgnore[i])) {
+        return;
+      }
+    }
     var stats = fs.lstatSync(filename),
         info = {
-            path: filename,
-            name: path.basename(filename)
+            "path": filename,
+            "name": path.basename(filename)
         };
 
     if (stats.isDirectory()) {
@@ -22,10 +34,6 @@ function dirTree(filename) {
     return info;
 }
 
-// if (module.parent == undefined) {
-    // node dirTree.js ~/foo/bar
-    var util = require('util');
-    var data = util.inspect(dirTree(process.env.PWD), false, null);
-// }
+var data = dirTree(process.env.PWD);
 
 module.exports = data;

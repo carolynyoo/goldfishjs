@@ -6,17 +6,12 @@ app.directive('projectbrowser', function($rootScope) {
 		restrict: 'E',
 		templateUrl: 'js/ui-routes/projectbrowser/projectbrowser.html',
 		controller: function ($scope, CommLinkFactory) {
-			var fileTree = require(path.join(process.env.PWD, "js", "dirTree.js"));
-			// var arr = [];
-			// arr.push(JSON.parse(fileTree)); 
-			$scope.fileTree = fileTree;
-			// $scope.fileTree = arr; 
+			$scope.fileTree = require(path.join(process.env.PWD, "js", "dirTree.js"));
 
 			// On click, will broadcast via commLink to other directives that are listening.
 			$scope.selectFile = function () {
 				console.log("Directive: file selected button clicked: ");
-				console.log($scope.fileTree); 
-				// CommLinkFactory.updateBrowser($scope.fileTree);
+				CommLinkFactory.updateBrowser($scope.fileTree);
 			};
 		}
 	};
