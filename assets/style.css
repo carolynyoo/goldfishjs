@@ -194,6 +194,14 @@ a.active.trigger {
 	background:#222222 85% 55% no-repeat;
 }
 
+projectbrowser {
+	height: 300px;
+}
+
+viewer {
+	height: 300px;
+}
+
 ng-md-icon svg {
 	padding-bottom: 10px;
 	padding-right: 7px;
