@@ -19,7 +19,7 @@ span.md-flex {
 
 /* Ace Editor */
 .ace_editor { 
-	height: 200px; 
+	height: 66vh !important; 
 }
 
 /* Truncate file from overflowing */
@@ -194,13 +194,13 @@ a.active.trigger {
 	background:#222222 85% 55% no-repeat;
 }
 
-projectbrowser {
-	height: 300px;
+#first-row {
+	height: 66vh;
 }
 
-viewer {
+/*viewer {
 	height: 300px;
-}
+}*/
 
 ng-md-icon svg {
 	padding-bottom: 10px;
