@@ -1,0 +1,6 @@
+>Clean up the file
+>Not enough error handling... look in the index.js file for db and watching.... You're ignoring those!
+>Promisfy db
+>See if nedb has a way to get the next record id a la .save() from Mongo...
+>abstract out the CLI and keyframe building. Promisfy them 
+>most likely want isolated scope on the directives...

@@ -1,5 +1,6 @@
 /*jslint node: true */
 'use strict';
+var path = require('path');
 
 app.directive('projectbrowser', function($rootScope) {
 	return {

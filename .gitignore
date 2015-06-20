@@ -1,5 +1,5 @@
-*.DS_Store
-node_modules/
+**/.DS_Store
+**/node_modules/
 bower_components/
 nedbstorage.db
 nedbstorage.db~
@@ -11,3 +11,4 @@ db/dumpdbtocsv.js
 *.swp
 *~
 *.swo
+npm-debug.log

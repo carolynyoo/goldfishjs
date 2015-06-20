@@ -16,6 +16,8 @@
   "dependencies": {
     "angular-material": "~0.9.7",
     "angular-ui-router": "~0.2.15",
-    "angular-ui-ace": "~0.2.3"
+    "core-icons": "Polymer/core-icons#~0.5.6",
+    "angular-ui-ace": "~0.2.3",
+    "angular-material-icons": "~0.5.0"
   }
 }
