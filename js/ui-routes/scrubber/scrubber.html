@@ -1,11 +1,6 @@
 <div>
-	<label for=KeyframeScrubber>Adjust Playhead</label>
-	<input type=range id="KeyframeScrubber" min=0 value=20 max=$scope.framesArray.length step=1 ng-model="currentFrameID" ng-change="$parent.advanceFrame(currentFrameID, currentFrame)">
-	<output for=KeyframeScrubber id=playhead>{{currentFrameID}}</output>
-
-	<button ng-click="broadcastKeyframeSelected()">Simulate Keyframe Click</button>
 	
-	<md-content style="margin: 16px; padding:16px">
+	<md-content style="padding:16px">
 		<div layout>
 	      <div flex="10" layout layout-align="center center">
 	        <span class="md-body-1">file history</span>
@@ -15,8 +10,35 @@
 		</div>
 	</md-content>
 
+	<!-- Scrubber Navigation -->
+    <section layout="row" layout-sm="column" layout-align="center center">
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isFirstFrame" ng-click="backTenFrames(currentFrameID)" aria-label="skip_previous">
+           	<ng-md-icon icon="skip_previous" style="fill: #fff" size="32"></ng-md-icon>
+        </md-button>
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isFirstFrame" aria-label="play_reverse">
+        	<ng-md-icon icon="keyboard_arrow_left" style="fill: #fff" size="32"></ng-md-icon>
+        </md-button>
+        <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="play_arrow">
+        	<ng-md-icon icon="play_arrow" style="fill: #fff" size="32"></ng-md-icon>
+        </md-button>
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" ng-click="advanceFrame(currentFrameID, currentFrame)" aria-label="keyboard_arrow_right">
+        	<ng-md-icon icon="keyboard_arrow_right" style="fill: #fff" size="32"></ng-md-icon>
+        </md-button>
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" aria-label="skip_next">
+        	<ng-md-icon icon="skip_next" style="fill: #fff" size="32"></ng-md-icon>
+        </md-button>
+    </section>
+
+    <br><br>
+
+	<label for=KeyframeScrubber>Adjust Playhead</label>
+	<input type=range id="KeyframeScrubber" min=0 value=20 max=$scope.framesArray.length step=1 ng-model="currentFrameID" ng-change="$parent.advanceFrame(currentFrameID, currentFrame)">
+	<output for=KeyframeScrubber id=playhead>{{currentFrameID}}</output>
+
+	<button ng-click="broadcastKeyframeSelected()">Simulate Keyframe Click</button>
+<!-- 
     <button type="button" id="advance" class="btn btn-danger" ng-click="advanceFrame(currentFrameID, currentFrame)">Next Frame</button>
-    <button type="button" id="advance" class="btn btn-danger" ng-click="backTenFrames(currentFrameID)">Back 10 Frames</button>
+    <button type="button" id="advance" class="btn btn-danger" ng-click="backTenFrames(currentFrameID)">Back 10 Frames</button> -->
 
     <fileinfo></fileinfo>
 

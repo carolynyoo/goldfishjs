@@ -19,7 +19,7 @@ span.md-flex {
 
 /* Ace Editor */
 .ace_editor { 
-	height: 200px; 
+	height: 66vh !important; 
 }
 
 /* Truncate file from overflowing */
@@ -193,3 +193,42 @@ a.trigger:hover{
 a.active.trigger {
 	background:#222222 85% 55% no-repeat;
 }
+
+#first-row {
+	height: 66vh;
+}
+
+/*viewer {
+	height: 300px;
+}*/
+
+ng-md-icon svg {
+	padding-bottom: 10px;
+	padding-right: 7px;
+}
+
+.buttondemoBasicUsage section {
+  background: #f7f7f7;
+  border-radius: 3px;
+  text-align: center;
+  margin: 1em;
+  position: relative !important;
+  padding-bottom: 10px; 
+}
+.buttondemoBasicUsage md-content {
+  margin-right: 7px; 
+}
+.buttondemoBasicUsage section .md-button {
+  margin-top: 16px;
+  margin-bottom: 16px; 
+}
+.buttondemoBasicUsage .label {
+  position: absolute;
+  bottom: 5px;
+  left: 7px;
+  font-size: 14px;
+  opacity: 0.54; 
+}
+
+
+
