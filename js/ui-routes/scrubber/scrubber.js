@@ -10,12 +10,16 @@ app.directive('scrubber', function() {
 			$scope.greeting = "the scrubber has loaded";
 			console.log("here's the greeting: ", $scope.greeting);
 
-			$scope.keyframes = KeyframeFactory.getAllKeyframes()
-								.then(function(keyframes) {
-									console.log("keyframes in the scrubber", keyframes);
-								}).catch(function (err) {
-									console.log("err in the scrubber", err);
-								});
+			$scope.keyframes = [];
+			$scope.diffsArray = [];
+			$scope.currentKeyframe = "";
+
+			// $scope.keyframes = KeyframeFactory.getAllKeyframes()
+			// 					.then(function(keyframes) {
+			// 						console.log("keyframes in the scrubber", keyframes);
+			// 					}).catch(function (err) {
+			// 						console.log("err in the scrubber", err);
+			// 					});
 
 			$scope.dummyKeyframe = {
 				source: "scrubber",
@@ -48,38 +52,39 @@ app.directive('scrubber', function() {
 	        	console.log("Pinged from the file browser:", file);
 	        	$scope.keyframes = KeyframeFactory.getFileKeyframes(file.filename)
 	        						.then(function(keyframes) {
-	        							console.log("Scrubber: Single File Keyframes: ", keyframes);
+							        	$scope.currentKeyframe = keyframes[keyframes.length - 1];
 	        						}).catch(function (err) {
 	        							console.log("Scrubber: Single File Keyframe error in retrieval: ", err);
 	        						});
 	        };
 
 	        CommLinkFactory.onBrowserUpdate($scope, onFilebrowserUpdateHandler);
+
 			
-			$scope.advanceFrame = function(frameID, currframe){
+			$scope.nextKeyframe = function(frameID){
 
-				$scope.diffsArray = GitDiffFactory.calculateDiff($scope.framesArray[frameID].text_state, $scope.framesArray[frameID+1].text_state);
+				$scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[frameID].text_state, $scope.keyframes[frameID+1].text_state);
 
-				console.log("clicked and ran advanceFrame function");
+				console.log("clicked and ran nextKeyframe function");
 			    console.log("frameID:", frameID);
 			    console.log("currframe:", currframe);
-			    console.log("framesArrayLength: ",$scope.framesArray.length);
+			    console.log("keyframesLength: ",$scope.keyframes.length);
 			    
-			    if (frameID == $scope.framesArray.length - 1){
+			    if (frameID == $scope.keyframes.length - 1){
 			    	console.log("Got to last frame");
-					$scope.currentFrame = "Frame " + frameID + " is the last frame!";
+					$scope.currentKeyframe = "Frame " + frameID + " is the last frame!";
 					$scope.$digest();
 			    }
 
 			    else{
-				    $scope.currentFrame = $scope.framesArray[frameID+1].text_state;
-				    $scope.editor.setValue($scope.currentFrame); // update editor
+				    $scope.currentKeyframe = $scope.keyframes[frameID+1].text_state;
+				    $scope.editor.setValue($scope.currentKeyframe); // update editor
 				    $scope.editor.navigateFileStart(); // return to top of file
-				    $scope.branchName = $scope.framesArray[frameID+1].branch_name;
-				    $scope.fileName = $scope.framesArray[frameID+1].filename;
-				    $scope.lastCommit = $scope.framesArray[frameID+1].last_commit;
-				    $scope.lastCommitTime = $scope.framesArray[frameID+1].last_commit_time;
-				    $scope.currentFrameID += 1;
+				    $scope.branchName = $scope.keyframes[frameID+1].branch_name;
+				    $scope.fileName = $scope.keyframes[frameID+1].filename;
+				    $scope.lastCommit = $scope.keyframes[frameID+1].last_commit;
+				    $scope.lastCommitTime = $scope.keyframes[frameID+1].last_commit_time;
+				    $scope.currentKeyframeId += 1;
 				    console.log("currframe after assigned:", currframe);
 					// $scope.$digest();
 				}
@@ -87,12 +92,12 @@ app.directive('scrubber', function() {
 
 	        $scope.backTenFrames = function(frameID){
 	        	
-	        	$scope.currentFrameID -= 10;
-	            $scope.currentFrame = $scope.framesArray[frameID].text_state;
-	            $scope.branchName = $scope.framesArray[frameID].branch_name;
-	            $scope.fileName = $scope.framesArray[frameID].filename;
-	            $scope.lastCommit = $scope.framesArray[frameID].last_commit;
-	            $scope.lastCommitTime = $scope.framesArray[frameID].last_commit_time;
+	        	$scope.currentKeyframeId -= 10;
+	            $scope.currentKeyframe = $scope.keyframes[frameID].text_state;
+	            $scope.branchName = $scope.keyframes[frameID].branch_name;
+	            $scope.fileName = $scope.keyframes[frameID].filename;
+	            $scope.lastCommit = $scope.keyframes[frameID].last_commit;
+	            $scope.lastCommitTime = $scope.keyframes[frameID].last_commit_time;
 	            
 	        //    $scope.$digest();	
 
