@@ -40,7 +40,7 @@ app.directive('scrubber', function() {
 	        // On scrubber click, will broadcast the selected keyframe via commLink to other directives that are listening.
 			$scope.broadcastKeyframeSelected = function () {
 				console.log("Directive: scrubber keyframe select button clicked: ");
-				CommLinkFactory.updateScrubber($scope.dummyKeyframe);
+				CommLinkFactory.updateScrubber($scope.currentKeyframe);
 			};
 			
 	        // Listener registers when the file browser is updated.
@@ -59,22 +59,15 @@ app.directive('scrubber', function() {
 
 			
 			$scope.nextKeyframe = function(keyframe){
-
-				// var keyframeIndex = _.findIndex($scope.keyframes, function(kf) {
-				// 	return kf._id == keyframe._id;
-				// });
-
+				$scope.isFirstFrame = false;
 				var keyframeIndex = $scope.getKeyframeIndex(keyframe);
-				console.log("The keyframe index is: ", keyframeIndex);
-				console.log("all frames @ nextKeyframe Call are:  ", $scope.keyframes);
-
 
 				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
 
-				console.log("nextKeyframe executed");
-			    console.log("keyframe:", keyframe);
-			    console.log("keyframeIndex:", keyframeIndex);
-			    console.log("$scope.diffsArray : ", $scope.diffsArray);
+				console.log("nextKeyframe executed, index is: ", keyframeIndex);
+			    // console.log("keyframe:", keyframe);
+			    // console.log("keyframe:", $scope.keyframes);
+			    // console.log("$scope.diffsArray : ", $scope.diffsArray);
 			    
 			    if (keyframeIndex === $scope.keyframes.length - 1){
 			    	console.log("@ Last Keyframe");
@@ -83,34 +76,41 @@ app.directive('scrubber', function() {
 			    }
 
 			    else {
-				    $scope.currentKeyframe = $scope.keyframes[keyframeIndex+1].text_state;
-				    // $scope.editor.setValue($scope.currentKeyframe); // update editor
-				    // $scope.editor.navigateFileStart(); // return to top of file
-				    // $scope.branchName = $scope.keyframes[keyframeIndex+1].branch_name;
-				    // $scope.fileName = $scope.keyframes[keyframeIndex+1].filename;
-				    // $scope.lastCommit = $scope.keyframes[keyframeIndex+1].last_commit;
-				    // $scope.lastCommitTime = $scope.keyframes[keyframeIndex+1].last_commit_time;
-				    // $scope.currentKeyframe = $scope.keyframes[keyframeIndex+1];
+				    $scope.currentKeyframe = $scope.keyframes[keyframeIndex + 1];
 				    console.log("New Current Keyframe:", $scope.currentKeyframe);
-					// $scope.$digest();
 				}
 			};
 
 			$scope.previousKeyframe = function(keyframe) {
+				$scope.isLastFrame = false;
+				var keyframeIndex = $scope.getKeyframeIndex(keyframe);
 
+				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
+
+				console.log("previousKeyframe executed, index is: ", keyframeIndex);
+			    // console.log("keyframe:", keyframe);
+			    // console.log("keyframe:", $scope.keyframes);
+			    // console.log("$scope.diffsArray : ", $scope.diffsArray);
+			    
+			    if (keyframeIndex === 0){
+			    	console.log("@ First Keyframe");
+					$scope.currentKeyframe = $scope.keyframes[0];
+					$scope.isFirstFrame = true;
+			    }
+
+			    else {
+				    $scope.currentKeyframe = $scope.keyframes[keyframeIndex - 1];
+				    console.log("New Current Keyframe:", $scope.currentKeyframe);
+				}
 			};
 
 	        $scope.backTenFrames = function(frameID){
-	        	
 	        	$scope.currentKeyframeId -= 10;
 	            $scope.currentKeyframe = $scope.keyframes[frameID].text_state;
 	            $scope.branchName = $scope.keyframes[frameID].branch_name;
 	            $scope.fileName = $scope.keyframes[frameID].filename;
 	            $scope.lastCommit = $scope.keyframes[frameID].last_commit;
 	            $scope.lastCommitTime = $scope.keyframes[frameID].last_commit_time;
-	            
-	        //    $scope.$digest();	
-
 	        };
 
 	        $scope.getKeyframeIndex = function (keyframe) {

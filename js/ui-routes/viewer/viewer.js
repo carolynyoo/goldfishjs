@@ -45,6 +45,7 @@ app.directive('viewer', function() {
 
 	  		$scope.aceChanged = function (keyframe) {
 	  	   		$scope.editor.setValue(keyframe.text_state, 1);
+	  	   		$scope.editor.navigateFileStart();
 	  	 	};
 
 		}
