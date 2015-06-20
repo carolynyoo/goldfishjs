@@ -14,7 +14,7 @@ var Keyframe = models.Keyframe;
 // Boot up the Angular App
 // var app = angular.module('gitplayback', ['ui.router', 'ui.ace']);
 
-var app = angular.module('gitplayback', ['ui.router', 'ui.ace', 'ngAnimate', 'ngAria', 'ngMaterial']);
+var app = angular.module('gitplayback', ['ui.router', 'ui.ace', 'ngAnimate', 'ngAria', 'ngMaterial', 'ngMdIcons']);
 app.config(function ($urlRouterProvider, $locationProvider) {
     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
     // $locationProvider.html5Mode(true);

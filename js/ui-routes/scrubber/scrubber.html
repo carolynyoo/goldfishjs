@@ -18,6 +18,30 @@
     <button type="button" id="advance" class="btn btn-danger" ng-click="advanceFrame(currentFrameID, currentFrame)">Next Frame</button>
     <button type="button" id="advance" class="btn btn-danger" ng-click="backTenFrames(currentFrameID)">Back 10 Frames</button>
 
+  <!--   <section layout="row" layout-sm="column" layout-align="center center">
+        <ng-md-icon icon="whatsapp" style="fill: #000" size="64"></ng-md-icon>
+        <ng-md-icon icon="facebook" style="fill: #000" size="64"></ng-md-icon>
+        <ng-md-icon icon="windows" style="fill: #000" size="64"></ng-md-icon>
+    </section> -->
+
+    <section layout="row" layout-sm="column" layout-align="center center">
+        <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="fast_rewind">
+           	<ng-md-icon icon="fast_rewind" style="fill: #fff" size="32"></ng-md-icon>
+        </md-button>
+        <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="play_reverse">
+        	<ng-md-icon icon="keyboard_arrow_left" style="fill: #fff" size="32"></ng-md-icon>
+        </md-button>
+        <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="pause">
+        	<ng-md-icon icon="pause" style="fill: #fff" size="32"></ng-md-icon>
+        </md-button>
+        <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="play_arrow">
+        	<ng-md-icon icon="play_arrow" style="fill: #fff" size="32"></ng-md-icon>
+        </md-button>
+        <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="fast_forward">
+        	<ng-md-icon icon="fast_forward" style="fill: #fff" size="32"></ng-md-icon>
+        </md-button>
+    </section>
+
     <fileinfo></fileinfo>
 
     <!-- refactor into ng-repeat later -->
