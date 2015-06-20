@@ -11,3 +11,4 @@ db/dumpdbtocsv.js
 *.swp
 *~
 *.swo
+npm-debug.log
