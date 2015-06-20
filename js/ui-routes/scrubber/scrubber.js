@@ -104,13 +104,42 @@ app.directive('scrubber', function() {
 				}
 			};
 
-	        $scope.backTenFrames = function(frameID){
-	        	$scope.currentKeyframeId -= 10;
-	            $scope.currentKeyframe = $scope.keyframes[frameID].text_state;
-	            $scope.branchName = $scope.keyframes[frameID].branch_name;
-	            $scope.fileName = $scope.keyframes[frameID].filename;
-	            $scope.lastCommit = $scope.keyframes[frameID].last_commit;
-	            $scope.lastCommitTime = $scope.keyframes[frameID].last_commit_time;
+	        $scope.advanceTenFrames = function(keyframe){
+	        	$scope.isLastFrame = false;
+				var keyframeIndex = $scope.getKeyframeIndex(keyframe);
+
+				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
+
+				console.log("advanceTenFrames executed, index is: ", keyframeIndex);
+			    
+			    if (($scope.keyframes.length - keyframeIndex) < 10) {
+			    	keyframeIndex = $scope.keyframes.length;
+			    	$scope.currentKeyframe = $scope.keyframes[$scope.keyframes.length-1];
+				    console.log("Less than ten frames remaining, default to last frame:", $scope.currentKeyframe);
+					$scope.isLastFrame = true;
+			    } else {
+				    $scope.currentKeyframe = $scope.keyframes[keyframeIndex + 10];
+				    console.log("New Current Keyframe:", $scope.currentKeyframe);
+				}
+	        };
+
+	        $scope.backTenFrames = function(keyframe){
+	        	$scope.isLastFrame = false;
+				var keyframeIndex = $scope.getKeyframeIndex(keyframe);
+
+				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
+
+				console.log("previousKeyframe executed, index is: ", keyframeIndex);
+			    
+			    if (keyframeIndex < 10) {
+			    	keyframeIndex = 0;
+			    	$scope.currentKeyframe = $scope.keyframes[0];
+				    console.log("Less than ten frames remaining, default to first frame:", $scope.currentKeyframe);
+					$scope.isFirstFrame = true;
+			    } else {
+				    $scope.currentKeyframe = $scope.keyframes[keyframeIndex - 10];
+				    console.log("New Current Keyframe:", $scope.currentKeyframe);
+				}
 	        };
 
 	        $scope.getKeyframeIndex = function (keyframe) {
