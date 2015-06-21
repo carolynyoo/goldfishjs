@@ -12,19 +12,19 @@
 
 	<!-- Scrubber Navigation -->
     <section layout="row" layout-sm="column" layout-align="center center">
-        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isFirstFrame" ng-click="backTenFrames(currentFrameID)" aria-label="skip_previous">
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isFirstFrame" ng-click="backTenFrames(currentKeyframe)" aria-label="skip_previous">
            	<ng-md-icon icon="skip_previous" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
-        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isFirstFrame" aria-label="play_reverse">
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isFirstFrame" ng-click="previousKeyframe(currentKeyframe)" aria-label="play_reverse">
         	<ng-md-icon icon="keyboard_arrow_left" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
-        <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="play_arrow">
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" aria-label="play_arrow">
         	<ng-md-icon icon="play_arrow" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
-        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" ng-click="advanceFrame(currentFrameID, currentFrame)" aria-label="keyboard_arrow_right">
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" ng-click="nextKeyframe(currentKeyframe)" aria-label="keyboard_arrow_right">
         	<ng-md-icon icon="keyboard_arrow_right" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
-        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" aria-label="skip_next">
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" ng-click="advanceTenFrames(currentKeyframe)" aria-label="skip_next">
         	<ng-md-icon icon="skip_next" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
     </section>
@@ -36,10 +36,7 @@
 	<output for=KeyframeScrubber id=playhead>{{currentFrameID}}</output>
 
 	<button ng-click="broadcastKeyframeSelected()">Simulate Keyframe Click</button>
-<!-- 
-    <button type="button" id="advance" class="btn btn-danger" ng-click="advanceFrame(currentFrameID, currentFrame)">Next Frame</button>
-    <button type="button" id="advance" class="btn btn-danger" ng-click="backTenFrames(currentFrameID)">Back 10 Frames</button> -->
-
+	<br><br><br>
     <fileinfo></fileinfo>
 
     <!-- refactor into ng-repeat later -->
