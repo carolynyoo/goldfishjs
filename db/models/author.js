@@ -12,4 +12,4 @@ module.exports = function(sequelize){
 
 	return Author;
 
-};
+};  
