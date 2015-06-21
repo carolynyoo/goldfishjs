@@ -7,7 +7,6 @@ function skipReading (filename) {
     var gitIgnore = path.join(process.env.PWD, ".gitignore"); 
     var globsToIgnore = gitignoreParse(gitIgnore);
     globsToIgnore.push('**/.git/**', '**/.gitignore');
-    console.log(globsToIgnore);
 
     for (var i=0; i<globsToIgnore.length; i++) {
       if (minimatch(filename, globsToIgnore[i])) {
@@ -19,7 +18,6 @@ function skipReading (filename) {
 
 function dirTree(filename) {
     if (!skipReading(filename)) {
-        console.log(filename);
         return;
     }
 
@@ -35,7 +33,6 @@ function dirTree(filename) {
             return dirTree(filename + '/' + child);
         })
         .filter(function (elem) {
-            console.log(elem);
             if (elem) {
                 if (elem.children && elem.children.length===0) {
                     return false;
