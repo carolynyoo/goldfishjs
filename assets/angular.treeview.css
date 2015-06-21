@@ -17,7 +17,6 @@ div[data-tree-model] ul {
   padding: 0;
   list-style: none; 
   border: none;
-  overflow: hidden;
 }
 
 div[data-tree-model] li {
@@ -27,19 +26,19 @@ div[data-tree-model] li {
 }
 
 div[data-tree-model] li .expanded {
-  padding: 1px 10px;
+  padding: 1px 3px 1px 0px;
   /*background-image: url("../img/folder.png");*/
   background-repeat: no-repeat;
 }
 
 div[data-tree-model] li .collapsed {
-  padding: 1px 10px;
+  padding: 1px 3px 1px 0px;
   /*background-image: url("../img/folder-closed.png");*/
   background-repeat: no-repeat;
 }
 
 div[data-tree-model] li .normal {
-  padding: 1px 10px;
+  padding: 1px 3px 1px 0px;
   /*background-image: url("../img/file.png");*/
   background-repeat: no-repeat;
 }
@@ -48,8 +47,7 @@ div[data-tree-model] li i, div[data-tree-model] li span {
   cursor: pointer;
 }
 
-div[data-tree-model] li .selected {
-  background-color: #aaddff;
+div[data-tree-model] li.selected {
   font-weight: bold;
-  padding: 1px 5px;
+  background-color: #ccc;
 }

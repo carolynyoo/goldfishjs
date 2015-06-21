@@ -27,16 +27,15 @@
         <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" ng-click="advanceTenFrames(currentKeyframe)" aria-label="skip_next">
         	<ng-md-icon icon="skip_next" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
-    </section>
+    </section> 
 
-    <br><br>
-
-	<label for=KeyframeScrubber>Adjust Playhead</label>
+    <section id="playhead" layout="row" layout-sm="column" layout-align="center center">
+    <label for=KeyframeScrubber>Adjust Playhead</label>
 	<input type=range id="KeyframeScrubber" min=0 value=20 max=$scope.framesArray.length step=1 ng-model="currentFrameID" ng-change="$parent.advanceFrame(currentFrameID, currentFrame)">
-	<output for=KeyframeScrubber id=playhead>{{currentFrameID}}</output>
-
+	<output for=KeyframeScrubber id='playhead'>{{currentFrameID}}</output>
+    <br/>
 	<button ng-click="broadcastKeyframeSelected()">Simulate Keyframe Click</button>
-	<br><br><br>
+    </section>
 <!--     <fileinfo></fileinfo> -->
 
     <!-- refactor into ng-repeat later -->
@@ -61,7 +60,7 @@
     </div>
     <a class="trigger" href="#">File Info</a> -->
 
-    <HR>
+<!--     <HR>
     <div class="AddedChange">
     <pre>
         {{diffsArray.textAdded}}
@@ -89,7 +88,6 @@
     </div>
 	<pre>
 		{{currentFrame}}
-	</pre>
+	</pre> -->
 
-	</div>
 </div>
