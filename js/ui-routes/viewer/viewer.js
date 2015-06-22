@@ -26,6 +26,7 @@ app.directive('viewer', function() {
 			        	$scope.aceChanged(keyframes[keyframes.length-1]);
 					}).catch(function (err) {
 						console.log("Viewer: Single File Keyframe error in retrieval: ", err);
+						$scope.editor.setValue("Database: File history not found.");
 					});
 	        };
 

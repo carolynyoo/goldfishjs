@@ -18,19 +18,6 @@ app.directive('scrubber', function() {
 			$scope.isFirstFrame = false;
 			$scope.isLastFrame = false;
 
-			// $scope.dummyKeyframe = {
-			// 	source: "scrubber",
-			// 	filename: "User/pete/keyframe",
-			// 	text_state: "(function () {})()",
-			// 	event_type: "changed",
-			// 	last_commit: "1234lkj151354",
-			// 	last_commit_time: new Date(), 
-			// 	prev_keyframe: "f1oij1g40941t4",
-			// 	next_keyframe: "0108ujt1oi14r",
-			// 	branch_name: "pubsub",
-			// 	createdAt: new Date()
-			// };
-
 			var onKeyframeUpdateHandler = function() {
 	            $scope.keyframes = KeyframeFactory.getAllKeyframes();
 	        };
