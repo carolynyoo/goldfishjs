@@ -10,12 +10,12 @@
   "window": {
     "frame": true,
     "toolbar": true,
-    "width": 900,
-    "height": 555,
+    "width": 1000,
+    "height": 700,
     "min_width": 600,
     "min_height": 370,
-    "max_width": 1000,
-    "max_height": 618
+    "max_width": 2000,
+    "max_height": 1400
   },
   "repository": {
     "type": "git",

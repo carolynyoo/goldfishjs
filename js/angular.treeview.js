@@ -51,11 +51,11 @@
 				//tree template
 				var template =
 					'<ul>' +
-						'<li data-ng-repeat="node in ' + treeModel + '">' +
-							'<ng-md-icon icon="keyboard_arrow_right" style="fill: #000" size="20" class="collapsed" data-ng-show="node.' + nodeChildren + '.length && node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></ng-md-icon>' +
-							'<ng-md-icon icon="keyboard_arrow_down" style="fill: #000" size="20" class="expanded" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></ng-md-icon>' +
-							'<i class="normal" data-ng-hide="node.' + nodeChildren + '.length"></i> ' +
-							'<span data-ng-class="node.selected" data-ng-click="' + treeId + '.selectNodeLabel(node)">{{node.' + nodeLabel + '}}</span>' +
+						'<li data-ng-class="node.selected" class="tree" data-ng-repeat="node in ' + treeModel + '">' +
+							'<i style="fill: #000" size="20" class="fa fa-folder-o collapsed" data-ng-show="node.' + nodeChildren + '.length && node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
+							'<i style="fill: #000" size="20" class="fa fa-folder-open-o expanded" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
+							'<i class="fa fa-file-code-o normal" data-ng-hide="node.' + nodeChildren + '.length"></i> ' +
+							'<span data-ng-click="' + treeId + '.selectNodeLabel(node)">{{node.' + nodeLabel + '}}</span>' +
 							'<div data-ng-hide="node.collapsed" data-tree-id="' + treeId + '" data-tree-model="node.' + nodeChildren + '" data-node-id=' + nodeId + ' data-node-label=' + nodeLabel + ' data-node-children=' + nodeChildren + '></div>' +
 						'</li>' +
 					'</ul>';
@@ -80,16 +80,22 @@
 						//if node label clicks,
 						scope[treeId].selectNodeLabel = scope[treeId].selectNodeLabel || function( selectedNode ){
 
-							//remove highlight from previous node
-							if( scope[treeId].currentNode && scope[treeId].currentNode.selected ) {
-								scope[treeId].currentNode.selected = undefined;
+							// only highlight if file, not folder 
+							if (!selectedNode.children) {
+								//remove highlight from previous node
+								if( scope[treeId].currentNode && scope[treeId].currentNode.selected ) {
+									scope[treeId].currentNode.selected = undefined;
+								}
+
+								//set highlight to selected node
+								selectedNode.selected = 'selected';
+
+								//set currentNode
+								scope[treeId].currentNode = selectedNode;
+							} else {
+								// if folder, toggle open/close behavior
+								selectedNode.collapsed = !selectedNode.collapsed; 
 							}
-
-							//set highlight to selected node
-							selectedNode.selected = 'selected';
-
-							//set currentNode
-							scope[treeId].currentNode = selectedNode;
 						};
 					}
 

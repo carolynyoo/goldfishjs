@@ -33,8 +33,7 @@ app.directive('viewer', function() {
 	        // These functions are used to both load and then update the code editor, respectively
 			$scope.aceLoaded = function (_editor) {
 			    // Options
-			    _editor.setTheme("ace/theme/solarized_light");
-			    // _editor.setTheme("../../../bower_components/ace-builds/src-min-noconflict/theme-solarized_light.js");
+			    _editor.setTheme("ace/theme/idle_fingers");
 			 	// _editor.setMode("ace/mode/javascript"); // Will need to let user toggle this or sense file ext later
 			    _editor.setReadOnly(true);
 			    _editor.setValue($scope.currentFrame, 1);
