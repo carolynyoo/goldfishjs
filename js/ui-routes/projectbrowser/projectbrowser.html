@@ -1,3 +1,7 @@
+<pre>
+	{{currentNode}}
+</pre>
+
 <div>
   <div
     data-angular-treeview="true"
@@ -8,5 +12,5 @@
     data-node-children="children">
   </div>
 
-	<button ng-click="selectFile()">File Name</button>
+	<button ng-click="selectFile(currentNode)">File Name</button>
 </div>
