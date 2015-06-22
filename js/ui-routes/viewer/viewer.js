@@ -20,12 +20,13 @@ app.directive('viewer', function() {
 			// Listener registers when the file browser is updated. The very last keyframe is loaded by default.
 	        var onFilebrowserUpdateHandler = function (file) {
 	        	console.log("Pinged from the file browser:", file);
-	        	$scope.keyframes = KeyframeFactory.getFileKeyframes(file.filename)
-	        						.then(function(keyframes) {
-							        	$scope.aceChanged(keyframes[keyframes.length-1]);
-	        						}).catch(function (err) {
-	        							console.log("Viewer: Single File Keyframe error in retrieval: ", err);
-	        						});
+	        	KeyframeFactory.getFileKeyframes(file)
+					.then(function(keyframes) {
+						$scope.keyframes = keyframes;
+			        	$scope.aceChanged(keyframes[keyframes.length-1]);
+					}).catch(function (err) {
+						console.log("Viewer: Single File Keyframe error in retrieval: ", err);
+					});
 	        };
 
 	        CommLinkFactory.onBrowserUpdate($scope, onFilebrowserUpdateHandler);
