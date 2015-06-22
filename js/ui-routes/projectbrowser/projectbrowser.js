@@ -9,7 +9,6 @@ app.directive('projectbrowser', function($rootScope) {
 		controller: function ($scope, CommLinkFactory) {
 
 			$scope.fileTree = require(path.join(process.env.PWD, "js", "dirTree.js"));
-			$scope.currentNode = {};
 
 			// This watches for the latest file selected in the browser file tree
 			$scope.$watch('abc.currentNode.path', function(newFile, oldFile) {
