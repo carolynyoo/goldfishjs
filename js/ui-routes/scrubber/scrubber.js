@@ -18,19 +18,6 @@ app.directive('scrubber', function() {
 			$scope.isFirstFrame = false;
 			$scope.isLastFrame = false;
 
-			$scope.dummyKeyframe = {
-				source: "scrubber",
-				filename: "User/pete/keyframe",
-				text_state: "(function () {})()",
-				event_type: "changed",
-				last_commit: "1234lkj151354",
-				last_commit_time: new Date(), 
-				prev_keyframe: "f1oij1g40941t4",
-				next_keyframe: "0108ujt1oi14r",
-				branch_name: "pubsub",
-				createdAt: new Date()
-			};
-
 			var onKeyframeUpdateHandler = function() {
 	            $scope.keyframes = KeyframeFactory.getAllKeyframes();
 	        };
@@ -46,7 +33,7 @@ app.directive('scrubber', function() {
 	        // Listener registers when the file browser is updated.
 	        var onFilebrowserUpdateHandler = function (file) {
 	        	console.log("Pinged from the file browser:", file);
-	        	KeyframeFactory.getFileKeyframes(file.filename)
+	        	KeyframeFactory.getFileKeyframes(file)
 					.then(function(keyframes) {
 			        	$scope.currentKeyframe = keyframes[keyframes.length - 1];
 			        	$scope.keyframes = keyframes;
@@ -150,6 +137,19 @@ app.directive('scrubber', function() {
 	        $scope.getKeyframeIndex = function (keyframe) {
 	        	return _.findIndex($scope.keyframes, {_id: keyframe._id});
 	        };
+
+    		$scope.playIntervalId = {};
+
+     		$scope.play = function (seconds) {
+     			//seconds is a variable we should use at a later time to allow speed adjustment
+     			// var delay = seconds * 1000;
+
+     			$scope.playIntervalId = setInterval($scope.nextKeyframe($scope.currentKeyframe), 1000);
+     		};
+
+     		$scope.pause = function () {
+     			clearInterval($scope.playIntervalId);
+     		};
 
 		}
 	};
