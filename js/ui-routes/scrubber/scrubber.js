@@ -151,6 +151,19 @@ app.directive('scrubber', function() {
 	        	return _.findIndex($scope.keyframes, {_id: keyframe._id});
 	        };
 
+    		$scope.playIntervalId = {};
+
+     		$scope.play = function (seconds) {
+     			//seconds is a variable we should use at a later time to allow speed adjustment
+     			// var delay = seconds * 1000;
+
+     			$scope.playIntervalId = setInterval($scope.nextKeyframe($scope.currentKeyframe), 1000);
+     		};
+
+     		$scope.pause = function () {
+     			clearInterval($scope.playIntervalId);
+     		};
+
 		}
 	};
 });
