@@ -46,7 +46,7 @@ app.directive('scrubber', function() {
 	        // Listener registers when the file browser is updated.
 	        var onFilebrowserUpdateHandler = function (file) {
 	        	console.log("Pinged from the file browser:", file);
-	        	KeyframeFactory.getFileKeyframes(file.filename)
+	        	KeyframeFactory.getFileKeyframes(file)
 					.then(function(keyframes) {
 			        	$scope.currentKeyframe = keyframes[keyframes.length - 1];
 			        	$scope.keyframes = keyframes;
