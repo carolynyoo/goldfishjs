@@ -7,10 +7,9 @@
 }
 
 .md-toolbar-tools {
-	background-color: blue;
-	padding: 0 5px;
-	margin: 0;
-	height: 25px;
+	background-color: rgb(40, 53, 147);
+	padding: 5px;
+	height: 30px;
 }
 
 span.md-flex {
@@ -194,13 +193,11 @@ a.active.trigger {
 	background:#222222 85% 55% no-repeat;
 }
 
-#first-row {
-	height: 66vh;
+#first-row #browser {
+	max-height: 66vh;
+  overflow-y: scroll;
+  background-color: #eee;
 }
-
-/*viewer {
-	height: 300px;
-}*/
 
 ng-md-icon svg {
 	padding-bottom: 10px;
@@ -230,5 +227,6 @@ ng-md-icon svg {
   opacity: 0.54; 
 }
 
-
-
+section#playhead {
+	margin-top: 20px;
+}
