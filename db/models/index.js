@@ -14,21 +14,22 @@ var minimatch = require('minimatch');
 var PromisifyMe = require('promisify-me');
 var DataStore = PromisifyMe(require('nedb'), 'nedb');
 // var db = new DataStore({ filename: path.join(global.window.nwDispatcher.requireNwGui().App.dataPath, 'nedbstorage.db') });
+// path.join the dir and filename 
 var db = new DataStore({ filename: 'nedbstorage.db', autoload: true });
 
-  chokidar.watch(process.env.PWD, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
-    console.log('WATCHER: ', event, path);
-    // to do: gitignore glob path match 
-    // also add .git to ignore 
-    var globsToIgnore = gitignoreParse(gitIgnore);
-    globsToIgnore.push('**/.git/**');
-    for (var i=0; i<globsToIgnore.length; i++) {
-      if (minimatch(path.split(pwd)[1], globsToIgnore[i])) {
-        return;
-      }
+chokidar.watch(process.env.PWD, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
+  console.log('WATCHER: ', event, path);
+  // to do: gitignore glob path match 
+  // also add .git to ignore 
+  var globsToIgnore = gitignoreParse(gitIgnore);
+  globsToIgnore.push('**/.git/**');
+  for (var i=0; i<globsToIgnore.length; i++) {
+    if (minimatch(path.split(pwd)[1], globsToIgnore[i])) {
+      return;
     }
-    readFile(event, path); 
-  });
+  }
+  readFile(event, path); 
+});
 
 function readFile (event, filepath) {
   fs.readFile(filepath, "utf-8", function(err, text) {
