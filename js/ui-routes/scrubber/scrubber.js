@@ -17,12 +17,7 @@ app.directive('scrubber', function() {
 			// Variables used to enable/disable scrubber buttons
 			$scope.isFirstFrame = false;
 			$scope.isLastFrame = false;
-
-			var onKeyframeUpdateHandler = function() {
-	            $scope.keyframes = KeyframeFactory.getAllKeyframes();
-	        };
-
-	        CommLinkFactory.onDataUpdated($scope, onKeyframeUpdateHandler);
+			$scope.isPlaying = false;
 
 	        // On scrubber click, will broadcast the selected keyframe via commLink to other directives that are listening.
 			$scope.broadcastKeyframeSelected = function () {
@@ -33,6 +28,8 @@ app.directive('scrubber', function() {
 	        // Listener registers when the file browser is updated.
 	        var onFilebrowserUpdateHandler = function (file) {
 	        	console.log("Pinged from the file browser:", file);
+	        	$scope.isLastFrame = true;
+				$scope.isFirstFrame = false;
 	        	KeyframeFactory.getFileKeyframes(file)
 					.then(function(keyframes) {
 			        	$scope.currentKeyframe = keyframes[keyframes.length - 1];
@@ -49,10 +46,6 @@ app.directive('scrubber', function() {
 				var keyframeIndex = $scope.getKeyframeIndex(keyframe);
 
 				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
-
-			    // console.log("keyframe:", keyframe);
-			    // console.log("keyframe:", $scope.keyframes);
-			    // console.log("$scope.diffsArray : ", $scope.diffsArray);
 			    
 			    if (keyframeIndex === $scope.keyframes.length - 1){
 			    	console.log("@ Last Keyframe");
@@ -140,14 +133,23 @@ app.directive('scrubber', function() {
 
     		$scope.playIntervalId = {};
 
-     		$scope.play = function (seconds) {
+     		$scope.play = function () {
      			//seconds is a variable we should use at a later time to allow speed adjustment
      			// var delay = seconds * 1000;
-
-     			$scope.playIntervalId = setInterval($scope.nextKeyframe($scope.currentKeyframe), 1000);
+	     			$scope.isPlaying = true;
+	     			$scope.isFirstFrame = false;
+	     			$scope.playIntervalId = setInterval(function () {
+		     			if(!$scope.isLastFrame) {
+		     				$scope.nextKeyframe($scope.currentKeyframe);
+		     			} else {
+     						$scope.pause();
+     						return;
+		     			}
+	     			}, 500);
      		};
 
      		$scope.pause = function () {
+     			$scope.isPlaying = false;
      			clearInterval($scope.playIntervalId);
      		};
 
