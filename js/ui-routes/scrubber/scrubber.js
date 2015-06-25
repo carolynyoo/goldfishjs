@@ -51,6 +51,7 @@ app.directive('scrubber', function() {
 			    	console.log("@ Last Keyframe");
 					$scope.currentKeyframe = $scope.keyframes[$scope.keyframes.length - 1];
 					$scope.isLastFrame = true;
+					$scope.pause();
 					console.log("nextKeyframe executed, index is: ", keyframeIndex);
 			    } else {
 				    $scope.currentKeyframe = $scope.keyframes[keyframeIndex + 1];
@@ -74,6 +75,7 @@ app.directive('scrubber', function() {
 			    	console.log("@ First Keyframe");
 					$scope.currentKeyframe = $scope.keyframes[0];
 					$scope.isFirstFrame = true;
+					$scope.pause();
 					console.log("previousKeyframe executed, index is: ", keyframeIndex);
 			    } else {
 				    $scope.currentKeyframe = $scope.keyframes[keyframeIndex - 1];
@@ -85,7 +87,7 @@ app.directive('scrubber', function() {
 			};
 
 	        $scope.advanceTenFrames = function(keyframe){
-	        	$scope.isLastFrame = false;
+	        	$scope.isFirstFrame = false;
 				var keyframeIndex = $scope.getKeyframeIndex(keyframe);
 
 				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
@@ -139,18 +141,20 @@ app.directive('scrubber', function() {
 	     			$scope.isPlaying = true;
 	     			$scope.isFirstFrame = false;
 	     			$scope.playIntervalId = setInterval(function () {
-		     			if(!$scope.isLastFrame) {
+		     			// if(!$scope.isLastFrame) {
 		     				$scope.nextKeyframe($scope.currentKeyframe);
-		     			} else {
-     						$scope.pause();
-     						return;
-		     			}
+		     			// } else {
+     						// $scope.pause();
+     						// return;
+		     			// }
 	     			}, 500);
      		};
 
      		$scope.pause = function () {
      			$scope.isPlaying = false;
-     			clearInterval($scope.playIntervalId);
+     			console.log("Pause func: ", $scope.isPlaying);
+     			
+     			$scope.$apply(clearInterval($scope.playIntervalId));
      		};
 
 		}
