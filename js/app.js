@@ -8,8 +8,12 @@ var path = require('path');
 var appPath = process.env.PWD;
 var dbPath = path.join(appPath, 'db/models');
 
-var models = require(dbPath);
-var Keyframe = models.Keyframe;
+// var models = require(dbPath);
+// var Keyframe = models.Keyframe;
+
+var dbFactory = require(dbPath);
+
+var Keyframe = dbFactory.setDb(appPath);
 
 // Boot up the Angular App
 // var app = angular.module('gitplayback', ['ui.router', 'ui.ace']);
