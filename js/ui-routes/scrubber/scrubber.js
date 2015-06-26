@@ -13,6 +13,7 @@ app.directive('scrubber', function() {
 			$scope.keyframes = [];
 			$scope.diffsArray = [];
 			$scope.currentKeyframe = {};
+			$scope.keyframeIndex = 0;
 
 			// Variables used to enable/disable scrubber buttons
 			$scope.isFirstFrame = false;
@@ -28,6 +29,7 @@ app.directive('scrubber', function() {
 			$scope.broadcastKeyframeSelected = function () {
 				console.log("Directive: scrubber keyframe select button clicked: ");
 				CommLinkFactory.updateScrubber($scope.currentKeyframe);
+				console.log("CommLinkFactory.updatedScrubber, currentKeyframe: ", $scope.currentKeyframe);
 			};
 			
 	        // Listener registers when the file browser is updated.
@@ -43,7 +45,13 @@ app.directive('scrubber', function() {
 	        };
 
 	        CommLinkFactory.onBrowserUpdate($scope, onFilebrowserUpdateHandler);
-			
+
+	        var onScrubberUpdate = function($scope, handler) {
+	              $scope.$on(scrubberUpdateEvent, function(event, args) {
+	                  handler(args.item);
+	              	});
+	          };		
+
 			$scope.nextKeyframe = function(keyframe){
 				$scope.isFirstFrame = false;
 				var keyframeIndex = $scope.getKeyframeIndex(keyframe);
@@ -54,6 +62,7 @@ app.directive('scrubber', function() {
 			    // console.log("keyframe:", $scope.keyframes);
 			    // console.log("$scope.diffsArray : ", $scope.diffsArray);
 			    
+			    // ASK: why the inconsistency here
 			    if (keyframeIndex === $scope.keyframes.length - 1){
 			    	console.log("@ Last Keyframe");
 					$scope.currentKeyframe = $scope.keyframes[$scope.keyframes.length - 1];
@@ -90,6 +99,54 @@ app.directive('scrubber', function() {
 
 				$scope.broadcastKeyframeSelected();
 			};
+
+
+			// Scrubbing playhead appropriately updates current keyframe
+			$scope.setKeyframeToPlayhead = function(keyframe){
+				$scope.isFirstFrame = false;
+				$scope.isLastFrame = false;
+				// Gets current keyframe index
+//				var keyframeIndex = $scope.getKeyframeIndex(keyframe);
+				$scope.keyframeIndex = keyframe; // use actual integer instead of function
+				console.log("KeyframeIndex after setKeyframeToPlayhead called:", $scope.keyframeIndex);
+
+				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
+
+			    // console.log("keyframe:", keyframe);
+			    // console.log("keyframe:", $scope.keyframes);
+			    // console.log("$scope.diffsArray : ", $scope.diffsArray);
+			    
+
+			    if ($scope.keyframeIndex === 0){
+			    	console.log("@ First Keyframe");
+					$scope.currentKeyframe = $scope.keyframes[0];
+					$scope.isFirstFrame = true;
+					console.log("previousKeyframe executed, index is: ", $scope.keyframeIndex);
+			    }
+
+			    // Scrubber is currently too many units long
+			    // If user scrubs past "present" ex: 200 of 100 frame values
+			    else if ($scope.keyframeIndex >= ($scope.keyframes.length - 1)){
+			    	console.log("@ Last Keyframe");
+			    	// then keyframe is set to "present" time, last keyframe
+					$scope.currentKeyframe = $scope.keyframes[$scope.keyframes.length - 1];
+					$scope.keyframeIndex = $scope.keyframes.length - 1;
+					$scope.isLastFrame = true;
+					console.log("nextKeyframe executed, index is: ", $scope.keyframeIndex);
+					// Todo:
+					// Update playhead on scrubber UI to last keyframe value
+
+			    } else {
+			    	// else update current keyframe to playhead
+				    $scope.currentKeyframe = $scope.keyframes[$scope.keyframeIndex]; // this works if pulled out chronologically
+					console.log("Keyframe index after scrubber update is: ", $scope.keyframeIndex);
+				}
+				// verify update
+				// call onScrubberUpdate function from CommlinkFactory
+				$scope.broadcastKeyframeSelected();
+			};
+
+
 
 	        $scope.advanceTenFrames = function(keyframe){
 	        	$scope.isLastFrame = false;

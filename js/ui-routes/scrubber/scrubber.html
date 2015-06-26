@@ -5,7 +5,7 @@
 	      <div flex="10" layout layout-align="center center">
 	        <span class="md-body-1">file history</span>
 	      </div>
-	      <md-slider flex class="md-primary" md-discrete ng-model="keyframe" step="1" min="1" max="100" aria-label="keyframe">
+	      <md-slider flex class="md-primary" md-discrete ng-model="keyframeIndex" step="1" min="1" max="100" aria-label="keyframe" ng-mouseup="setKeyframeToPlayhead(keyframeIndex)">
 	      </md-slider>
 		</div>
 	</md-content>
@@ -28,14 +28,14 @@
         	<ng-md-icon icon="skip_next" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
     </section> 
-
+<!--
     <section id="playhead" layout="row" layout-sm="column" layout-align="center center">
     <label for=KeyframeScrubber>Adjust Playhead</label>
 	<input type=range id="KeyframeScrubber" min=0 value=20 max=$scope.framesArray.length step=1 ng-model="currentFrameID" ng-change="$parent.advanceFrame(currentFrameID, currentFrame)">
 	<output for=KeyframeScrubber id='playhead'>{{currentFrameID}}</output>
     <br/>
 	<button ng-click="broadcastKeyframeSelected()">Simulate Keyframe Click</button>
-    </section>
+    </section> -->
 <!--     <fileinfo></fileinfo> -->
 
     <!-- refactor into ng-repeat later -->
