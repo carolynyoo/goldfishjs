@@ -9,10 +9,12 @@ app.directive('viewer', function() {
 		controller: function ($scope, CommLinkFactory, KeyframeFactory) {
 
 			$scope.editor = {};
+			$scope.modelist = ace.require("ace/ext/modelist");
+			$scope.mode = "";
 
 			var onScrubberUpdateHandler = function (keyframe) {
 				console.log("Pinged from the scrubber", keyframe);
-				$scope.aceChanged(keyframe);
+				$scope.aceChanged(keyframe, $scope.mode);
 			};
 
 			CommLinkFactory.onScrubberUpdate($scope, onScrubberUpdateHandler);
@@ -23,7 +25,8 @@ app.directive('viewer', function() {
 	        	KeyframeFactory.getFileKeyframes(file)
 					.then(function(keyframes) {
 						$scope.keyframes = keyframes;
-			        	$scope.aceChanged(keyframes[keyframes.length-1]);
+						$scope.mode = $scope.modelist.getModeForPath(file).mode;
+			        	$scope.aceChanged(keyframes[keyframes.length-1], $scope.mode);
 					}).catch(function (err) {
 						console.log("Viewer: Single File Keyframe error in retrieval: ", err);
 						$scope.editor.setValue("Database: File history not found.");
@@ -44,7 +47,8 @@ app.directive('viewer', function() {
 			    $scope.editor = _editor;
 		  	};
 
-	  		$scope.aceChanged = function (keyframe) {
+	  		$scope.aceChanged = function (keyframe, mode) {
+	  	   		$scope.editor.session.setMode(mode);
 	  	   		$scope.editor.setValue(keyframe.text_state, 1);
 	  	   		$scope.editor.navigateFileStart();
 	  	 	};
