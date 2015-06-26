@@ -1,21 +1,21 @@
-<div class="panel:active" ng-class="{'active': showFileTab}">
+<div class="panel:active" ng-show="showFileTab" ng-class="{'active': showFileTab}">
 	<!-- need to fix some bug with active show when click tab -->
 	<!-- for now forcing the active state -->
     <div class="content">
         <p>
-            filename: {{fileName}}
+            filename: {{currentKeyframe.filename}}
         </p>
         <p>
-            branchname: {{branchName}}
+            branchname: {{currentKeyframe.branch_name}}
         </p>
         <p>
-            last commit: {{lastCommit}}
+            last commit: {{currentKeyframe.last_commit}}
         </p>
         <p ng-filter>
-            committed at: {{lastCommitTime | datetime}}
+            committed at: {{currentKeyframe.last_commit_time | datetime}}
         </p>
         <p>
-            frame id: {{currentFrameID}}
+            frame id: {{keyframeIndex}}
         </p>
     </div>
 </div>
