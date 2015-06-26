@@ -144,7 +144,7 @@ opacity: .85;
 a.trigger{
 	position: absolute;
 	text-decoration: none;
-	top: 75%; 
+	top: 90%; 
 	right: 0;
 	font-size: 16px;
 	letter-spacing:-1px;
@@ -168,7 +168,7 @@ a.trigger{
 a.trigger:hover{
 	position: absolute;
 	text-decoration: none;
-	top: 75%; 
+	top: 90%; 
 	right: 0;
 	font-size: 16px;
 	letter-spacing:-1px;
@@ -190,7 +190,7 @@ a.trigger:hover{
 }
 
 a.active.trigger {
-	background:#222222 85% 55% no-repeat;
+	background:#222222 90% 55% no-repeat;
 }
 
 #first-row #browser {
