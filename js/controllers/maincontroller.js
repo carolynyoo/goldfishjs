@@ -16,8 +16,8 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
 	$scope.playFrame = "empty";
 
 	$scope.toggleActive = function() {
-		// console.log("scope.showFileTab", $scope.showFileTab);
-		// console.log("NG CLICK");
+		console.log("scope.showFileTab", $scope.showFileTab);
+		console.log("NG CLICK");
 	    
 	    $scope.showFileTab = $scope.showFileTab === false ? true: false;
 	    // console.log("scope.showFileTab", $scope.showFileTab);
