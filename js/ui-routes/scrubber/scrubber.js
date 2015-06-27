@@ -32,25 +32,25 @@ app.directive('scrubber', function() {
 				CommLinkFactory.updateScrubber($scope.currentKeyframe);
 			};
 			
-	        // Listener registers when the file browser is updated.
-	   //      var onFilebrowserUpdateHandler = function (file) {
-	   //      	console.log("Pinged from the file browser:", file);
-	   //      	$scope.isLastFrame = true;
-				// $scope.isFirstFrame = false;
-	   //      	KeyframeFactory.getFileKeyframes(file)
-				// 	.then(function(keyframes) {
-			 //        	$scope.keyframes = keyframes;
-			 //        	$scope.updatePointers(null, "end");
-			 //        	// $scope.goToKeyframe();
-			 //        	// $scope.$apply($scope.keyframeIndex);
-			 //        	console.log("File Load: # of Frames: ", keyframes.length);
-			 //        	console.log("File Load: Frame Index: ", $scope.keyframeIndex);
-				// 	}).catch(function (err) {
-				// 		console.log("Scrubber: Error retrieving File Keyframes: ", err);
-				// 	});
-	   //      };
+		    // Listener registers when the file browser is updated.
+		   //      var onFilebrowserUpdateHandler = function (file) {
+		   //      	console.log("Pinged from the file browser:", file);
+		   //      	$scope.isLastFrame = true;
+					// $scope.isFirstFrame = false;
+		   //      	KeyframeFactory.getFileKeyframes(file)
+					// 	.then(function(keyframes) {
+			//        	$scope.keyframes = keyframes;
+			//        	$scope.updatePointers(null, "end");
+			//        	// $scope.goToKeyframe();
+			//        	// $scope.$apply($scope.keyframeIndex);
+			//        	console.log("File Load: # of Frames: ", keyframes.length);
+			//        	console.log("File Load: Frame Index: ", $scope.keyframeIndex);
+					// 	}).catch(function (err) {
+					// 		console.log("Scrubber: Error retrieving File Keyframes: ", err);
+					// 	});
+		   //      };
 
-	   //      CommLinkFactory.onBrowserUpdate($scope, onFilebrowserUpdateHandler);
+		   //      CommLinkFactory.onBrowserUpdate($scope, onFilebrowserUpdateHandler);
 			
 	        $scope.goToKeyframe = function () {
 	        	console.log("NG-CHANGE/CLICK on SLIDER: ", $scope.keyframeIndex);
@@ -156,7 +156,6 @@ app.directive('scrubber', function() {
      		};
 
      		$scope.updatePointers = function (step, position) {
-     			console.log('scope.keyframes is', $scope.keyframes)
      			if (position === "advance") {
      				$scope.keyframeIndex += step;
      			} else if (position === "start") {
@@ -170,13 +169,13 @@ app.directive('scrubber', function() {
      			}
      			
      			$scope.currentKeyframe = $scope.keyframes[$scope.keyframeIndex];
+				$scope.broadcastKeyframeSelected();
 
-     			console.log("Pointer Update: KFI = ", $scope.keyframeIndex);
-     			console.log("Current Keyframe:     ", $scope.currentKeyframe);
+     			// console.log("Pointer Update: KFI = ", $scope.keyframeIndex);
+     			// console.log("Current Keyframe:     ", $scope.currentKeyframe);
      		};
      		$scope.updatePointers(null, "end");
-			$scope.broadcastKeyframeSelected();
-     		
+
 		}
 	};
 });
