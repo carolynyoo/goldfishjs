@@ -20,40 +20,12 @@ app.directive('scrubber', function() {
 			$scope.isLastFrame = false;
 			$scope.isPlaying = false;
 
-			// $scope.$watch('keyframeIndex', function (newVal, oldVal) {
-			// 	console.log('KFI Watcher, New: ', newVal);
-			// 	console.log('KFI Watcher, Old: ', oldVal);
-			// 	$scope.goToKeyframe();
-			// });
-
 	        // On scrubber click, will broadcast the selected keyframe via commLink to other directives that are listening.
 			$scope.broadcastKeyframeSelected = function () {
-				console.log("Directive: scrubber keyframe select button clicked: ");
 				CommLinkFactory.updateScrubber($scope.currentKeyframe);
 			};
 			
-		    // Listener registers when the file browser is updated.
-		   //      var onFilebrowserUpdateHandler = function (file) {
-		   //      	console.log("Pinged from the file browser:", file);
-		   //      	$scope.isLastFrame = true;
-					// $scope.isFirstFrame = false;
-		   //      	KeyframeFactory.getFileKeyframes(file)
-					// 	.then(function(keyframes) {
-			//        	$scope.keyframes = keyframes;
-			//        	$scope.updatePointers(null, "end");
-			//        	// $scope.goToKeyframe();
-			//        	// $scope.$apply($scope.keyframeIndex);
-			//        	console.log("File Load: # of Frames: ", keyframes.length);
-			//        	console.log("File Load: Frame Index: ", $scope.keyframeIndex);
-					// 	}).catch(function (err) {
-					// 		console.log("Scrubber: Error retrieving File Keyframes: ", err);
-					// 	});
-		   //      };
-
-		   //      CommLinkFactory.onBrowserUpdate($scope, onFilebrowserUpdateHandler);
-			
 	        $scope.goToKeyframe = function () {
-	        	console.log("NG-CHANGE/CLICK on SLIDER: ", $scope.keyframeIndex);
 	        	$scope.pause();
 	        	$scope.currentKeyframe = $scope.keyframes[$scope.keyframeIndex];
 
@@ -65,7 +37,6 @@ app.directive('scrubber', function() {
 				if ($scope.keyframeIndex === $scope.keyframes.length-1) {
 					$scope.isLastFrame = true;
 				}
-	        	console.log("goToKeyframe $scope.currentKeyframe", $scope.currentKeyframe);
 				$scope.broadcastKeyframeSelected();
 	        };
 
@@ -170,9 +141,6 @@ app.directive('scrubber', function() {
      			
      			$scope.currentKeyframe = $scope.keyframes[$scope.keyframeIndex];
 				$scope.broadcastKeyframeSelected();
-
-     			// console.log("Pointer Update: KFI = ", $scope.keyframeIndex);
-     			// console.log("Current Keyframe:     ", $scope.currentKeyframe);
      		};
      		$scope.updatePointers(null, "end");
 

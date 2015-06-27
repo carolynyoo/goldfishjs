@@ -16,17 +16,9 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
 	$scope.playFrame = "empty";
 
 	$scope.toggleActive = function() {
-		// console.log("scope.showFileTab", $scope.showFileTab);
-		// console.log("NG CLICK");
-	    
 	    $scope.showFileTab = $scope.showFileTab === false ? true: false;
-	    // console.log("scope.showFileTab", $scope.showFileTab);
 	};
-
-	// $scope.example = function () {
-	// 	console.log("for isolate scope test");
-	// };
-
+	
 	// Opens debugger window
 	var nwgui = nwguiFactory;
 	nwgui.Window.get().showDevTools();
