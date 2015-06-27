@@ -2,10 +2,12 @@
 	<div ng-controller="MainController">
 		<div id="first-row" layout="row">
 			<div flex="30" id="browser"><projectbrowser></projectbrowser></div>
-			<div flex="70"><viewer></viewer></div>
+			<!-- <div flex="70"><viewer></viewer></div> -->
+			<div flex="70" ui-view="viewer"></div>
 		</div>
 		<div id="second-row" layout="row">
-			<div flex="100"><scrubber advance="example()"></scrubber></div>
+		    <div flex="100" ui-view="scrubber"></div>
+			<!-- <div flex="100"><scrubber advance="example()"></scrubber></div> -->
 		</div>
 	</div>
 </div>

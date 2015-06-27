@@ -80,6 +80,8 @@
 						//if node label clicks,
 						scope[treeId].selectNodeLabel = scope[treeId].selectNodeLabel || function( selectedNode ){
 
+							scope.goToFile(selectedNode.path)
+
 							// only highlight if file, not folder 
 							if (!selectedNode.children) {
 								//remove highlight from previous node

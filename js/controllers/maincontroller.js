@@ -7,7 +7,7 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
 	$scope.editor = "nothing";
 	$scope.showFileTab = false;
 	// Gets all keyframes
-	$scope.getall = KeyframeFactory.getAllKeyframes();
+	// $scope.getall = KeyframeFactory.getAllKeyframes();
 	$scope.framesArray = "empty";
 	$scope.branchName = "branch name goes here";
 	$scope.fileName = "filename goes here";
@@ -16,17 +16,9 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
 	$scope.playFrame = "empty";
 
 	$scope.toggleActive = function() {
-		// console.log("scope.showFileTab", $scope.showFileTab);
-		// console.log("NG CLICK");
-	    
 	    $scope.showFileTab = $scope.showFileTab === false ? true: false;
-	    // console.log("scope.showFileTab", $scope.showFileTab);
 	};
-
-	// $scope.example = function () {
-	// 	console.log("for isolate scope test");
-	// };
-
+	
 	// Opens debugger window
 	var nwgui = nwguiFactory;
 	nwgui.Window.get().showDevTools();
