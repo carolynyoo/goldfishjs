@@ -13,7 +13,7 @@ var dbPath = path.join(appPath, 'db/models');
 
 var dbFactory = require(dbPath);
 
-var Keyframe = dbFactory.setDb(appPath);
+var Keyframe = dbFactory.setDb('/Users/carolynyoo/Fullstack/wikistack');
 
 // Boot up the Angular App
 // var app = angular.module('gitplayback', ['ui.router', 'ui.ace']);

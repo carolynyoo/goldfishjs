@@ -3,7 +3,7 @@ var storagePath = path.join(process.env.PWD, "db","storage.db");
 var storagePath = path.join(__dirname, "..", "storage.db");
 console.log("pwd: ", process.env.PWD); 
 var pwd = process.env.PWD+"/";
-var gitIgnore = path.join(process.env.PWD, ".gitignore"); 
+// var gitIgnore = path.join(process.env.PWD, ".gitignore"); 
 
 var nodeCLI = require("shelljs-nodecli");
 var fs = require("fs");
@@ -14,24 +14,33 @@ var minimatch = require('minimatch');
 var PromisifyMe = require('promisify-me');
 var DataStore = PromisifyMe(require('nedb'), 'nedb');
 
-function setDb (dir) {
+var setDb = function (dir) {
   console.log(path.join(dir, 'nedbstorage.db'));
-  var db = new Datastore({filename: path.join(dir, 'nedbstorage.db'), autoload: true});
+  var db = new DataStore({filename: path.join(dir, 'nedbstorage.db'), autoload: true});
   watcher(db, dir); 
   return db; 
 }
 
-function watcher (db, dir) {
+var watcher = function (db, dir) {
   chokidar.watch(dir, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
     console.log('WATCHER: ', event, path);
-    var globsToIgnore = gitignoreParse(gitIgnore);
-    globsToIgnore.push('**/.git/**');
+    var globsToIgnore = []; 
+    try {
+      var stats = fs.lstatSync(dir+'/.gitignore');
+      if(stats.isFile()) {
+        globsToIgnore = gitignoreParse(dir+"/.gitignore");
+      }
+    }
+    catch (e) {
+      
+    }
+    globsToIgnore.push('**/.git/**', '*.db', 'nedbstorage.db', 'nedbstorage.db~');
     for (var i=0; i<globsToIgnore.length; i++) {
-      if (minimatch(path.split(pwd)[1], globsToIgnore[i])) {
+      if (minimatch(path.split(dir+"/")[1], globsToIgnore[i])) {
         return;
       }
     }
-    readFile(event, path, db); 
+    readFile(event, path, db, dir); 
   });
 }
 
@@ -39,10 +48,12 @@ function watcher (db, dir) {
 // path.join the dir and filename 
 // var db = new DataStore({ filename: 'nedbstorage.db', autoload: true });
 
-function readFile (event, filepath, db) {
+var readFile = function (event, filepath, db, dir) {
   fs.readFile(filepath, "utf-8", function(err, text) {
   
+  // Redo, currently execs on PWD but needs to be on fed in directory
   // Reads last commit hash for current branch
+  nodeCLI.exec("cd", dir);
   var lastCommit = nodeCLI.exec("git", "rev-parse","head", {async:true});
   lastCommit.stdout.on('data', function(lastcommit){
 
@@ -61,7 +72,7 @@ function readFile (event, filepath, db) {
             text_state: text,
             event_type: event,
             last_commit: lastcommit,
-            last_commit_time: committime, 
+            last_commit_time: committime,
             prev_keyframe: null,
             next_keyframe: null,
             branch_name: branchname,
@@ -86,7 +97,6 @@ var addToTail = function (newKeyframe, filepath, db) {
   // var = oldKeyFrame is result of first line --> createKeyframe()
   // update oldKeyFrame.next_keyframe = newKeyFrame.ID
   // update newKeyFrame.prev_keyframe = oldKeyFrame.ID
-
   db.find({ filename: filepath }).sort({ createdAt: -1 }).limit(2).exec(function (err, docs) {
     if (docs.length<2) {
       return;

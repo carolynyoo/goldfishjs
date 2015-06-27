@@ -15,9 +15,8 @@ dropbox.ondragleave = function () { this.className = ''; return false; };
 dropbox.ondrop = function (e) {
   e.preventDefault();
 
-  for (var i = 0; i < e.dataTransfer.files.length; ++i) {
-    window.globalVar = e.dataTransfer.files[i].path;
-    console.log(e.dataTransfer.files[i].path);
-  }
+  // assuming one directory is dropped
+  dbFactory.setDb(e.dataTransfer.files[0].path);
+  
   return false;
 };
