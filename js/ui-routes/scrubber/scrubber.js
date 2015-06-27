@@ -40,21 +40,20 @@ app.directive('scrubber', function() {
 	        	KeyframeFactory.getFileKeyframes(file)
 					.then(function(keyframes) {
 			        	$scope.keyframes = keyframes;
-			        	$scope.currentKeyframe = keyframes[keyframes.length - 1];
-			        	$scope.keyframeIndex = $scope.getKeyframeIndex($scope.currentKeyframe);
+			        	$scope.updatePointers(null, "end");
 			        	// $scope.goToKeyframe();
 			        	// $scope.$apply($scope.keyframeIndex);
-			        	console.log("# of Frames: ", keyframes.length);
-			        	console.log("Frame Index: ", $scope.keyframeIndex);
+			        	console.log("File Load: # of Frames: ", keyframes.length);
+			        	console.log("File Load: Frame Index: ", $scope.keyframeIndex);
 					}).catch(function (err) {
-						console.log("Scrubber: Single File Keyframe error in retrieval: ", err);
+						console.log("Scrubber: Error retrieving File Keyframes: ", err);
 					});
 	        };
 
 	        CommLinkFactory.onBrowserUpdate($scope, onFilebrowserUpdateHandler);
 			
 	        $scope.goToKeyframe = function () {
-	        	console.log("goToKeyframe $scope.goToKeyframe", $scope.keyframeIndex);
+	        	console.log("NG-CHANGE/CLICK on SLIDER: ", $scope.keyframeIndex);
 	        	$scope.pause();
 	        	$scope.currentKeyframe = $scope.keyframes[$scope.keyframeIndex];
 
@@ -68,13 +67,12 @@ app.directive('scrubber', function() {
 				}
 	        	console.log("goToKeyframe $scope.currentKeyframe", $scope.currentKeyframe);
 				$scope.broadcastKeyframeSelected();
-
 	        };
 
 			$scope.nextKeyframe = function(keyframe){
 				$scope.isFirstFrame = false;
 				$scope.keyframeIndex = $scope.getKeyframeIndex(keyframe);
-				// $scope.$apply($scope.keyframeIndex);
+				$scope.$apply($scope.keyframeIndex);
 
 				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
 			    

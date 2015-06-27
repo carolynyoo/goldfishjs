@@ -5,7 +5,7 @@
 	      <div flex="10" layout layout-align="center center">
 	        <span class="md-body-1">file history</span>
 	      </div>
-	      <md-slider flex class="md-primary" md-discrete ng-model="keyframeIndex" ng-click="goToKeyframe()" step="1" min="0" max="{{keyframes.length-1}}" aria-label="keyframe">
+	      <md-slider flex class="md-primary" md-discrete ng-model="keyframeIndex" ng-change="goToKeyframe()" step="1" min="0" max="{{keyframes.length-1}}" aria-label="keyframe">
 	      </md-slider>
 		</div>
 	</md-content>
