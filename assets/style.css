@@ -18,7 +18,7 @@ span.md-flex {
 
 /* Ace Editor */
 .ace_editor { 
-	height: 66vh !important; 
+	height: 72vh !important; 
 }
 
 /* Truncate file from overflowing */
@@ -194,7 +194,7 @@ a.active.trigger {
 }
 
 #first-row #browser {
-	max-height: 66vh;
+	max-height: 72vh;
   overflow-y: scroll;
   background-color: #eee;
 }
@@ -229,4 +229,10 @@ ng-md-icon svg {
 
 section#playhead {
 	margin-top: 20px;
+}
+
+#slider {
+	padding: 16px;
+	padding-top: 20px;
+	padding-bottom: 0px;
 }

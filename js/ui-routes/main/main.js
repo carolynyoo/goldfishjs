@@ -25,9 +25,17 @@ app.config(function ($stateProvider) {
     		}
     	},
     	resolve: {
-    		keyframes: function(KeyframeFactory, $stateParams) {
+    		keyframes: function(KeyframeFactory, $stateParams, Errors) {
     			var filename = $stateParams.file.replace(/%2F/g,'/');
 	    		return KeyframeFactory.getFileKeyframes(filename);
+	    		// .then(function(keyframes) {
+	    		// 	if(!keyframes || !keyframes.length) { throw new Error("no keyframes for this file"); }
+	    		// 	return keyframes;
+	    		// })
+	    		// .catch(function(err) {
+	    		// 	Errors.add(err);
+	    		// 	throw err;
+	    		// });
 	    	},
 	    },
     	

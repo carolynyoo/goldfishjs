@@ -81,7 +81,9 @@ app.directive('scrubber', function() {
 
 				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
 
-			    if (($scope.keyframes.length - $scope.keyframeIndex) < 10) {
+		    	console.log("kf.length: ", $scope.keyframes.length);
+		    	console.log("kf.index:  ", $scope.keyframeIndex);
+			    if ((($scope.keyframes.length - 1) - $scope.keyframeIndex) <= 10) {
 			    	$scope.updatePointers(null, "end");
 			    } else {
 				    $scope.updatePointers(10, "advance");
@@ -96,7 +98,7 @@ app.directive('scrubber', function() {
 
 				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
 			    
-			    if ($scope.keyframeIndex < 10) {
+			    if ($scope.keyframeIndex <= 10) {
 			    	$scope.updatePointers(null, "start");
 			    } else {
 				    $scope.updatePointers(10);

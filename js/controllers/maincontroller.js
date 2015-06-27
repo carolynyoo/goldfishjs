@@ -1,5 +1,5 @@
-app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory, GitDiffFactory) {
-	
+app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory, GitDiffFactory, Errors) {
+	$scope.errors = Errors.errors;
 	// $scope.framesArray = ['nothing'];
 	// $scope.currentFrame = "no current frame";
 	$scope.firstFrame = "no current frame";
