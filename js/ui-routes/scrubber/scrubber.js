@@ -147,7 +147,7 @@ app.directive('scrubber', function() {
 	     			$scope.isFirstFrame = false;
 	     			$scope.playIntervalId = setInterval(function () {
 		     			$scope.nextKeyframe($scope.currentKeyframe);
-	     			}, 500);
+	     			}, 250);
      		};
 
      		$scope.pause = function () {
