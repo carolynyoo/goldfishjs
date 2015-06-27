@@ -7,7 +7,7 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
 	$scope.editor = "nothing";
 	$scope.showFileTab = false;
 	// Gets all keyframes
-	$scope.getall = KeyframeFactory.getAllKeyframes();
+	// $scope.getall = KeyframeFactory.getAllKeyframes();
 	$scope.framesArray = "empty";
 	$scope.branchName = "branch name goes here";
 	$scope.fileName = "filename goes here";
