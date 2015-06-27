@@ -5,22 +5,38 @@
 	      <div flex="10" layout layout-align="center center">
 	        <span class="md-body-1">file history</span>
 	      </div>
-	      <md-slider flex class="md-primary" md-discrete ng-model="keyframe" step="1" min="1" max="100" aria-label="keyframe">
+	      <md-slider
+            flex 
+            class="md-primary" 
+            md-discrete 
+            ng-disabled="keyframes.length==0" 
+            ng-model="keyframeIndex" 
+            ng-change="goToKeyframe()" 
+            step="1" 
+            min="0" 
+            max="{{keyframes.length-1}}" 
+            aria-label="keyframe">
 	      </md-slider>
 		</div>
 	</md-content>
 
 	<!-- Scrubber Navigation -->
     <section layout="row" layout-sm="column" layout-align="center center">
-        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isFirstFrame" ng-click="backTenFrames(currentKeyframe)" aria-label="skip_previous">
+        <!-- Move into the Past -->
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="keyframes.length==0 || isFirstFrame" ng-click="backTenFrames(currentKeyframe)" aria-label="skip_previous">
            	<ng-md-icon icon="skip_previous" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
-        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isFirstFrame" ng-click="previousKeyframe(currentKeyframe)" aria-label="play_reverse">
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="keyframes.length==0 || isFirstFrame" ng-click="previousKeyframe(currentKeyframe)" aria-label="play_reverse">
         	<ng-md-icon icon="keyboard_arrow_left" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
-        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" ng-click="play()" aria-label="play_arrow">
+        <!-- Play / Pause -->
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" ng-click="play()" ng-hide="isPlaying" aria-label="play_arrow">
         	<ng-md-icon icon="play_arrow" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
+        <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" ng-click="pause()" ng-hide="!isPlaying" aria-label="pause">
+            <ng-md-icon icon="pause" style="fill: #fff" size="32"></ng-md-icon>
+        </md-button>
+        <!-- Move into the Future -->
         <md-button class="md-fab md-mini md-primary md-hue-2" ng-disabled="isLastFrame" ng-click="nextKeyframe(currentKeyframe)" aria-label="keyboard_arrow_right">
         	<ng-md-icon icon="keyboard_arrow_right" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
@@ -28,14 +44,14 @@
         	<ng-md-icon icon="skip_next" style="fill: #fff" size="32"></ng-md-icon>
         </md-button>
     </section> 
-
+<!-- 
     <section id="playhead" layout="row" layout-sm="column" layout-align="center center">
     <label for=KeyframeScrubber>Adjust Playhead</label>
 	<input type=range id="KeyframeScrubber" min=0 value=20 max=$scope.framesArray.length step=1 ng-model="currentFrameID" ng-change="$parent.advanceFrame(currentFrameID, currentFrame)">
 	<output for=KeyframeScrubber id='playhead'>{{currentFrameID}}</output>
     <br/>
 	<button ng-click="broadcastKeyframeSelected()">Simulate Keyframe Click</button>
-    </section>
+    </section> -->
 <!--     <fileinfo></fileinfo> -->
 
     <!-- refactor into ng-repeat later -->

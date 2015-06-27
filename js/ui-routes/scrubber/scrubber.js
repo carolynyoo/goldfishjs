@@ -7,61 +7,52 @@ app.directive('scrubber', function() {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/ui-routes/scrubber/scrubber.html',
-		scope: {},
+		// scope: {},
 		controller: function ($scope, CommLinkFactory, KeyframeFactory, GitDiffFactory) {
 
-			$scope.keyframes = [];
+			// $scope.keyframes = [];
 			$scope.diffsArray = [];
 			$scope.currentKeyframe = {};
+			$scope.keyframeIndex = '';
 
 			// Variables used to enable/disable scrubber buttons
 			$scope.isFirstFrame = false;
 			$scope.isLastFrame = false;
-
-			var onKeyframeUpdateHandler = function() {
-	            $scope.keyframes = KeyframeFactory.getAllKeyframes();
-	        };
-
-	        CommLinkFactory.onDataUpdated($scope, onKeyframeUpdateHandler);
+			$scope.isPlaying = false;
 
 	        // On scrubber click, will broadcast the selected keyframe via commLink to other directives that are listening.
 			$scope.broadcastKeyframeSelected = function () {
-				console.log("Directive: scrubber keyframe select button clicked: ");
 				CommLinkFactory.updateScrubber($scope.currentKeyframe);
 			};
 			
-	        // Listener registers when the file browser is updated.
-	        var onFilebrowserUpdateHandler = function (file) {
-	        	console.log("Pinged from the file browser:", file);
-	        	KeyframeFactory.getFileKeyframes(file)
-					.then(function(keyframes) {
-			        	$scope.currentKeyframe = keyframes[keyframes.length - 1];
-			        	$scope.keyframes = keyframes;
-					}).catch(function (err) {
-						console.log("Scrubber: Single File Keyframe error in retrieval: ", err);
-					});
+	        $scope.goToKeyframe = function () {
+	        	$scope.pause();
+	        	$scope.currentKeyframe = $scope.keyframes[$scope.keyframeIndex];
+
+				$scope.isLastFrame = false;
+				$scope.isFirstFrame = false;
+				if ($scope.keyframeIndex === 0) {
+					$scope.isFirstFrame = true;
+				}
+				if ($scope.keyframeIndex === $scope.keyframes.length-1) {
+					$scope.isLastFrame = true;
+				}
+				$scope.broadcastKeyframeSelected();
 	        };
 
-	        CommLinkFactory.onBrowserUpdate($scope, onFilebrowserUpdateHandler);
-			
 			$scope.nextKeyframe = function(keyframe){
 				$scope.isFirstFrame = false;
-				var keyframeIndex = $scope.getKeyframeIndex(keyframe);
+				$scope.keyframeIndex = $scope.getKeyframeIndex(keyframe);
+				$scope.$apply($scope.keyframeIndex);
 
 				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
-
-			    // console.log("keyframe:", keyframe);
-			    // console.log("keyframe:", $scope.keyframes);
-			    // console.log("$scope.diffsArray : ", $scope.diffsArray);
 			    
-			    if (keyframeIndex === $scope.keyframes.length - 1){
+			    if ($scope.keyframeIndex === $scope.keyframes.length - 1){
 			    	console.log("@ Last Keyframe");
-					$scope.currentKeyframe = $scope.keyframes[$scope.keyframes.length - 1];
-					$scope.isLastFrame = true;
-					console.log("nextKeyframe executed, index is: ", keyframeIndex);
+			    	$scope.updatePointers(null, "end");
+					$scope.pause();
 			    } else {
-				    $scope.currentKeyframe = $scope.keyframes[keyframeIndex + 1];
-					console.log("nextKeyframe executed, index is: ", keyframeIndex);
+				    $scope.updatePointers(1, "advance");
 				}
 
 				$scope.broadcastKeyframeSelected();
@@ -69,45 +60,31 @@ app.directive('scrubber', function() {
 
 			$scope.previousKeyframe = function(keyframe) {
 				$scope.isLastFrame = false;
-				var keyframeIndex = $scope.getKeyframeIndex(keyframe);
+				$scope.keyframeIndex = $scope.getKeyframeIndex(keyframe);
 
 				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
-
-			    // console.log("keyframe:", keyframe);
-			    // console.log("keyframe:", $scope.keyframes);
-			    // console.log("$scope.diffsArray : ", $scope.diffsArray);
 			    
-			    if (keyframeIndex === 0){
+			    if ($scope.keyframeIndex === 0){
 			    	console.log("@ First Keyframe");
-					$scope.currentKeyframe = $scope.keyframes[0];
-					$scope.isFirstFrame = true;
-					console.log("previousKeyframe executed, index is: ", keyframeIndex);
+			    	$scope.updatePointers(null, "start");
+					$scope.pause();
 			    } else {
-				    $scope.currentKeyframe = $scope.keyframes[keyframeIndex - 1];
-				    console.log("New Current Keyframe:", $scope.currentKeyframe);
-					console.log("previousKeyframe executed, index is: ", keyframeIndex);
+				    $scope.updatePointers(1);
 				}
 
 				$scope.broadcastKeyframeSelected();
 			};
 
 	        $scope.advanceTenFrames = function(keyframe){
-	        	$scope.isLastFrame = false;
-				var keyframeIndex = $scope.getKeyframeIndex(keyframe);
+	        	$scope.isFirstFrame = false;
+				$scope.keyframeIndex = $scope.getKeyframeIndex(keyframe);
 
 				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
 
-			    
-			    if (($scope.keyframes.length - keyframeIndex) < 10) {
-			    	keyframeIndex = $scope.keyframes.length;
-			    	$scope.currentKeyframe = $scope.keyframes[$scope.keyframes.length-1];
-				    console.log("Less than ten frames remaining, default to last frame:", $scope.currentKeyframe);
-					console.log("advanceTenFrames executed, index is: ", keyframeIndex);
-					$scope.isLastFrame = true;
+			    if (($scope.keyframes.length - $scope.keyframeIndex) < 10) {
+			    	$scope.updatePointers(null, "end");
 			    } else {
-				    $scope.currentKeyframe = $scope.keyframes[keyframeIndex + 10];
-				    // console.log("New Current Keyframe:", $scope.currentKeyframe);
-					console.log("advanceTenFrames executed, index is: ", keyframeIndex);
+				    $scope.updatePointers(10, "advance");
 				}
 
 				$scope.broadcastKeyframeSelected();
@@ -115,20 +92,14 @@ app.directive('scrubber', function() {
 
 	        $scope.backTenFrames = function(keyframe){
 	        	$scope.isLastFrame = false;
-				var keyframeIndex = $scope.getKeyframeIndex(keyframe);
+				$scope.keyframeIndex = $scope.getKeyframeIndex(keyframe);
 
 				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
-
 			    
-			    if (keyframeIndex < 10) {
-			    	keyframeIndex = 0;
-			    	$scope.currentKeyframe = $scope.keyframes[0];
-				    console.log("Less than ten frames remaining, default to first frame:", $scope.currentKeyframe);
-					console.log("previousKeyframe executed, index is: ", keyframeIndex);
-					$scope.isFirstFrame = true;
+			    if ($scope.keyframeIndex < 10) {
+			    	$scope.updatePointers(null, "start");
 			    } else {
-				    $scope.currentKeyframe = $scope.keyframes[keyframeIndex - 10];
-					console.log("previousKeyframe executed, index is: ", keyframeIndex);
+				    $scope.updatePointers(10);
 				}
 
 				$scope.broadcastKeyframeSelected();
@@ -140,16 +111,38 @@ app.directive('scrubber', function() {
 
     		$scope.playIntervalId = {};
 
-     		$scope.play = function (seconds) {
+     		$scope.play = function () {
      			//seconds is a variable we should use at a later time to allow speed adjustment
      			// var delay = seconds * 1000;
-
-     			$scope.playIntervalId = setInterval($scope.nextKeyframe($scope.currentKeyframe), 1000);
+	     			$scope.isPlaying = true;
+	     			$scope.isFirstFrame = false;
+	     			$scope.playIntervalId = setInterval(function () {
+		     			$scope.nextKeyframe($scope.currentKeyframe);
+	     			}, 250);
      		};
 
      		$scope.pause = function () {
-     			clearInterval($scope.playIntervalId);
+     			$scope.isPlaying = false;
+     			$scope.$apply(clearInterval($scope.playIntervalId));
      		};
+
+     		$scope.updatePointers = function (step, position) {
+     			if (position === "advance") {
+     				$scope.keyframeIndex += step;
+     			} else if (position === "start") {
+     				$scope.keyframeIndex = 0;
+     				$scope.isFirstFrame = true;
+     			} else if (position === "end") {
+     				$scope.keyframeIndex = $scope.keyframes.length-1;
+     				$scope.isLastFrame = true;
+     			} else {
+     				$scope.keyframeIndex -= step;
+     			}
+     			
+     			$scope.currentKeyframe = $scope.keyframes[$scope.keyframeIndex];
+				$scope.broadcastKeyframeSelected();
+     		};
+     		$scope.updatePointers(null, "end");
 
 		}
 	};
