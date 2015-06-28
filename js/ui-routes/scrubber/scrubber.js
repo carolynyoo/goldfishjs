@@ -13,6 +13,7 @@ app.directive('scrubber', function() {
 			// $scope.keyframes = [];
 			$scope.diffsArray = [];
 			$scope.currentKeyframe = {};
+			$scope.priorFrame = {};
 			$scope.keyframeIndex = '';
 
 			// Variables used to enable/disable scrubber buttons
@@ -45,7 +46,6 @@ app.directive('scrubber', function() {
 				$scope.keyframeIndex = $scope.getKeyframeIndex(keyframe);
 				$scope.$apply($scope.keyframeIndex);
 
-				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
 			    
 			    if ($scope.keyframeIndex === $scope.keyframes.length - 1){
 			    	console.log("@ Last Keyframe");
@@ -55,6 +55,9 @@ app.directive('scrubber', function() {
 				    $scope.updatePointers(1, "advance");
 				}
 
+				$scope.diffsArray = GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state);
+				console.log("---> Scrubber: Diffs Array", $scope.diffsArray);
+				
 				$scope.broadcastKeyframeSelected();
 			};
 
@@ -129,6 +132,8 @@ app.directive('scrubber', function() {
      		};
 
      		$scope.updatePointers = function (step, position) {
+     			$scope.priorFrame = $scope.currentKeyframe;
+
      			if (position === "advance") {
      				$scope.keyframeIndex += step;
      			} else if (position === "start") {
