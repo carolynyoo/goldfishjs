@@ -13,7 +13,6 @@ var dbPath = path.join(appPath, 'db/models');
 
 var dbFactory = require(dbPath);
 
-// var Keyframe = dbFactory.setDb('/Users/carolynyoo/Fullstack/wikistack');
 // var Keyframe = dbFactory.setDb(appPath);
 
 // Boot up the Angular App

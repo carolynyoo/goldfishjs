@@ -1,4 +1,4 @@
-app.factory('KeyframeFactory', function (CommLinkFactory) {
+app.factory('KeyframeFactory', ['Keyframe', function (Keyframe, CommLinkFactory) {
 	var getAllKeyframes = function() {
 		return Keyframe.find({}).sort({createdAt:1}).exec()
 		    .then(function(keyframes) {
@@ -31,4 +31,4 @@ app.factory('KeyframeFactory', function (CommLinkFactory) {
 		insertKeyframe: insertKeyframe,
 		deleteKeyframe: deleteKeyframe
     };
-});
+}]);
