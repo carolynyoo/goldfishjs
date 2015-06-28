@@ -24,5 +24,4 @@ app.controller('MainController', function($scope, KeyframeFactory, nwguiFactory,
 	nwgui.Window.get().showDevTools();
 
 	//var folder_view = folderviewFactory;
-
 });

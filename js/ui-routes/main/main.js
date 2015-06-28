@@ -4,17 +4,17 @@
 app.config(function ($stateProvider) {
 
     $stateProvider.state('main', {
-        url: '',
+        url: '/main',
         controller: 'MainController',
-        templateUrl: 'js/ui-routes/main/main.html',
-        resolve: {
-          fileTree: function(DirTreeFactory, DropDirectoryFactory) {
-            return DirTreeFactory.getTree(DropDirectoryFactory.getDir());
-          }
-        }
+        templateUrl: 'js/ui-routes/main/main.html'
+        // resolve: {
+        //   fileTree: function(DirTreeFactory, DropDirectoryFactory) {
+        //     return process.cwd();
+        //   }
+        // }
     })
     .state('main.file', {
-    	url: '/:file',
+    	url: '/main/:file',
     	views: {
     		viewer: {
     			template: '<viewer></viewer>',
