@@ -15,8 +15,8 @@ var PromisifyMe = require('promisify-me');
 var DataStore = PromisifyMe(require('nedb'), 'nedb');
 
 var setDb = function (dir) {
-  console.log(path.join(dir, 'nedbstorage.db'));
-  var db = new DataStore({filename: path.join(dir, 'nedbstorage.db'), autoload: true});
+  console.log(path.join(dir, '.nedbstorage.db'));
+  var db = new DataStore({filename: path.join(dir, '.nedbstorage.db'), autoload: true});
   watcher(db, dir); 
   return db; 
 }
@@ -34,7 +34,7 @@ var watcher = function (db, dir) {
     catch (e) {
       
     }
-    globsToIgnore.push('**/.git/**', '*.db', 'nedbstorage.db', 'nedbstorage.db~');
+    globsToIgnore.push('**/.git/**', '*.db', '.nedbstorage.db', 'nedbstorage.db~');
     for (var i=0; i<globsToIgnore.length; i++) {
       if (minimatch(path.split(dir+"/")[1], globsToIgnore[i])) {
         return;
@@ -50,10 +50,10 @@ var watcher = function (db, dir) {
 
 var readFile = function (event, filepath, db, dir) {
   fs.readFile(filepath, "utf-8", function(err, text) {
-  
+
   // Redo, currently execs on PWD but needs to be on fed in directory
   // Reads last commit hash for current branch
-  nodeCLI.exec("cd", dir);
+  process.chdir(dir);
   var lastCommit = nodeCLI.exec("git", "rev-parse","head", {async:true});
   lastCommit.stdout.on('data', function(lastcommit){
 

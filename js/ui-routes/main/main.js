@@ -6,7 +6,12 @@ app.config(function ($stateProvider) {
     $stateProvider.state('main', {
         url: '',
         controller: 'MainController',
-        templateUrl: 'js/ui-routes/main/main.html'
+        templateUrl: 'js/ui-routes/main/main.html',
+        resolve: {
+          fileTree: function(DirTreeFactory, DropDirectoryFactory) {
+            return DirTreeFactory.getTree(DropDirectoryFactory.getDir());
+          }
+        }
     })
     .state('main.file', {
     	url: '/:file',

@@ -63,7 +63,3 @@ app.factory('DirTreeFactory', function () {
     getTree: getTree
     }; 
 });
-
-
-
-

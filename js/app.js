@@ -13,7 +13,8 @@ var dbPath = path.join(appPath, 'db/models');
 
 var dbFactory = require(dbPath);
 
-var Keyframe = dbFactory.setDb('/Users/carolynyoo/Fullstack/wikistack');
+// var Keyframe = dbFactory.setDb('/Users/carolynyoo/Fullstack/wikistack');
+// var Keyframe = dbFactory.setDb(appPath);
 
 // Boot up the Angular App
 // var app = angular.module('gitplayback', ['ui.router', 'ui.ace']);
@@ -25,3 +26,4 @@ app.config(function ($urlRouterProvider, $locationProvider) {
     // If we go to a URL that ui-router doesn't have registered, go to the "/" url.
     $urlRouterProvider.otherwise('/');
 });
+app.value('Keyframe', dbFactory.setDb(appPath));
