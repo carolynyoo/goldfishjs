@@ -34,7 +34,9 @@ app.directive('viewer', function() {
 
 	  		$scope.aceChanged = function (keyframe) {
 	  			// $scope.editor.getSession().removeMarker(marker);
-	  			$scope.editor.addMarker(new Range(1, 1, 5, 5), "deletion", "line", true);
+	  			var marker = new Range(2, 2, 5, 5);
+	  			console.log("Ranger Marker: ", marker);
+	  			$scope.editor.getSession().addMarker(marker, "deletion", "text");
 	  			// $scope.editor.addMarker(new Range(), "addition", "line", true);
 			    $scope.mode = $scope.modelist.getModeForPath(keyframe.filename).mode;
 	  	   		$scope.editor.session.setMode($scope.mode);

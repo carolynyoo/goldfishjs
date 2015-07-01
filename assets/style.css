@@ -247,6 +247,7 @@ section#playhead {
 	position: absolute;
 	width: 100% !important;
 	left: 0 !important;
+	z-index: 50;
 }
 
 .addition {
@@ -254,6 +255,7 @@ section#playhead {
 	position: absolute;
 	width: 100% !important;
 	left: 0 !important;
+	z-index: 50;
 }
 
 
