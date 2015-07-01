@@ -13,6 +13,8 @@ app.directive('viewer', function() {
 			var Range = ace.require("ace/range").Range;
 			console.log("ACE Range: ", Range);
 			$scope.mode = "";
+			$scope.additionMarker = null;
+			$scope.deletionMarker = null;
 
 			var onScrubberUpdateHandler = function (keyframe) {
 				$scope.aceChanged(keyframe);
@@ -33,11 +35,12 @@ app.directive('viewer', function() {
 		  	};
 
 	  		$scope.aceChanged = function (keyframe) {
-	  			// $scope.editor.getSession().removeMarker(marker);
-	  			var marker = new Range(2, 2, 5, 5);
-	  			console.log("Ranger Marker: ", marker);
-	  			$scope.editor.getSession().addMarker(marker, "deletion", "text");
-	  			// $scope.editor.addMarker(new Range(), "addition", "line", true);
+	  			var marker = null;
+	  			$scope.editor.getSession().removeMarker($scope.additionMarker);
+	  			$scope.editor.getSession().removeMarker($scope.deletionMarker);
+	  			$scope.additionMarker = $scope.editor.getSession().addMarker(new Range(7, 7, 10, 10), "addition", "line");
+	  			$scope.deletionMarker = $scope.editor.getSession().addMarker(new Range(2, 2, 5, 5), "deletion", "line");
+	  			
 			    $scope.mode = $scope.modelist.getModeForPath(keyframe.filename).mode;
 	  	   		$scope.editor.session.setMode($scope.mode);
 	  	   		$scope.editor.setValue(keyframe.text_state, 1);

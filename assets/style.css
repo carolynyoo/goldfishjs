@@ -243,7 +243,7 @@ section#playhead {
 }
 
 .deletion {
-	background: rgba(255, 50, 50, 0.1);
+	background: rgba(255, 66, 66, 0.6);
 	position: absolute;
 	width: 100% !important;
 	left: 0 !important;
@@ -251,7 +251,7 @@ section#playhead {
 }
 
 .addition {
-	background: rgba(50, 255, 50, 0.1);
+	background: rgba(0, 149, 30, 0.8);
 	position: absolute;
 	width: 100% !important;
 	left: 0 !important;
