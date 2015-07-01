@@ -10,6 +10,7 @@ app.directive('viewer', function() {
 
 			$scope.editor = {};
 			$scope.modelist = ace.require("ace/ext/modelist");
+			var Range = ace.require("ace/range").Range;
 			$scope.mode = "";
 
 			var onScrubberUpdateHandler = function (keyframe) {
