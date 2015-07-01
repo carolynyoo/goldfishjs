@@ -1,13 +1,13 @@
-var jsDiff = require('jsDiff');
+var jsdiff = require('diff');
 
 app.factory('GitDiffFactory', function(){
 
 	var calculateDiff = function (lastFrame, currentFrame) {
-		console.log("jsDiff: ", jsDiff);
+		console.log("jsdiff: ", jsdiff);
 
-		var diff = jsDiff.diff(lastFrame, currentFrame);
+		var diff = jsdiff.diffLines(lastFrame, currentFrame);
 
-		console.log("jsDiff OBJECT: ", diff);
+		console.log("jsdiff OBJECT: ", diff);
 	};
 
 			// var dmp = new diff_match_patch();
