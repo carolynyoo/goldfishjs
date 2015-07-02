@@ -13,8 +13,8 @@ app.directive('viewer', function() {
 			var Range = ace.require("ace/range").Range;
 			console.log("ACE Range: ", Range);
 			$scope.mode = "";
-			$scope.additionMarker = null;
-			$scope.deletionMarker = null;
+			$scope.additionMarker = [];
+			$scope.deletionMarker = [];
 
 			var onScrubberUpdateHandler = function (keyframe) {
 				$scope.aceChanged(keyframe);
@@ -35,24 +35,35 @@ app.directive('viewer', function() {
 		  	};
 
 	  		$scope.aceChanged = function (keyframe) {
-	  			var marker = null;
 	  			var lineCounter = 0;
 	  			var text = "";
 
 	  			// console.log("DiffMode: ", $scope.diffMode);
 
-	  			$scope.editor.getSession().removeMarker($scope.additionMarker);
-	  			$scope.editor.getSession().removeMarker($scope.deletionMarker);
-	  			
+	  			// console.log("adds before: ", typeof $scope.additionMarker);
+	  			// console.log("adds before: ", $scope.deletionMarker); 
+
 	  			if(keyframe.diffMode) {
-		  			keyframe.diffsArray.forEach(function(changeObj) {
+
+	  				$scope.additionMarker.forEach(function(marker, index){
+		  				$scope.editor.getSession().removeMarker($scope.additionMarker[index]);
+	  				});
+
+	  				$scope.deletionMarker.forEach(function(marker, index){
+		  				$scope.editor.getSession().removeMarker($scope.deletionMarker[index]);
+	  				});
+
+		  			// console.log("adds: ", $scope.additionMarker);
+		  			// console.log("adds: ", $scope.deletionMarker); 
+	  			
+		  			keyframe.diffsArray.forEach(function(changeObj, index) {
 		  				text += changeObj.value;
 
 		  				if(changeObj.added) {
-		  					$scope.additionMarker = $scope.editor.getSession().addMarker(new Range(lineCounter, 0, lineCounter+changeObj.count, 0), "addition", "line");
+		  					$scope.additionMarker[index] = $scope.editor.getSession().addMarker(new Range(lineCounter, 0, lineCounter+changeObj.count, 0), "addition", "line");
 		  				}
 		  				if(changeObj.removed) {
-		  					$scope.deletionMarker = $scope.editor.getSession().addMarker(new Range(lineCounter, 0, lineCounter+changeObj.count, 0), "deletion", "line");
+		  					$scope.deletionMarker[index] = $scope.editor.getSession().addMarker(new Range(lineCounter, 0, lineCounter+changeObj.count, 0), "deletion", "line");
 		  				}
 
 		  				lineCounter += changeObj.count;	

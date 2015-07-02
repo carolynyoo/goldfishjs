@@ -27,6 +27,7 @@ app.directive('scrubber', function() {
 	        // On scrubber click, will broadcast the selected keyframe via commLink to other directives that are listening.
 			$scope.broadcastKeyframeSelected = function () {
 				CommLinkFactory.updateScrubber($scope.currentKeyframe);
+				console.log("Broadcast called once.");
 			};
 			
 	        $scope.goToKeyframe = function () {
@@ -155,7 +156,7 @@ app.directive('scrubber', function() {
      			}
      			
      			$scope.currentKeyframe = $scope.keyframes[$scope.keyframeIndex];
-				$scope.broadcastKeyframeSelected();
+				// $scope.broadcastKeyframeSelected();
      		};
      		$scope.updatePointers(null, "end");
 
