@@ -22,7 +22,7 @@ var setDb = function (dir) {
 }
 
 var watcher = function (db, dir) {
-  chokidar.watch(dir, {ignored: '*.db', ignoreInitial: true}).on('all', function(event, path) {
+  chokidar.watch(dir, {ignored: /[\/\\]\./, ignoreInitial: false}).on('all', function(event, path) {
     console.log('WATCHER: ', event, path);
     var globsToIgnore = []; 
     try {
@@ -35,6 +35,7 @@ var watcher = function (db, dir) {
       
     }
     globsToIgnore.push('**/.git/**', '*.db', '.nedbstorage.db', 'nedbstorage.db~');
+    console.log(path);
     for (var i=0; i<globsToIgnore.length; i++) {
       if (minimatch(path.split(dir+"/")[1], globsToIgnore[i])) {
         return;
