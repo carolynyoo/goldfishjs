@@ -36,10 +36,33 @@ app.directive('viewer', function() {
 
 	  		$scope.aceChanged = function (keyframe) {
 	  			var marker = null;
+	  			var lineCounter = 0;
+	  			var text = "";
+
+	  			console.log("Piggy-Backing Diffs: ", keyframe.diffsArray);
+
 	  			$scope.editor.getSession().removeMarker($scope.additionMarker);
 	  			$scope.editor.getSession().removeMarker($scope.deletionMarker);
-	  			$scope.additionMarker = $scope.editor.getSession().addMarker(new Range(7, 7, 10, 10), "addition", "line");
-	  			$scope.deletionMarker = $scope.editor.getSession().addMarker(new Range(2, 2, 5, 5), "deletion", "line");
+	  			
+	  			// if($scope.diffMode) {
+		  			// keyframe.diffsArray.forEach(function(changeObj) {
+		  			// 	text += changeObj.value;
+
+		  			// 	if(changeObj.added) {
+		  			// 		$scope.additionMarker = $scope.editor.getSession().addMarker(new Range(lineCounter+1, 0, lineCounter+1+changeObj.count, 0), "addition", "line");
+		  			// 	}
+		  			// 	if(changeObj.removed) {
+		  			// 		$scope.deletionMarker = $scope.editor.getSession().addMarker(new Range(lineCounter+1, 0, lineCounter+1+changeObj.count, 0), "deletion", "line");
+		  			// 	}
+
+		  			// 	lineCounter += changeObj.count;	
+		  			// });
+
+	  	   // 			$scope.editor.setValue(text, 1);
+
+	  			// } else {
+	  				
+	  			// }
 	  			
 			    $scope.mode = $scope.modelist.getModeForPath(keyframe.filename).mode;
 	  	   		$scope.editor.session.setMode($scope.mode);

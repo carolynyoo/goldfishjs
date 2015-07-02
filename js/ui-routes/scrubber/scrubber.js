@@ -21,6 +21,9 @@ app.directive('scrubber', function() {
 			$scope.isLastFrame = false;
 			$scope.isPlaying = false;
 
+			// Variables used for varioius modes
+			$scope.diffMode = true;
+
 	        // On scrubber click, will broadcast the selected keyframe via commLink to other directives that are listening.
 			$scope.broadcastKeyframeSelected = function () {
 				CommLinkFactory.updateScrubber($scope.currentKeyframe);
@@ -54,10 +57,12 @@ app.directive('scrubber', function() {
 			    } else {
 				    $scope.updatePointers(1, "advance");
 				}
-
-				$scope.diffsArray = GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state);
-				console.log("---> Scrubber: Diffs Array", $scope.diffsArray);
 				
+				if($scope.diffMode) {
+					$scope.diffsArray = GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state);
+					console.log("---> Scrubber: Diffs Array", $scope.diffsArray);
+					$scope.currentKeyframe.diffsArray = $scope.diffsArray;
+				}
 				$scope.broadcastKeyframeSelected();
 			};
 
