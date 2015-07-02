@@ -38,10 +38,7 @@ app.directive('viewer', function() {
 	  			var lineCounter = 0;
 	  			var text = "";
 
-	  			// console.log("DiffMode: ", $scope.diffMode);
-
-	  			// console.log("adds before: ", typeof $scope.additionMarker);
-	  			// console.log("adds before: ", $scope.deletionMarker); 
+	  			console.log(":::received KEYFRAME: ", keyframe);
 
 	  			if(keyframe.diffMode) {
 
@@ -52,9 +49,6 @@ app.directive('viewer', function() {
 	  				$scope.deletionMarker.forEach(function(marker, index){
 		  				$scope.editor.getSession().removeMarker($scope.deletionMarker[index]);
 	  				});
-
-		  			// console.log("adds: ", $scope.additionMarker);
-		  			// console.log("adds: ", $scope.deletionMarker); 
 	  			
 		  			keyframe.diffsArray.forEach(function(changeObj, index) {
 		  				text += changeObj.value;

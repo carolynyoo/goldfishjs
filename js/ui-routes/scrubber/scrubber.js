@@ -42,7 +42,13 @@ app.directive('scrubber', function() {
 				if ($scope.keyframeIndex === $scope.keyframes.length-1) {
 					$scope.isLastFrame = true;
 				}
+
+				if($scope.diffMode) {
+					$scope.makeDiff();
+				}
+				
 				$scope.broadcastKeyframeSelected();
+				$scope.currentKeyframe.diffsArray = null;
 	        };
 
 			$scope.nextKeyframe = function(keyframe){
@@ -60,14 +66,18 @@ app.directive('scrubber', function() {
 				}
 				
 				if($scope.diffMode) {
-					$scope.diffsArray = GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state);
-					console.log("---> Scrubber: Diffs Array", $scope.diffsArray);
-					$scope.currentKeyframe.diffsArray = $scope.diffsArray;
-					$scope.currentKeyframe.diffMode = $scope.diffMode;
+					$scope.makeDiff();
 				}
+
 				$scope.broadcastKeyframeSelected();
 				$scope.currentKeyframe.diffsArray = null;
 
+			};
+
+			$scope.makeDiff = function () {
+					$scope.diffsArray = GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state);
+					$scope.currentKeyframe.diffsArray = $scope.diffsArray;
+					$scope.currentKeyframe.diffMode = $scope.diffMode;
 			};
 
 			$scope.previousKeyframe = function(keyframe) {
@@ -84,7 +94,12 @@ app.directive('scrubber', function() {
 				    $scope.updatePointers(1);
 				}
 
+				if($scope.diffMode) {
+					$scope.makeDiff();
+				}
+
 				$scope.broadcastKeyframeSelected();
+				$scope.currentKeyframe.diffsArray = null;
 			};
 
 	        $scope.advanceTenFrames = function(keyframe){
@@ -101,7 +116,12 @@ app.directive('scrubber', function() {
 				    $scope.updatePointers(10, "advance");
 				}
 
+				if($scope.diffMode) {
+					$scope.makeDiff();
+				}
+
 				$scope.broadcastKeyframeSelected();
+				$scope.currentKeyframe.diffsArray = null;
 	        };
 
 	        $scope.backTenFrames = function(keyframe){
@@ -116,7 +136,12 @@ app.directive('scrubber', function() {
 				    $scope.updatePointers(10);
 				}
 
+				if($scope.diffMode) {
+					$scope.makeDiff();
+				}
+
 				$scope.broadcastKeyframeSelected();
+				$scope.currentKeyframe.diffsArray = null;
 	        };
 
 	        $scope.getKeyframeIndex = function (keyframe) {
