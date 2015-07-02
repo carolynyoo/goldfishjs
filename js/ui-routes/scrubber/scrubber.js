@@ -62,6 +62,7 @@ app.directive('scrubber', function() {
 					$scope.diffsArray = GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state);
 					console.log("---> Scrubber: Diffs Array", $scope.diffsArray);
 					$scope.currentKeyframe.diffsArray = $scope.diffsArray;
+					$scope.currentKeyframe.diffMode = $scope.diffMode;
 				}
 				$scope.broadcastKeyframeSelected();
 			};

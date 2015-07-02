@@ -39,34 +39,35 @@ app.directive('viewer', function() {
 	  			var lineCounter = 0;
 	  			var text = "";
 
-	  			console.log("Piggy-Backing Diffs: ", keyframe.diffsArray);
+	  			// console.log("Piggy-Backing Diffs: ", keyframe.diffsArray);
+	  			// console.log("DiffMode: ", $scope.diffMode);
 
 	  			$scope.editor.getSession().removeMarker($scope.additionMarker);
 	  			$scope.editor.getSession().removeMarker($scope.deletionMarker);
 	  			
-	  			// if($scope.diffMode) {
-		  			// keyframe.diffsArray.forEach(function(changeObj) {
-		  			// 	text += changeObj.value;
+	  			if(keyframe.diffMode) {
+		  			keyframe.diffsArray.forEach(function(changeObj) {
+		  				text += changeObj.value;
 
-		  			// 	if(changeObj.added) {
-		  			// 		$scope.additionMarker = $scope.editor.getSession().addMarker(new Range(lineCounter+1, 0, lineCounter+1+changeObj.count, 0), "addition", "line");
-		  			// 	}
-		  			// 	if(changeObj.removed) {
-		  			// 		$scope.deletionMarker = $scope.editor.getSession().addMarker(new Range(lineCounter+1, 0, lineCounter+1+changeObj.count, 0), "deletion", "line");
-		  			// 	}
+		  				if(changeObj.added) {
+		  					$scope.additionMarker = $scope.editor.getSession().addMarker(new Range(lineCounter+1, 0, lineCounter+1+changeObj.count, 0), "addition", "line");
+		  				}
+		  				if(changeObj.removed) {
+		  					$scope.deletionMarker = $scope.editor.getSession().addMarker(new Range(lineCounter+1, 0, lineCounter+1+changeObj.count, 0), "deletion", "line");
+		  				}
 
-		  			// 	lineCounter += changeObj.count;	
-		  			// });
+		  				lineCounter += changeObj.count;	
+		  			});
 
-	  	   // 			$scope.editor.setValue(text, 1);
+	  	   			$scope.editor.setValue(text, 1);
 
 	  			// } else {
 	  				
-	  			// }
+	  			}
 	  			
 			    $scope.mode = $scope.modelist.getModeForPath(keyframe.filename).mode;
 	  	   		$scope.editor.session.setMode($scope.mode);
-	  	   		$scope.editor.setValue(keyframe.text_state, 1);
+	  	   		// $scope.editor.setValue(keyframe.text_state, 1);
 	  	   		$scope.editor.navigateFileStart();
 	  	 	};
 
