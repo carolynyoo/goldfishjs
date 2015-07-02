@@ -65,6 +65,8 @@ app.directive('scrubber', function() {
 					$scope.currentKeyframe.diffMode = $scope.diffMode;
 				}
 				$scope.broadcastKeyframeSelected();
+				$scope.currentKeyframe.diffsArray = null;
+
 			};
 
 			$scope.previousKeyframe = function(keyframe) {

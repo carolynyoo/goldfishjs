@@ -39,7 +39,6 @@ app.directive('viewer', function() {
 	  			var lineCounter = 0;
 	  			var text = "";
 
-	  			// console.log("Piggy-Backing Diffs: ", keyframe.diffsArray);
 	  			// console.log("DiffMode: ", $scope.diffMode);
 
 	  			$scope.editor.getSession().removeMarker($scope.additionMarker);
@@ -50,10 +49,10 @@ app.directive('viewer', function() {
 		  				text += changeObj.value;
 
 		  				if(changeObj.added) {
-		  					$scope.additionMarker = $scope.editor.getSession().addMarker(new Range(lineCounter+1, 0, lineCounter+1+changeObj.count, 0), "addition", "line");
+		  					$scope.additionMarker = $scope.editor.getSession().addMarker(new Range(lineCounter, 0, lineCounter+changeObj.count, 0), "addition", "line");
 		  				}
 		  				if(changeObj.removed) {
-		  					$scope.deletionMarker = $scope.editor.getSession().addMarker(new Range(lineCounter+1, 0, lineCounter+1+changeObj.count, 0), "deletion", "line");
+		  					$scope.deletionMarker = $scope.editor.getSession().addMarker(new Range(lineCounter, 0, lineCounter+changeObj.count, 0), "deletion", "line");
 		  				}
 
 		  				lineCounter += changeObj.count;	
