@@ -164,6 +164,7 @@ app.directive('scrubber', function() {
      			} else if (position === "end") {
      				$scope.keyframeIndex = $scope.keyframes.length-1;
      				$scope.isLastFrame = true;
+					$scope.broadcastKeyframeSelected();
      			} else {
      				$scope.keyframeIndex -= step;
      			}
