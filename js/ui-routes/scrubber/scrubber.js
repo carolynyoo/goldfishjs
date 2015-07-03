@@ -170,6 +170,8 @@ app.directive('scrubber', function() {
      			}
      			
      			$scope.currentKeyframe = $scope.keyframes[$scope.keyframeIndex];
+				$scope.broadcastKeyframeSelected();
+     			
      		};
 
      		$scope.makeDiff = function () {
