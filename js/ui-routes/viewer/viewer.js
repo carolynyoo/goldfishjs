@@ -37,8 +37,7 @@ app.directive('viewer', function() {
 	  			var lineCounter = 0;
 	  			var text = "";
 
-	  			// console.log(":::received KEYFRAME: ", keyframe);
-	  			console.log(":::>Viewer: SF.diffMode: ", SettingsFactory.getMode());
+	  			console.log(":::received KEYFRAME: ", keyframe);
 
 	  			if($scope.additionMarker.length >= 1) {
 	  				$scope.additionMarker.forEach(function(marker, index){

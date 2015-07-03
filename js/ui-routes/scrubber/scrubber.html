@@ -47,7 +47,11 @@
     </section> 
 
     <section layout="row" layout-sm="column" layout-align="right right">
-        <md-switch class="md-primary" md-no-ink aria-label="Diff Mode" ng-click="switchDiffMode()">
+        <md-switch 
+            class="md-primary" 
+            md-no-ink aria-label="Diff Mode" 
+            ng-model="diffSwitch" 
+            ng-click="switchDiffMode()">
           Diff Mode
         </md-switch>
     </section>

@@ -22,7 +22,7 @@ app.directive('scrubber', function() {
 			$scope.isPlaying = false;
 
 			// Initialize setting variables
-			// SettingsFactory.getMode() = SettingsFactory.diffMode;
+			$scope.diffSwitch = SettingsFactory.getMode();
 
 			$scope.switchDiffMode = function () {
 				SettingsFactory.switchMode();
@@ -31,6 +31,7 @@ app.directive('scrubber', function() {
 
 	        // On scrubber click, will broadcast the selected keyframe via commLink to other directives that are listening.
 			$scope.broadcastKeyframeSelected = function () {
+				console.log("THIS is the OUTGOING keyframe: ", $scope.currentKeyframe);
 				CommLinkFactory.updateScrubber($scope.currentKeyframe);
 				// console.log("Broadcast called once.");
 			};
@@ -48,11 +49,12 @@ app.directive('scrubber', function() {
 					$scope.isLastFrame = true;
 				}
 
-				if(SettingsFactory.getMode()) {
+				if (SettingsFactory.getMode()) {
 					$scope.makeDiff();
+				} else {
+					$scope.broadcastKeyframeSelected();
 				}
 
-				$scope.broadcastKeyframeSelected();
 				$scope.currentKeyframe.diffsArray = null;
 	        };
 
@@ -60,7 +62,6 @@ app.directive('scrubber', function() {
 				$scope.isFirstFrame = false;
 				$scope.keyframeIndex = $scope.getKeyframeIndex(keyframe);
 				$scope.$apply($scope.keyframeIndex);
-				console.log("---->NEXT - diffmode:     ", SettingsFactory.getMode());				
 
 			    if ($scope.keyframeIndex === $scope.keyframes.length - 1){
 			    	console.log("@ Last Keyframe");
@@ -70,11 +71,12 @@ app.directive('scrubber', function() {
 				    $scope.updatePointers(1, "advance");
 				}
 				
-				if(SettingsFactory.getMode()) {
+				if (SettingsFactory.getMode()) {
 					$scope.makeDiff();
+				} else {
+					$scope.broadcastKeyframeSelected();
 				}
 
-				$scope.broadcastKeyframeSelected();
 				$scope.currentKeyframe.diffsArray = null;
 
 			};
@@ -91,7 +93,7 @@ app.directive('scrubber', function() {
 				    $scope.updatePointers(1);
 				}
 
-				if(SettingsFactory.getMode()) {
+				if (SettingsFactory.getMode()) {
 					$scope.makeDiff();
 				}
 
@@ -111,7 +113,7 @@ app.directive('scrubber', function() {
 				    $scope.updatePointers(10, "advance");
 				}
 
-				if(SettingsFactory.getMode()) {
+				if (SettingsFactory.getMode()) {
 					$scope.makeDiff();
 				}
 
@@ -129,7 +131,7 @@ app.directive('scrubber', function() {
 				    $scope.updatePointers(10);
 				}
 
-				if(SettingsFactory.getMode()) {
+				if (SettingsFactory.getMode()) {
 					$scope.makeDiff();
 				}
 
@@ -175,13 +177,26 @@ app.directive('scrubber', function() {
      			}
      			
      			$scope.currentKeyframe = $scope.keyframes[$scope.keyframeIndex];
-				$scope.broadcastKeyframeSelected();
+				
+     			if(!SettingsFactory.getMode()) {
+					$scope.broadcastKeyframeSelected();
+     			}
 
      		};
 
      		$scope.makeDiff = function () {
-     				$scope.diffsArray = GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state);
-     				$scope.currentKeyframe.diffsArray = $scope.diffsArray;
+     				return GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state)
+     					.then(function(difference) {
+     						$scope.currentKeyframe.diffsArray = difference;
+     						console.log("&&&*** $scope.currentKeyframe.diffsArray :", $scope.currentKeyframe.diffsArray);
+     					}).then(function() {
+							$scope.broadcastKeyframeSelected();
+     					}).catch(function(err) {
+     						console.log("GitDiffFactory Returns Error: ", err);
+     					});
+     				// $scope.currentKeyframe.diffsArray = GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state);
+     				// console.log(">>>>Diffs Made and Attached", $scope.currentKeyframe.diffsArray);
+     				// $scope.currentKeyframe.diffsArray = $scope.diffsArray;
      		};
 
      		$scope.updatePointers(null, "end");
