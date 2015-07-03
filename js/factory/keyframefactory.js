@@ -1,6 +1,6 @@
-app.factory('KeyframeFactory', ['Keyframe', function (Keyframe, CommLinkFactory) {
+app.factory('KeyframeFactory', function (ValuesService, CommLinkFactory) {
 	var getAllKeyframes = function() {
-		return Keyframe.find({}).sort({createdAt:1}).exec()
+		return ValuesService.Keyframe.find({}).sort({createdAt:1}).exec()
 		    .then(function(keyframes) {
 		      // console.log("KeyframeFactory - get all files: ", keyframes);
 		      return keyframes; 
@@ -8,7 +8,7 @@ app.factory('KeyframeFactory', ['Keyframe', function (Keyframe, CommLinkFactory)
 		};
 
 	var getFileKeyframes = function (filename) {
-		return Keyframe.find({ filename: filename }).sort({createdAt:1}).exec()
+		return ValuesService.Keyframe.find({ filename: filename }).sort({createdAt:1}).exec()
 			.then(function(fileKeyframes) {
 				// console.log("KeyframeFactory - get single file:", fileKeyframes);
 				return fileKeyframes;
@@ -31,4 +31,4 @@ app.factory('KeyframeFactory', ['Keyframe', function (Keyframe, CommLinkFactory)
 		insertKeyframe: insertKeyframe,
 		deleteKeyframe: deleteKeyframe
     };
-}]);
+});

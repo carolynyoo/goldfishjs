@@ -37,7 +37,11 @@ var watcher = function (db, dir) {
     globsToIgnore.push('**/.git/**', '*.db', '.nedbstorage.db', 'nedbstorage.db~');
     console.log(path);
     for (var i=0; i<globsToIgnore.length; i++) {
-      if (minimatch(path.split(dir+"/")[1], globsToIgnore[i])) {
+      // Is it dangerous to read everything? Let's discuss  
+      if (dir===path) {
+        readFile(event, path, db, dir);
+      }
+      else if (minimatch(path.split(dir+"/")[1], globsToIgnore[i])) {
         return;
       }
     }

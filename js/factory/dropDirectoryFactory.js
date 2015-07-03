@@ -1,4 +1,4 @@
-app.factory('DropDirectoryFactory', function ($state) {
+app.factory('DropDirectoryFactory', function ($state, ValuesService) {
   var dir = process.env.PWD;
   // prevent default behavior from changing page on dropped file
   window.ondragover = function(e) { 
@@ -18,7 +18,8 @@ app.factory('DropDirectoryFactory', function ($state) {
     e.preventDefault();
 
     // assuming one directory is dropped
-    dbFactory.setDb(e.dataTransfer.files[0].path);
+    // values service 
+    ValuesService.Keyframe = dbFactory.setDb(e.dataTransfer.files[0].path);
     // change directory to dropped directory
     process.chdir(e.dataTransfer.files[0].path);
     console.log("PWD on drop: ", process.cwd());
