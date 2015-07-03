@@ -6,7 +6,7 @@ app.directive('viewer', function() {
 		restrict: 'E',
 		templateUrl: 'js/ui-routes/viewer/viewer.html',
 		// scope: {},
-		controller: function ($scope, CommLinkFactory, KeyframeFactory) {
+		controller: function ($scope, CommLinkFactory, SettingsFactory) {
 
 			$scope.editor = {};
 			$scope.modelist = ace.require("ace/ext/modelist");
@@ -37,20 +37,26 @@ app.directive('viewer', function() {
 	  			var lineCounter = 0;
 	  			var text = "";
 
-	  			console.log(":::received KEYFRAME: ", keyframe);
+	  			// console.log(":::received KEYFRAME: ", keyframe);
+	  			console.log(":::>Viewer: SF.diffMode: ", SettingsFactory.getMode());
 
 	  			if($scope.additionMarker.length >= 1) {
 	  				$scope.additionMarker.forEach(function(marker, index){
 		  				$scope.editor.getSession().removeMarker($scope.additionMarker[index]);
 	  				});
+	  				$scope.additionMarker = [];
+	  			}
 
+	  			if($scope.deletionMarker.length >= 1) {
 	  				$scope.deletionMarker.forEach(function(marker, index){
 		  				$scope.editor.getSession().removeMarker($scope.deletionMarker[index]);
 	  				});
+	  				$scope.deletionMarker = [];
 	  			}
 
-	  			if(keyframe.diffMode) {
+	  			if(SettingsFactory.getMode()) {
 
+	  				console.log("editor diffmode hit");
 
 	  				$scope.deletionMarker.forEach(function(marker, index){
 		  				$scope.editor.getSession().removeMarker($scope.deletionMarker[index]);
