@@ -31,9 +31,7 @@ app.directive('scrubber', function() {
 
 	        // On scrubber click, will broadcast the selected keyframe via commLink to other directives that are listening.
 			$scope.broadcastKeyframeSelected = function () {
-				console.log("THIS is the OUTGOING keyframe: ", $scope.currentKeyframe);
 				CommLinkFactory.updateScrubber($scope.currentKeyframe);
-				// console.log("Broadcast called once.");
 			};
 			
 	        $scope.goToKeyframe = function () {
@@ -95,9 +93,10 @@ app.directive('scrubber', function() {
 
 				if (SettingsFactory.getMode()) {
 					$scope.makeDiff();
+				} else {
+					$scope.broadcastKeyframeSelected();
 				}
 
-				$scope.broadcastKeyframeSelected();
 				$scope.currentKeyframe.diffsArray = null;
 			};
 
@@ -115,9 +114,10 @@ app.directive('scrubber', function() {
 
 				if (SettingsFactory.getMode()) {
 					$scope.makeDiff();
+				} else {
+					$scope.broadcastKeyframeSelected();
 				}
-
-				$scope.broadcastKeyframeSelected();
+				
 				$scope.currentKeyframe.diffsArray = null;
 	        };
 
@@ -133,9 +133,10 @@ app.directive('scrubber', function() {
 
 				if (SettingsFactory.getMode()) {
 					$scope.makeDiff();
+				} else {
+					$scope.broadcastKeyframeSelected();
 				}
-
-				$scope.broadcastKeyframeSelected();
+				
 				$scope.currentKeyframe.diffsArray = null;
 	        };
 
@@ -171,13 +172,16 @@ app.directive('scrubber', function() {
      			} else if (position === "end") {
      				$scope.keyframeIndex = $scope.keyframes.length-1;
      				$scope.isLastFrame = true;
-					$scope.broadcastKeyframeSelected();
+     				if(SettingsFactory.getMode()) {
+						$scope.broadcastKeyframeSelected();
+     				}
      			} else {
      				$scope.keyframeIndex -= step;
      			}
      			
      			$scope.currentKeyframe = $scope.keyframes[$scope.keyframeIndex];
 				
+				// This broadcast needs to be executed when a file is first loaded
      			if(!SettingsFactory.getMode()) {
 					$scope.broadcastKeyframeSelected();
      			}
@@ -188,15 +192,11 @@ app.directive('scrubber', function() {
      				return GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state)
      					.then(function(difference) {
      						$scope.currentKeyframe.diffsArray = difference;
-     						console.log("&&&*** $scope.currentKeyframe.diffsArray :", $scope.currentKeyframe.diffsArray);
      					}).then(function() {
 							$scope.broadcastKeyframeSelected();
      					}).catch(function(err) {
      						console.log("GitDiffFactory Returns Error: ", err);
      					});
-     				// $scope.currentKeyframe.diffsArray = GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state);
-     				// console.log(">>>>Diffs Made and Attached", $scope.currentKeyframe.diffsArray);
-     				// $scope.currentKeyframe.diffsArray = $scope.diffsArray;
      		};
 
      		$scope.updatePointers(null, "end");

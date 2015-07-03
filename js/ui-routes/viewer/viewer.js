@@ -8,9 +8,10 @@ app.directive('viewer', function() {
 		// scope: {},
 		controller: function ($scope, CommLinkFactory, SettingsFactory) {
 
+			var Range = ace.require("ace/range").Range;
+			
 			$scope.editor = {};
 			$scope.modelist = ace.require("ace/ext/modelist");
-			var Range = ace.require("ace/range").Range;
 			$scope.mode = "";
 			$scope.additionMarker = [];
 			$scope.deletionMarker = [];
@@ -37,8 +38,6 @@ app.directive('viewer', function() {
 	  			var lineCounter = 0;
 	  			var text = "";
 
-	  			console.log(":::received KEYFRAME: ", keyframe);
-
 	  			if($scope.additionMarker.length >= 1) {
 	  				$scope.additionMarker.forEach(function(marker, index){
 		  				$scope.editor.getSession().removeMarker($scope.additionMarker[index]);
@@ -54,8 +53,6 @@ app.directive('viewer', function() {
 	  			}
 
 	  			if(SettingsFactory.getMode()) {
-
-	  				console.log("editor diffmode hit");
 
 	  				$scope.deletionMarker.forEach(function(marker, index){
 		  				$scope.editor.getSession().removeMarker($scope.deletionMarker[index]);
