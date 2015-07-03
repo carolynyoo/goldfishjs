@@ -11,7 +11,6 @@ app.directive('viewer', function() {
 			$scope.editor = {};
 			$scope.modelist = ace.require("ace/ext/modelist");
 			var Range = ace.require("ace/range").Range;
-			console.log("ACE Range: ", Range);
 			$scope.mode = "";
 			$scope.additionMarker = [];
 			$scope.deletionMarker = [];
@@ -40,11 +39,18 @@ app.directive('viewer', function() {
 
 	  			console.log(":::received KEYFRAME: ", keyframe);
 
-	  			if(keyframe.diffMode) {
-
+	  			if($scope.additionMarker.length >= 1) {
 	  				$scope.additionMarker.forEach(function(marker, index){
 		  				$scope.editor.getSession().removeMarker($scope.additionMarker[index]);
 	  				});
+
+	  				$scope.deletionMarker.forEach(function(marker, index){
+		  				$scope.editor.getSession().removeMarker($scope.deletionMarker[index]);
+	  				});
+	  			}
+
+	  			if(keyframe.diffMode) {
+
 
 	  				$scope.deletionMarker.forEach(function(marker, index){
 		  				$scope.editor.getSession().removeMarker($scope.deletionMarker[index]);
@@ -65,13 +71,12 @@ app.directive('viewer', function() {
 
 	  	   			$scope.editor.setValue(text, 1);
 
-	  			// } else {
-	  				
+	  			} else {	
+	  	   			$scope.editor.setValue(keyframe.text_state, 1);
 	  			}
 	  			
 			    $scope.mode = $scope.modelist.getModeForPath(keyframe.filename).mode;
 	  	   		$scope.editor.session.setMode($scope.mode);
-	  	   		// $scope.editor.setValue(keyframe.text_state, 1);
 	  	   		$scope.editor.navigateFileStart();
 	  	 	};
 

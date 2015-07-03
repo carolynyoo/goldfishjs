@@ -22,7 +22,7 @@ app.directive('scrubber', function() {
 			$scope.isPlaying = false;
 
 			// Variables used for varioius modes
-			$scope.diffMode = true;
+			$scope.diffMode = false;
 
 	        // On scrubber click, will broadcast the selected keyframe via commLink to other directives that are listening.
 			$scope.broadcastKeyframeSelected = function () {
@@ -46,7 +46,7 @@ app.directive('scrubber', function() {
 				if($scope.diffMode) {
 					$scope.makeDiff();
 				}
-				
+
 				$scope.broadcastKeyframeSelected();
 				$scope.currentKeyframe.diffsArray = null;
 	        };
@@ -74,17 +74,9 @@ app.directive('scrubber', function() {
 
 			};
 
-			$scope.makeDiff = function () {
-					$scope.diffsArray = GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state);
-					$scope.currentKeyframe.diffsArray = $scope.diffsArray;
-					$scope.currentKeyframe.diffMode = $scope.diffMode;
-			};
-
 			$scope.previousKeyframe = function(keyframe) {
 				$scope.isLastFrame = false;
 				$scope.keyframeIndex = $scope.getKeyframeIndex(keyframe);
-
-				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
 			    
 			    if ($scope.keyframeIndex === 0){
 			    	console.log("@ First Keyframe");
@@ -106,8 +98,6 @@ app.directive('scrubber', function() {
 	        	$scope.isFirstFrame = false;
 				$scope.keyframeIndex = $scope.getKeyframeIndex(keyframe);
 
-				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
-
 		    	console.log("kf.length: ", $scope.keyframes.length);
 		    	console.log("kf.index:  ", $scope.keyframeIndex);
 			    if ((($scope.keyframes.length - 1) - $scope.keyframeIndex) <= 10) {
@@ -128,8 +118,6 @@ app.directive('scrubber', function() {
 	        	$scope.isLastFrame = false;
 				$scope.keyframeIndex = $scope.getKeyframeIndex(keyframe);
 
-				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
-			    
 			    if ($scope.keyframeIndex <= 10) {
 			    	$scope.updatePointers(null, "start");
 			    } else {
@@ -181,8 +169,14 @@ app.directive('scrubber', function() {
      			}
      			
      			$scope.currentKeyframe = $scope.keyframes[$scope.keyframeIndex];
-				// $scope.broadcastKeyframeSelected();
      		};
+
+     		$scope.makeDiff = function () {
+     				$scope.diffsArray = GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state);
+     				$scope.currentKeyframe.diffsArray = $scope.diffsArray;
+     				$scope.currentKeyframe.diffMode = $scope.diffMode;
+     		};
+
      		$scope.updatePointers(null, "end");
 
 		}
