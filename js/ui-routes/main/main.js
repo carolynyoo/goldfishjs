@@ -25,7 +25,7 @@ app.config(function ($stateProvider) {
     		}
     	},
     	resolve: {
-    		keyframes: function(KeyframeFactory, $stateParams, Errors) {
+    		keyframes: function(KeyframeFactory, $stateParams) {
     			var filename = $stateParams.file.replace(/%2F/g,'/');
 	    		return KeyframeFactory.getFileKeyframes(filename);
 	    		// .then(function(keyframes) {
