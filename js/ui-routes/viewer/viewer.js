@@ -6,11 +6,15 @@ app.directive('viewer', function() {
 		restrict: 'E',
 		templateUrl: 'js/ui-routes/viewer/viewer.html',
 		// scope: {},
-		controller: function ($scope, CommLinkFactory, KeyframeFactory) {
+		controller: function ($scope, CommLinkFactory, SettingsFactory) {
 
+			var Range = ace.require("ace/range").Range;
+			
 			$scope.editor = {};
 			$scope.modelist = ace.require("ace/ext/modelist");
 			$scope.mode = "";
+			$scope.additionMarker = [];
+			$scope.deletionMarker = [];
 
 			var onScrubberUpdateHandler = function (keyframe) {
 				$scope.aceChanged(keyframe);
@@ -31,9 +35,50 @@ app.directive('viewer', function() {
 		  	};
 
 	  		$scope.aceChanged = function (keyframe) {
+	  			var lineCounter = 0;
+	  			var text = "";
+
+	  			if($scope.additionMarker.length >= 1) {
+	  				$scope.additionMarker.forEach(function(marker, index){
+		  				$scope.editor.getSession().removeMarker($scope.additionMarker[index]);
+	  				});
+	  				$scope.additionMarker = [];
+	  			}
+
+	  			if($scope.deletionMarker.length >= 1) {
+	  				$scope.deletionMarker.forEach(function(marker, index){
+		  				$scope.editor.getSession().removeMarker($scope.deletionMarker[index]);
+	  				});
+	  				$scope.deletionMarker = [];
+	  			}
+
+	  			if(SettingsFactory.getMode()) {
+
+	  				$scope.deletionMarker.forEach(function(marker, index){
+		  				$scope.editor.getSession().removeMarker($scope.deletionMarker[index]);
+	  				});
+	  			
+		  			keyframe.diffsArray.forEach(function(changeObj, index) {
+		  				text += changeObj.value;
+
+		  				if(changeObj.added) {
+		  					$scope.additionMarker[index] = $scope.editor.getSession().addMarker(new Range(lineCounter, 0, lineCounter+changeObj.count, 0), "addition", "line");
+		  				}
+		  				if(changeObj.removed) {
+		  					$scope.deletionMarker[index] = $scope.editor.getSession().addMarker(new Range(lineCounter, 0, lineCounter+changeObj.count, 0), "deletion", "line");
+		  				}
+
+		  				lineCounter += changeObj.count;	
+		  			});
+
+	  	   			$scope.editor.setValue(text, 1);
+
+	  			} else {	
+	  	   			$scope.editor.setValue(keyframe.text_state, 1);
+	  			}
+	  			
 			    $scope.mode = $scope.modelist.getModeForPath(keyframe.filename).mode;
 	  	   		$scope.editor.session.setMode($scope.mode);
-	  	   		$scope.editor.setValue(keyframe.text_state, 1);
 	  	   		$scope.editor.navigateFileStart();
 	  	 	};
 

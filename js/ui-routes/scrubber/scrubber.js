@@ -8,17 +8,26 @@ app.directive('scrubber', function() {
 		restrict: 'E',
 		templateUrl: 'js/ui-routes/scrubber/scrubber.html',
 		// scope: {},
-		controller: function ($scope, CommLinkFactory, KeyframeFactory, GitDiffFactory) {
+		controller: function ($scope, CommLinkFactory, GitDiffFactory, SettingsFactory) {
 
 			// $scope.keyframes = [];
 			$scope.diffsArray = [];
 			$scope.currentKeyframe = {};
+			$scope.priorFrame = {};
 			$scope.keyframeIndex = '';
 
 			// Variables used to enable/disable scrubber buttons
 			$scope.isFirstFrame = false;
 			$scope.isLastFrame = false;
 			$scope.isPlaying = false;
+
+			// Initialize setting variables
+			$scope.diffSwitch = SettingsFactory.getMode();
+
+			$scope.switchDiffMode = function () {
+				SettingsFactory.switchMode();
+				console.log("Diff Mode turned: ", SettingsFactory.getMode());
+			};
 
 	        // On scrubber click, will broadcast the selected keyframe via commLink to other directives that are listening.
 			$scope.broadcastKeyframeSelected = function () {
@@ -37,7 +46,14 @@ app.directive('scrubber', function() {
 				if ($scope.keyframeIndex === $scope.keyframes.length-1) {
 					$scope.isLastFrame = true;
 				}
-				$scope.broadcastKeyframeSelected();
+
+				if (SettingsFactory.getMode()) {
+					$scope.makeDiff();
+				} else {
+					$scope.broadcastKeyframeSelected();
+				}
+
+				$scope.currentKeyframe.diffsArray = null;
 	        };
 
 			$scope.nextKeyframe = function(keyframe){
@@ -45,8 +61,6 @@ app.directive('scrubber', function() {
 				$scope.keyframeIndex = $scope.getKeyframeIndex(keyframe);
 				$scope.$apply($scope.keyframeIndex);
 
-				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
-			    
 			    if ($scope.keyframeIndex === $scope.keyframes.length - 1){
 			    	console.log("@ Last Keyframe");
 			    	$scope.updatePointers(null, "end");
@@ -54,15 +68,20 @@ app.directive('scrubber', function() {
 			    } else {
 				    $scope.updatePointers(1, "advance");
 				}
+				
+				if (SettingsFactory.getMode()) {
+					$scope.makeDiff();
+				} else {
+					$scope.broadcastKeyframeSelected();
+				}
 
-				$scope.broadcastKeyframeSelected();
+				$scope.currentKeyframe.diffsArray = null;
+
 			};
 
 			$scope.previousKeyframe = function(keyframe) {
 				$scope.isLastFrame = false;
 				$scope.keyframeIndex = $scope.getKeyframeIndex(keyframe);
-
-				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
 			    
 			    if ($scope.keyframeIndex === 0){
 			    	console.log("@ First Keyframe");
@@ -72,37 +91,53 @@ app.directive('scrubber', function() {
 				    $scope.updatePointers(1);
 				}
 
-				$scope.broadcastKeyframeSelected();
+				if (SettingsFactory.getMode()) {
+					$scope.makeDiff();
+				} else {
+					$scope.broadcastKeyframeSelected();
+				}
+
+				$scope.currentKeyframe.diffsArray = null;
 			};
 
 	        $scope.advanceTenFrames = function(keyframe){
 	        	$scope.isFirstFrame = false;
 				$scope.keyframeIndex = $scope.getKeyframeIndex(keyframe);
 
-				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
-
-			    if (($scope.keyframes.length - $scope.keyframeIndex) < 10) {
+		    	console.log("kf.length: ", $scope.keyframes.length);
+		    	console.log("kf.index:  ", $scope.keyframeIndex);
+			    if ((($scope.keyframes.length - 1) - $scope.keyframeIndex) <= 10) {
 			    	$scope.updatePointers(null, "end");
 			    } else {
 				    $scope.updatePointers(10, "advance");
 				}
 
-				$scope.broadcastKeyframeSelected();
+				if (SettingsFactory.getMode()) {
+					$scope.makeDiff();
+				} else {
+					$scope.broadcastKeyframeSelected();
+				}
+				
+				$scope.currentKeyframe.diffsArray = null;
 	        };
 
 	        $scope.backTenFrames = function(keyframe){
 	        	$scope.isLastFrame = false;
 				$scope.keyframeIndex = $scope.getKeyframeIndex(keyframe);
 
-				// $scope.diffsArray = GitDiffFactory.calculateDiff($scope.keyframes[keyframeIndex].text_state, $scope.keyframes[keyframeIndex+1].text_state);
-			    
-			    if ($scope.keyframeIndex < 10) {
+			    if ($scope.keyframeIndex <= 10) {
 			    	$scope.updatePointers(null, "start");
 			    } else {
 				    $scope.updatePointers(10);
 				}
 
-				$scope.broadcastKeyframeSelected();
+				if (SettingsFactory.getMode()) {
+					$scope.makeDiff();
+				} else {
+					$scope.broadcastKeyframeSelected();
+				}
+				
+				$scope.currentKeyframe.diffsArray = null;
 	        };
 
 	        $scope.getKeyframeIndex = function (keyframe) {
@@ -127,6 +162,8 @@ app.directive('scrubber', function() {
      		};
 
      		$scope.updatePointers = function (step, position) {
+     			$scope.priorFrame = $scope.currentKeyframe;
+
      			if (position === "advance") {
      				$scope.keyframeIndex += step;
      			} else if (position === "start") {
@@ -135,13 +172,33 @@ app.directive('scrubber', function() {
      			} else if (position === "end") {
      				$scope.keyframeIndex = $scope.keyframes.length-1;
      				$scope.isLastFrame = true;
+     				if(SettingsFactory.getMode()) {
+						$scope.broadcastKeyframeSelected();
+     				}
      			} else {
      				$scope.keyframeIndex -= step;
      			}
      			
      			$scope.currentKeyframe = $scope.keyframes[$scope.keyframeIndex];
-				$scope.broadcastKeyframeSelected();
+				
+				// This broadcast needs to be executed when a file is first loaded
+     			if(!SettingsFactory.getMode()) {
+					$scope.broadcastKeyframeSelected();
+     			}
+
      		};
+
+     		$scope.makeDiff = function () {
+     				return GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state)
+     					.then(function(difference) {
+     						$scope.currentKeyframe.diffsArray = difference;
+     					}).then(function() {
+							$scope.broadcastKeyframeSelected();
+     					}).catch(function(err) {
+     						console.log("GitDiffFactory Returns Error: ", err);
+     					});
+     		};
+
      		$scope.updatePointers(null, "end");
 
 		}
