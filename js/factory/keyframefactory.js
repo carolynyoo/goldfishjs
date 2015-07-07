@@ -1,6 +1,8 @@
-app.factory('KeyframeFactory', function (CommLinkFactory) {
+var fs = require('fs');
+
+app.factory('KeyframeFactory', function (ValuesService, CommLinkFactory) {
 	var getAllKeyframes = function() {
-		return Keyframe.find({}).sort({createdAt:1}).exec()
+		return ValuesService.Keyframe.find({}).sort({createdAt:1}).exec()
 		    .then(function(keyframes) {
 		      // console.log("KeyframeFactory - get all files: ", keyframes);
 		      return keyframes; 
@@ -8,13 +10,31 @@ app.factory('KeyframeFactory', function (CommLinkFactory) {
 		};
 
 	var getFileKeyframes = function (filename) {
-		return Keyframe.find({ 
+		return ValuesService.Keyframe.find({ 
 				filename: filename,
 				event_type: "change"
 			})
 			.sort({createdAt:1}).exec()
 			.then(function(fileKeyframes) {
-				// console.log("KeyframeFactory - get single file:", fileKeyframes);
+				console.log("fileKeyframes: ", fileKeyframes);
+				if (fileKeyframes.length < 1) {
+					var doc = {};
+
+					fs.readFile(filename, 'utf-8', function(err, string) {
+						if (err) {
+							console.log("---> err: ", err);
+						}
+
+						doc.filename = filename;
+						doc.text_state = string;
+						doc.event_type = "change";
+
+						fileKeyframes.push(doc);
+						return fileKeyframes;
+
+					});
+				}
+				
 				return fileKeyframes;
 			});
 	};

@@ -10,7 +10,8 @@ app.factory('SettingsFactory', function () {
 			return diffMode;
 		},
 		switchMode: function () {
-			diffMode = diffMode === true ? false : true;
+			// diffMode = diffMode === true ? false : true;
+			diffMode = !diffMode;
 			return diffMode;
 		}
 	};

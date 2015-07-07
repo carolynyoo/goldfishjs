@@ -1,5 +1,5 @@
 
-app.factory('Errors', function($timeout) {
+app.factory('ErrorsFactory', function($timeout) {
 	return {
 		errors: [],
 		add: function(err) {

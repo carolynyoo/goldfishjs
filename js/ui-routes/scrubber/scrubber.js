@@ -163,6 +163,7 @@ app.directive('scrubber', function() {
 
      		$scope.updatePointers = function (step, position) {
      			$scope.priorFrame = $scope.currentKeyframe;
+     			console.log('SINGLE NEW keyframe: ', $scope.keyframes);
 
      			if (position === "advance") {
      				$scope.keyframeIndex += step;
