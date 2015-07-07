@@ -8,7 +8,11 @@ app.factory('KeyframeFactory', function (ValuesService, CommLinkFactory) {
 		};
 
 	var getFileKeyframes = function (filename) {
-		return ValuesService.Keyframe.find({ filename: filename }).sort({createdAt:1}).exec()
+		return ValuesService.Keyframe.find({ 
+				filename: filename,
+				event_type: "change"
+			})
+			.sort({createdAt:1}).exec()
 			.then(function(fileKeyframes) {
 				// console.log("KeyframeFactory - get single file:", fileKeyframes);
 				return fileKeyframes;

@@ -18,7 +18,7 @@ span.md-flex {
 
 /* Ace Editor */
 .ace_editor { 
-	height: 66vh !important; 
+	height: 72vh !important; 
 }
 
 /* Truncate file from overflowing */
@@ -144,7 +144,7 @@ opacity: .85;
 a.trigger{
 	position: absolute;
 	text-decoration: none;
-	top: 75%; 
+	top: 90%; 
 	right: 0;
 	font-size: 16px;
 	letter-spacing:-1px;
@@ -168,13 +168,13 @@ a.trigger{
 a.trigger:hover{
 	position: absolute;
 	text-decoration: none;
-	top: 75%; 
+	top: 90%; 
 	right: 0;
 	font-size: 16px;
 	letter-spacing:-1px;
 	font-family: verdana, helvetica, arial, sans-serif;
 	color:#fff;
-	padding: 20px 40px 20px 20px;
+	padding: 20px 40px 20px 15px;
 	font-weight: 700;
 	background:#222222 85% 55% no-repeat;
 	border:1px solid #444444;
@@ -190,11 +190,11 @@ a.trigger:hover{
 }
 
 a.active.trigger {
-	background:#222222 85% 55% no-repeat;
+	background:#222222 90% 55% no-repeat;
 }
 
 #first-row #browser {
-	max-height: 66vh;
+	max-height: 72vh;
   overflow-y: scroll;
   background-color: #eee;
 }
@@ -230,3 +230,38 @@ ng-md-icon svg {
 section#playhead {
 	margin-top: 20px;
 }
+
+#slider {
+	padding: 16px;
+	padding-top: 20px;
+	padding-bottom: 0px;
+}
+
+#history-icon {
+	margin-right: 25px;
+	margin-top: 4px;
+}
+
+.deletion {
+	background: rgba(255, 66, 66, 0.6);
+	position: absolute;
+	width: 100% !important;
+	left: 0 !important;
+	z-index: 50;
+}
+
+.addition {
+	background: rgba(0, 149, 30, 0.8);
+	position: absolute;
+	width: 100% !important;
+	left: 0 !important;
+	z-index: 50;
+}
+
+
+
+
+
+
+
+
