@@ -1,18 +1,15 @@
-// var index = require('./db/models/index.js');
 var fs = require('fs');
 var path = require('path');
 
 // var _ = require('lodash');
 
-// Database...and Models (Is this still needed?)
+// Database Paths for injecting db value into angular app
 var appPath = process.env.PWD;
 var dbPath = path.join(appPath, 'db/models');
 
-var models = require(dbPath);
-var Keyframe = models.Keyframe;
+var dbFactory = require(dbPath);
 
 // Boot up the Angular App
-// var app = angular.module('gitplayback', ['ui.router', 'ui.ace']);
 
 var app = angular.module('gitplayback', ['angularTreeview', 'ui.router', 'ui.ace', 'ngAnimate', 'ngAria', 'ngMaterial', 'ngMdIcons']);
 app.config(function ($urlRouterProvider, $locationProvider) {
