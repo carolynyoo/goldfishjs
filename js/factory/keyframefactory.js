@@ -16,7 +16,6 @@ app.factory('KeyframeFactory', function (ValuesService, CommLinkFactory) {
 			})
 			.sort({createdAt:1}).exec()
 			.then(function(fileKeyframes) {
-				console.log("fileKeyframes: ", fileKeyframes);
 				if (fileKeyframes.length < 1) {
 					var doc = {};
 

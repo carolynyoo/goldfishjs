@@ -1,7 +1,7 @@
 /*jslint node: true */
 'use strict';
 
-app.directive('viewer', function() {
+app.directive('viewer', function($state) {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/ui-routes/viewer/viewer.html',
@@ -86,8 +86,11 @@ app.directive('viewer', function() {
 
 	  	 	$scope.revertFile = function () {
 	  	 		FileIoFactory.writeToFile($scope.displayedKeyframe.filename, $scope.displayedKeyframe.text_state)
-	  	 			.then(function(respone) {
-	  	 				console.log("Viewer: Here's the respone from writing to file: ", respone);
+	  	 			.then(function() {
+	  	 				console.log("Viewer: Here's the respone from writing to file: ");
+	  	 				$state.go('main.file', {
+	  	 					file: $scope.displayedKeyframe.filename
+	  	 				});
 	  	 			}).catch(function (err){
 	  	 				console.log("revert to file error: ", err);
 	  	 			});
