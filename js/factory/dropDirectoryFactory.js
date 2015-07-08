@@ -18,8 +18,9 @@ app.factory('DropDirectoryFactory', function ($state, ValuesService) {
     e.preventDefault();
 
     // assuming one directory is dropped
-    // values service 
+    // values service
     ValuesService.Keyframe = dbFactory.setDb(e.dataTransfer.files[0].path);
+    localStorage.recentDir = e.dataTransfer.files[0].path; 
     // change directory to dropped directory
     process.chdir(e.dataTransfer.files[0].path);
     console.log("PWD on drop: ", process.cwd());
