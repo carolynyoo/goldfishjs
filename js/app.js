@@ -8,8 +8,8 @@ var appPath = process.env.PWD;
 var appConfigPath = process.env.HOME + '/Library/Preferences/Saved Application State/goldfishjs';
 var dbPath = path.join(appPath, 'db/models');
 
-console.log("%$%$%$ APPCONFIGPATH: ", appConfigPath);
-console.log("%$%$%$ appPATH:       ", appPath);
+// console.log("%$%$%$ APPCONFIGPATH: ", appConfigPath);
+// console.log("%$%$%$ appPATH:       ", appPath);
 
 var dbFactory = require(dbPath);
 

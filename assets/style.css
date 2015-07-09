@@ -258,6 +258,26 @@ section#playhead {
 	z-index: 50;
 }
 
+.repo-loader {
+	padding: 30px;
+	margin: 15px;
+	padding-bottom: 0px;
+}
+
+.repos {
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	margin-left: 45px;
+	margin-right: 45px;
+}
+
+#repo-icon {
+	margin-right: 37px;
+	margin-bottom: 17px;
+	z-index: 10px;
+}
 
 
 

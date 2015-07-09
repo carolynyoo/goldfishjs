@@ -136,6 +136,19 @@ var addToTail = function (newKeyframe, filepath, db) {
 
 };
 
+var saveRepo = function (repopath) {
+
+  var pathArr = repopath.split(path.sep);
+  var name = pathArr.pop();
+
+  var repository = {
+    path: repopath,
+    name: name,
+    createdAt: new Date()
+  };
+
+};
+
 var insertKeyframe = function (revertKeyframe, newKeyframe) {
   // newKeyframe.prev_keyframe = revertKeyframe.ID
 }; 
@@ -146,5 +159,6 @@ module.exports = {
   watcher: watcher,
   readFile: readFile,
   addToTail: addToTail,
-  setAppConfigDb: setAppConfigDb
+  setAppConfigDb: setAppConfigDb,
+  saveRepo: saveRepo
 };
