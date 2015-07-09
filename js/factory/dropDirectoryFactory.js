@@ -21,6 +21,21 @@ app.factory('DropDirectoryFactory', function ($state, ValuesService) {
     // values service
     ValuesService.Keyframe = dbFactory.setDb(e.dataTransfer.files[0].path);
     // localStorage.recentDir = e.dataTransfer.files[0].path; 
+
+    var pathstring = e.dataTransfer.files[0].path;
+    var pathArr = pathstring.split(path.sep);
+    var name = pathArr.pop();
+
+    ValuesService.AppConfig.insert({
+      path: pathstring,
+      name: name,
+      createdAt: new Date()
+    }).then(function(newRepo) {
+      console.log("Recent Repo successfually saved", newRepo);
+    }).fail(function(err) {
+      console.log("Error saving new Repo: ", err);
+    });
+    
     // change directory to dropped directory
     process.chdir(e.dataTransfer.files[0].path);
     console.log("PWD on drop: ", process.cwd());
