@@ -4,7 +4,7 @@
 </div>
 <div layout="column" layout-fill style="padding-bottom: 32px;">
   
-  <md-whiteframe class="md-whiteframe-z3 repos" ng-repeat="repo in repositories" layout layout-align="left left">
+  <md-whiteframe class="md-whiteframe-z3 repos" ng-repeat="repo in repositories | unique:'path'" layout layout-align="left left">
     
     <md-content>
 	  	<section layout="row" layout-sm="column" layout-align="center center">
