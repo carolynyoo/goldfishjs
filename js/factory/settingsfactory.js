@@ -20,7 +20,6 @@ app.factory('SettingsFactory', function (ValuesService) {
 			.sort({createdAt:1})
 			.exec()
 			.then(function(repos) {
-				console.log("*** AppConfig Service Query: ", repos);
 				return repos;
 			});
 	};

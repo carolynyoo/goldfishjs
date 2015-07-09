@@ -271,12 +271,17 @@ section#playhead {
 	padding-bottom: 15px;
 	margin-left: 45px;
 	margin-right: 45px;
+	margin-bottom: 10px;
 }
 
 #repo-icon {
 	margin-right: 37px;
 	margin-bottom: 17px;
 	z-index: 10px;
+}
+
+a:link {
+    text-decoration: none;
 }
 
 

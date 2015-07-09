@@ -28,8 +28,6 @@ app.directive('loader', function() {
     templateUrl: 'js/ui-routes/loader/loader.html',
     controller: function ($scope, $state, DirTreeFactory, DropDirectoryFactory) {
       $scope.fileTree = DirTreeFactory.getTree(DropDirectoryFactory.getDir());
-      console.log("LOADER CTRL: Here are the saved repos: ", $scope.repositories);
-      // $scope.repositories = repositories;
     }
   };
 });

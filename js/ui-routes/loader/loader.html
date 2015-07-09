@@ -4,18 +4,20 @@
 </div>
 <div layout="column" layout-fill style="padding-bottom: 32px;">
   
-  <md-whiteframe class="md-whiteframe-z3 repos" ng-repeat="repo in repositories" layout layout-align="left left">
-    
-    <md-content>
-	  	<section layout="row" layout-sm="column" layout-align="center center">
-  	      <md-button class="md-icon-button md-primary" aria-label="Settings">
-  	      	<ng-md-icon id="repo-icon" icon="access_time" style="fill: #b79A00" size="48"></ng-md-icon>
-  	      </md-button>
-	    </section>
-    </md-content>
+  <div ng-repeat="repo in repositories">
+	  <md-whiteframe class="md-whiteframe-z3 repos" layout layout-align="left left">
+	    
+	    <md-content>
+		  	<section layout="row" layout-sm="column" layout-align="center center">
+	  	      <md-button ui-sref="main({ file: repo.path })" class="md-icon-button md-primary" aria-label="Settings">
+	  	      	<ng-md-icon id="repo-icon" icon="access_time" style="fill: #b79A00" size="48"></ng-md-icon>
+	  	      </md-button>
+		    </section>
+	    </md-content>
 
-    <h6>Directory Name: {{repo.name}}</h6>
-    <h7>{{repo.path}}</h7>
-  </md-whiteframe>
+	    <h3><a ui-sref="main({ file: repo.path })">{{ repo.name }}</a></h3>
+	    <!-- <h7>{{repo.path}}</h7> -->
+	  </md-whiteframe>
+  </div>
  
 </div>
