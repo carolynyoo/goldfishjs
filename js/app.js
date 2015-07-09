@@ -5,7 +5,7 @@ var path = require('path');
 
 // Database Paths for injecting db value into angular app
 var appPath = process.env.PWD;
-var appConfigPath = process.env.HOME + '/Library/Preferences/Saved Application State/goldfishjs';
+var appConfigPath = process.env.HOME + '/Library/Preferences/Saved\ Application\ State/goldfishjs';
 var dbPath = path.join(appPath, 'db/models');
 
 // console.log("%$%$%$ APPCONFIGPATH: ", appConfigPath);
@@ -21,4 +21,9 @@ app.config(function ($urlRouterProvider, $locationProvider) {
     // $locationProvider.html5Mode(true);
     // If we go to a URL that ui-router doesn't have registered, go to the "/" url.
     $urlRouterProvider.otherwise('/');
+});
+
+app.run(function(ValuesService) {
+    ValuesService.AppConfig = dbFactory.setAppConfigDb(appConfigPath);
+    console.log(">>>>APP DATABASE: ", ValuesService.AppConfig);
 });

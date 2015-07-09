@@ -34,5 +34,5 @@ app.factory('DropDirectoryFactory', function ($state, ValuesService) {
     getDir: function () {
       return dir;
     }
-  }
-})
+  };
+});
