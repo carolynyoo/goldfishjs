@@ -299,5 +299,9 @@ a:link {
 	cursor: pointer;
 }
 
+.border-on-hover {
+	border-radius: 20px;
+}
+
 
 
