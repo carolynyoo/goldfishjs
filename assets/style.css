@@ -141,6 +141,11 @@ opacity: .85;
 
 /* Information Tab */
 
+a {
+	color: inherit;
+	cursor: pointer;
+}
+
 a.trigger{
 	position: absolute;
 	text-decoration: none;
@@ -284,9 +289,15 @@ a:link {
     text-decoration: none;
 }
 
+.loader-btn-container {
+	position: relative;
+	top: 50%;
+	transform: translateY(10%);
+}
 
-
-
+#navibar {
+	cursor: pointer;
+}
 
 
 

@@ -9,7 +9,7 @@
   },
   "window": {
     "frame": true,
-    "toolbar": true,
+    "toolbar": false,
     "width": 960,
     "height": 650,
     "min_width": 600,
