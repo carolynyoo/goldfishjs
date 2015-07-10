@@ -4,7 +4,7 @@
 </div>
 <div layout="column" layout-fill style="padding-bottom: 32px;">
   
-  <div ng-repeat="repo in repositories">
+  <div ng-repeat="repo in repositories | orderBy: '-repo.createdAt'">
 	  <md-whiteframe class="md-whiteframe-z3 repos" layout layout-align="left left">
 	    
 	    <md-content>

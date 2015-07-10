@@ -10,8 +10,8 @@
   "window": {
     "frame": true,
     "toolbar": false,
-    "width": 960,
-    "height": 650,
+    "width": 1130,
+    "height": 700,
     "min_width": 600,
     "min_height": 370,
     "max_width": 2000,

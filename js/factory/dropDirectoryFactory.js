@@ -26,10 +26,17 @@ app.factory('DropDirectoryFactory', function ($state, ValuesService) {
     var pathArr = pathstring.split(path.sep);
     var name = pathArr.pop();
 
-    ValuesService.AppConfig.insert({
-      path: pathstring,
-      name: name,
-      createdAt: new Date()
+    ValuesService.AppConfig
+      .update({ 
+          path: pathstring 
+        },
+        {
+          path: pathstring,
+          name: name,
+          createdAt: new Date()
+        },
+        {
+          upsert: true
     }).then(function(newRepo) {
       console.log("Recent Repo successfually saved", newRepo);
     }).fail(function(err) {
