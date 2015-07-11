@@ -26,8 +26,15 @@ app.directive('loader', function() {
   return {
     restrict: 'E',
     templateUrl: 'js/ui-routes/loader/loader.html',
-    controller: function ($scope, $state, DirTreeFactory, DropDirectoryFactory) {
-      $scope.fileTree = DirTreeFactory.getTree(DropDirectoryFactory.getDir());
+    controller: function ($scope, $state, DirTreeFactory, DropDirectoryFactory, SettingsFactory) {
+      // $scope.fileTree = DirTreeFactory.getTree(DropDirectoryFactory.getDir());
+      console.log("Loader $scope.filetree", $scope.fileTree);
+
+      $scope.setRepo = function (str) {
+        SettingsFactory.setCurrentRepo(str);
+        $state.go('main');
+      };
+
     }
   };
 });

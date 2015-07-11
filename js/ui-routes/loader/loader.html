@@ -9,13 +9,16 @@
 	    
 	    <md-content>
 		  	<section class="loader-btn-container" layout="row" layout-sm="column" layout-align="center center">
-	  	      <md-button ui-sref="main({ file: repo.path })" class="md-icon-button md-primary" aria-label="Settings">
+	  	      <md-button ng-click="setRepo(repo.path)" class="md-icon-button md-primary" aria-label="Settings">
 	  	      	<ng-md-icon id="repo-icon" icon="access_time" style="fill: #b79A00" size="48"></ng-md-icon>
 	  	      </md-button>
 		    </section>
 	    </md-content>
 
-	    <h3><a ui-sref="main({ file: repo.path })">{{ repo.name }}</a></h3>
+	    <section layout="row" ng-click="setRepo(repo.path)" layout-sm="column" layout-align="center center">
+	          <md-button>{{ repo.name }}</md-button>
+	    </section>
+	    <!-- <h3><a ui-sref="main">{{ repo.name }}</a></h3> -->
 	    <!-- <h7>{{repo.path}}</h7> -->
 	  </md-whiteframe>
   </div>

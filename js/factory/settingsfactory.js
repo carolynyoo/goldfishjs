@@ -4,6 +4,7 @@ app.factory('SettingsFactory', function (ValuesService) {
 	// Store booleans as private vars and expose functions for getting or setting them.
 	
 	var diffMode = false;
+	var currentRepo = "";
 
 	var getMode = function () {
 		return diffMode;
@@ -13,6 +14,15 @@ app.factory('SettingsFactory', function (ValuesService) {
 		// diffMode = diffMode === true ? false : true;
 		diffMode = !diffMode;
 		return diffMode;
+	};
+
+	var getCurrentRepo = function () {
+		return currentRepo;
+	};
+
+	var setCurrentRepo = function (repoPath) {
+		currentRepo = repoPath;
+		console.log("New Rep set as Current:", currentRepo);
 	};
 
 	var getRecentRepos = function () {
@@ -27,7 +37,9 @@ app.factory('SettingsFactory', function (ValuesService) {
 	return {
 		getMode: getMode,
 		switchMode: switchMode,
-		getRecentRepos: getRecentRepos
+		getRecentRepos: getRecentRepos,
+		getCurrentRepo: getCurrentRepo,
+		setCurrentRepo: setCurrentRepo
 	};
 
 });
