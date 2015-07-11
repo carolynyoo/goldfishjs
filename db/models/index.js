@@ -19,7 +19,13 @@ var setDb = function (dir) {
   var db = new DataStore({filename: path.join(dir, '.nedbstorage.db'), autoload: true});
   watcher(db, dir); 
   return db; 
-}
+};
+
+var setAppConfigDb = function (dir) {
+  console.log(path.join(dir, '.goldfishjsapp.db'));
+  var appConfigDb = new DataStore({filename: path.join(dir, '.goldfishjsapp.db'), autoload: true});
+  return appConfigDb; 
+};
 
 var watcher = function (db, dir) {
   chokidar.watch(dir, {ignored: /[\/\\]\./, ignoreInitial: false}).on('all', function(event, path) {
@@ -130,6 +136,19 @@ var addToTail = function (newKeyframe, filepath, db) {
 
 };
 
+var saveRepo = function (repopath) {
+
+  var pathArr = repopath.split(path.sep);
+  var name = pathArr.pop();
+
+  var repository = {
+    path: repopath,
+    name: name,
+    createdAt: new Date()
+  };
+
+};
+
 var insertKeyframe = function (revertKeyframe, newKeyframe) {
   // newKeyframe.prev_keyframe = revertKeyframe.ID
 }; 
@@ -139,5 +158,7 @@ module.exports = {
   setDb: setDb,
   watcher: watcher,
   readFile: readFile,
-  addToTail: addToTail
+  addToTail: addToTail,
+  setAppConfigDb: setAppConfigDb,
+  saveRepo: saveRepo
 };

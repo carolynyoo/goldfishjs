@@ -32,6 +32,8 @@ app.config(function ($stateProvider) {
     	resolve: {
     		keyframes: function(KeyframeFactory, $stateParams) {
     			var filename = $stateParams.file.replace(/%2F/g,'/');
+                // console.log("MainController $stateParams: ", $stateParams);
+
                 return KeyframeFactory.getFileKeyframes(filename);
 	    		// .then(function(keyframes) {
 	    		// 	if(!keyframes || !keyframes.length) { throw new Error("no keyframes for this file"); }
