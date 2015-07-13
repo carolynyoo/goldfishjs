@@ -141,6 +141,11 @@ opacity: .85;
 
 /* Information Tab */
 
+a {
+	color: inherit;
+	cursor: pointer;
+}
+
 a.trigger{
 	position: absolute;
 	text-decoration: none;
@@ -265,10 +270,45 @@ section#playhead {
 	margin-right: 1px;
 }
 
+.repo-loader {
+	padding: 30px;
+	margin: 15px;
+	padding-bottom: 0px;
+}
 
+.repos {
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	margin-left: 45px;
+	margin-right: 45px;
+	margin-bottom: 10px;
+}
 
+#repo-icon {
+	margin-right: 37px;
+	margin-bottom: 17px;
+	z-index: 10px;
+}
 
+a:link {
+    text-decoration: none;
+}
 
+.loader-btn-container {
+	position: relative;
+	top: 50%;
+	transform: translateY(10%);
+}
+
+#navibar {
+	cursor: pointer;
+}
+
+.border-on-hover {
+	border-radius: 15px;
+}
 
 
 

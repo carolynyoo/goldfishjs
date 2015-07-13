@@ -1,4 +1,26 @@
-hello 
-<div id="dropbox">
-<h1>Drop directory here to start tracking.</h1>
+<div class="repo-loader">
+	<h1>Drop || Select a Repository</h1>
+	<!-- <h4>Recent:</h4> -->
+</div>
+<div layout="column" layout-fill style="padding-bottom: 32px;">
+  
+  <div ng-repeat="repo in repositories | orderBy: '-repo.createdAt'">
+	  <md-whiteframe class="md-whiteframe-z3 repos" layout layout-align="left left" border-on-hover>
+	    
+	    <md-content>
+		  	<section class="loader-btn-container" layout="row" layout-sm="column" layout-align="center center">
+	  	      <md-button ng-click="setRepo(repo.path)" class="md-icon-button md-primary" aria-label="Settings">
+	  	      	<ng-md-icon id="repo-icon" icon="access_time" style="fill: #b79A00" size="48"></ng-md-icon>
+	  	      </md-button>
+		    </section>
+	    </md-content>
+
+	    <section layout="row" ng-click="setRepo(repo.path)" layout-sm="column" layout-align="center center">
+	          <md-button>{{ repo.name }}</md-button>
+	    </section>
+	    <!-- <h3><a ui-sref="main">{{ repo.name }}</a></h3> -->
+	    <!-- <h7>{{repo.path}}</h7> -->
+	  </md-whiteframe>
+  </div>
+ 
 </div>

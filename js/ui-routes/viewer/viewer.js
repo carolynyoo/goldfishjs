@@ -29,7 +29,8 @@ app.directive('viewer', function($state) {
 			    _editor.setTheme("ace/theme/idle_fingers");
 			 	// _editor.setMode("ace/mode/javascript"); // Will need to let user toggle this or sense file ext later
 			    _editor.setReadOnly(true);
-			    // _editor.setValue($scope.currentFrame, 1);
+			    _editor.setValue($scope.currentFrame, 1);
+			    _editor.setFontSize(18);
 			    _editor.$blockScrolling = Infinity;
 			    _editor.navigateFileStart();
 			    $scope.editor = _editor;
