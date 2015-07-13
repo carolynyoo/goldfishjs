@@ -263,6 +263,13 @@ section#playhead {
 	z-index: 50;
 }
 
+#revert-button {
+	position: fixed;
+	right: 1vw;
+	top: 66vh;
+	margin-right: 1px;
+}
+
 .repo-loader {
 	padding: 30px;
 	margin: 15px;

@@ -1,18 +1,19 @@
 /*jslint node: true */
 'use strict';
 
-app.directive('viewer', function() {
+app.directive('viewer', function($state) {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/ui-routes/viewer/viewer.html',
 		// scope: {},
-		controller: function ($scope, CommLinkFactory, SettingsFactory) {
+		controller: function ($scope, CommLinkFactory, SettingsFactory, FileIoFactory) {
 
 			var Range = ace.require("ace/range").Range;
 			
 			$scope.editor = {};
 			$scope.modelist = ace.require("ace/ext/modelist");
 			$scope.mode = "";
+			$scope.displayedKeyframe = {};
 			$scope.additionMarker = [];
 			$scope.deletionMarker = [];
 
@@ -36,6 +37,7 @@ app.directive('viewer', function() {
 		  	};
 
 	  		$scope.aceChanged = function (keyframe) {
+	  			$scope.displayedKeyframe = keyframe;
 	  			var lineCounter = 0;
 	  			var text = "";
 
@@ -81,6 +83,18 @@ app.directive('viewer', function() {
 			    $scope.mode = $scope.modelist.getModeForPath(keyframe.filename).mode;
 	  	   		$scope.editor.session.setMode($scope.mode);
 	  	   		$scope.editor.navigateFileStart();
+	  	 	};
+
+	  	 	$scope.revertFile = function () {
+	  	 		FileIoFactory.writeToFile($scope.displayedKeyframe.filename, $scope.displayedKeyframe.text_state)
+	  	 			.then(function() {
+	  	 				console.log("Viewer: Here's the response from writing to file: ");
+	  	 				// $state.go('main.file', {
+	  	 				// 	file: $scope.displayedKeyframe.filename
+	  	 				// });
+	  	 			}).catch(function (err){
+	  	 				console.log("revert to file error: ", err);
+	  	 			});
 	  	 	};
 
 		}

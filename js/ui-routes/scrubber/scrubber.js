@@ -169,7 +169,6 @@ app.directive('scrubber', function() {
 
      		$scope.updatePointers = function (step, position) {
      			$scope.priorFrame = $scope.currentKeyframe;
-     			console.log('SINGLE NEW keyframe: ', $scope.keyframes);
 
      			if (position === "advance") {
      				$scope.keyframeIndex += step;
@@ -196,14 +195,14 @@ app.directive('scrubber', function() {
      		};
 
      		$scope.makeDiff = function () {
-     				return GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state)
-     					.then(function(difference) {
-     						$scope.currentKeyframe.diffsArray = difference;
-     					}).then(function() {
-							$scope.broadcastKeyframeSelected();
-     					}).catch(function(err) {
-     						console.log("GitDiffFactory Returns Error: ", err);
-     					});
+ 				return GitDiffFactory.calculateDiff($scope.priorFrame.text_state, $scope.currentKeyframe.text_state)
+ 					.then(function(difference) {
+ 						$scope.currentKeyframe.diffsArray = difference;
+ 					}).then(function() {
+						$scope.broadcastKeyframeSelected();
+ 					}).catch(function(err) {
+ 						console.log("GitDiffFactory Returns Error: ", err);
+ 					});
      		};
 
      		$scope.updatePointers(null, "end");

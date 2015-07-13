@@ -28,14 +28,8 @@ var setAppConfigDb = function (dir) {
 };
 
 var watcher = function (db, dir) {
-  chokidar.watch(dir, {ignored: /[\/\\]\./, ignoreInitial: false}).on('all', function(event, path) {
-    var dbEmpty = false;
+  chokidar.watch(dir, {ignored: /[\/\\]\./, ignoreInitial: true}).on('all', function(event, path) {
     console.log('WATCHER: ', event, path);
-    db.find({}).exec().then(function (kf) {
-      if (!kf.length) {
-        readFile(event, path, db, dir);
-      }
-    })
     var globsToIgnore = []; 
     try {
       var stats = fs.lstatSync(dir+'/.gitignore');
@@ -47,16 +41,11 @@ var watcher = function (db, dir) {
       
     }
     globsToIgnore.push('**/.git/**', '*.db', '.nedbstorage.db', 'nedbstorage.db~');
-    console.log(path);
-    // if (dir===path && dbEmpty) {
-    //   readFile(event, path, db, dir);
-    // } else {
-      for (var i=0; i<globsToIgnore.length; i++) {
-        if (minimatch(path.split(dir+"/")[1], globsToIgnore[i])) {
-          return;
-        }
+    for (var i=0; i<globsToIgnore.length; i++) {
+      if (minimatch(path.split(dir+"/")[1], globsToIgnore[i])) {
+        return;
       }
-    // }
+    }
     readFile(event, path, db, dir); 
   });
 }
