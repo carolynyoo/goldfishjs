@@ -23,10 +23,16 @@ app.directive('scrubber', function() {
 
 			// Initialize setting variables
 			$scope.diffSwitch = SettingsFactory.getMode();
+			$scope.infoSwitch = SettingsFactory.getInfoMode();
 
 			$scope.switchDiffMode = function () {
 				SettingsFactory.switchMode();
 				console.log("Diff Mode turned: ", SettingsFactory.getMode());
+			};
+
+			$scope.switchInfoMode = function () {
+				SettingsFactory.switchInfoMode();
+				console.log("File Info Mode turned: ", SettingsFactory.getInfoMode());
 			};
 
 	        // On scrubber click, will broadcast the selected keyframe via commLink to other directives that are listening.
@@ -153,7 +159,7 @@ app.directive('scrubber', function() {
 	     			$scope.isFirstFrame = false;
 	     			$scope.playIntervalId = setInterval(function () {
 		     			$scope.nextKeyframe($scope.currentKeyframe);
-	     			}, 250);
+	     			}, 750);
      		};
 
      		$scope.pause = function () {

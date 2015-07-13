@@ -47,6 +47,7 @@
     </section> 
 
     <section layout="row" layout-sm="column" layout-align="right right">
+        
         <md-switch 
             class="md-primary" 
             md-no-ink aria-label="Diff Mode" 
@@ -54,6 +55,15 @@
             ng-click="switchDiffMode()">
           Diff Mode
         </md-switch>
+
+        <md-switch 
+            class="md-primary" 
+            md-no-ink aria-label="File Info" 
+            ng-model="infoSwitch" 
+            ng-click="switchInfoMode()">
+          File Info
+        </md-switch>
+
     </section>
 <!-- 
     <section id="playhead" layout="row" layout-sm="column" layout-align="center center">
