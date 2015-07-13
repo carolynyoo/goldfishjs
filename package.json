@@ -36,6 +36,7 @@
     "gitignore-globs": "^0.1.1",
     "lodash": "^3.9.3",
     "minimatch": "^2.0.8",
+    "moment": "^2.10.3",
     "nedb": "^1.1.2",
     "promisify-me": "^0.1.1",
     "sequelize": "^3.2.0",

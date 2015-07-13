@@ -2,18 +2,16 @@
 
     <div layout="column keyframe-info" layout-fill style="padding-bottom: 32px;">
       <md-whiteframe class="md-whiteframe-z1" layout layout-align="left left">
-        <p>
-        <ng-md-icon icon="call_split" style="fill: #aaa" size="24"></ng-md-icon>
+       
+        <ng-md-icon icon="call_split" style="fill: #aaa" size="24"></ng-md-icon><br>
         <h5>{{ currentKeyframe.branch_name }}</h5>
-        </p>
-        <p>
+
         <ng-md-icon icon="timer" style="fill: #aaa" size="24"></ng-md-icon>
         <h5>{{ currentKeyframe.last_commit_time | myDateFormat }}</h5>
-        </p>
-        <p>
+
         <ng-md-icon icon="check_circle" style="fill: #aaa" size="24"></ng-md-icon>
         <h5>{{ currentKeyframe.last_commit.substring(0,8) + "..." }}</h5>
-        </p>
+
       </md-whiteframe>
     </div>
 
