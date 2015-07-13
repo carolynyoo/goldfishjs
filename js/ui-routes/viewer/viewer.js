@@ -88,10 +88,10 @@ app.directive('viewer', function($state) {
 	  	 	$scope.revertFile = function () {
 	  	 		FileIoFactory.writeToFile($scope.displayedKeyframe.filename, $scope.displayedKeyframe.text_state)
 	  	 			.then(function() {
-	  	 				console.log("Viewer: Here's the respone from writing to file: ");
-	  	 				$state.go('main.file', {
-	  	 					file: $scope.displayedKeyframe.filename
-	  	 				});
+	  	 				console.log("Viewer: Here's the response from writing to file: ");
+	  	 				// $state.go('main.file', {
+	  	 				// 	file: $scope.displayedKeyframe.filename
+	  	 				// });
 	  	 			}).catch(function (err){
 	  	 				console.log("revert to file error: ", err);
 	  	 			});
