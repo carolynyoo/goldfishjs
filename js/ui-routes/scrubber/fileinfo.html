@@ -1,7 +1,7 @@
 <div class="panel:active" ng-show="showFileTab" ng-class="{'active': showFileTab}">
 	<!-- need to fix some bug with active show when click tab -->
 	<!-- for now forcing the active state -->
-    <div class="content">
+  <!--   <div class="content keyframe-info">
         <p>
             filename: {{currentKeyframe.filename}}
         </p>
@@ -14,9 +14,19 @@
         <p ng-filter>
             committed at: {{currentKeyframe.last_commit_time | datetime}}
         </p>
-        <p>
+        <p> -->
 <!--            frame id: {{currentFrameID}} -->
-        </p>
+        <!-- </p> -->
+    <!-- </div> -->
+
+    <div layout="column keyframe-info" layout-fill style="padding-bottom: 32px;">
+      <md-whiteframe class="md-whiteframe-z1" layout layout-align="left left">
+        <ng-md-icon icon="call_split" style="fill: #aaa" size="24"></ng-md-icon>
+        <h5>{{ currentKeyframe.branch_name }}</h5><br>
+        <ng-md-icon icon="timer" style="fill: #aaa" size="24"></ng-md-icon>
+        <h5>{{ currentKeyframe.last_commit_time | datetime }}</h5>
+      </md-whiteframe>
     </div>
+
 </div>
 <a class="trigger" ng-click="toggleActive()">File Info</a>

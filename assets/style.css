@@ -81,13 +81,13 @@ opacity: .85;
 .content {
 	font-style:normal;
 	font-family:helvetica, arial, verdana, sans-serif;
-	color: #52D017;
-	background:#333333;
-	border:1px solid #444444;
-	-moz-border-radius-topright: 20px;
+	/*color: #52D017;
+	background:#333333;*/
+	/*border:1px solid #444444;*/
+	/*-moz-border-radius-topright: 20px;
 	-webkit-border-top-right-radius: 20px;
 	-moz-border-radius-bottomleft: 20px;
-	-webkit-border-bottom-left-radius: 20px;
+	-webkit-border-bottom-left-radius: 20px;*/
 	margin: 30px 0 50px;
 	padding: 15px 0;
 }
@@ -303,5 +303,13 @@ a:link {
 	border-radius: 15px;
 }
 
+.keyframe-info {
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+}
 
+.keyframe-info h5 {
+	color: #888;
+}
 
