@@ -1,22 +1,18 @@
-<div class="panel:active" ng-show="showFileTab" ng-class="{'active': showFileTab}">
-	<!-- need to fix some bug with active show when click tab -->
-	<!-- for now forcing the active state -->
-    <div class="content">
-        <p>
-            filename: {{currentKeyframe.filename}}
-        </p>
-        <p>
-            branchname: {{currentKeyframe.branch_name}}
-        </p>
-        <p>
-            last commit: {{currentKeyframe.last_commit}}
-        </p>
-        <p ng-filter>
-            committed at: {{currentKeyframe.last_commit_time | datetime}}
-        </p>
-        <p>
-<!--            frame id: {{currentFrameID}} -->
-        </p>
+<div class="file-info-box">
+
+    <div layout="column keyframe-info" layout-fill>
+      <md-whiteframe class="md-whiteframe-z1" layout layout-align="left left">
+       
+        <ng-md-icon class="file-info-height file-info-icon" icon="call_split" style="fill: #aaa" size="22"></ng-md-icon><br>
+        <h5 class="file-info-height file-info-head">{{ currentKeyframe.branch_name }}</h5>
+
+        <ng-md-icon class="file-info-height file-info-icon" icon="timer" style="fill: #aaa" size="22"></ng-md-icon>
+        <h5 class="file-info-height file-info-head">{{ currentKeyframe.last_commit_time | myDateFormat }}</h5>
+
+        <ng-md-icon class="file-info-height file-info-icon" icon="check_circle" style="fill: #aaa" size="22"></ng-md-icon>
+        <h5 class="file-info-height file-info-head">{{ currentKeyframe.last_commit.substring(0,8) + "..." }}</h5>
+
+      </md-whiteframe>
     </div>
+
 </div>
-<a class="trigger" ng-click="toggleActive()">File Info</a>

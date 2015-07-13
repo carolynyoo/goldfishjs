@@ -47,6 +47,7 @@
     </section> 
 
     <section layout="row" layout-sm="column" layout-align="right right">
+        
         <md-switch 
             class="md-primary" 
             md-no-ink aria-label="Diff Mode" 
@@ -54,46 +55,24 @@
             ng-click="switchDiffMode()">
           Diff Mode
         </md-switch>
-    </section>
-<!-- 
-    <section id="playhead" layout="row" layout-sm="column" layout-align="center center">
-    <label for=KeyframeScrubber>Adjust Playhead</label>
-	<input type=range id="KeyframeScrubber" min=0 value=20 max=$scope.framesArray.length step=1 ng-model="currentFrameID" ng-change="$parent.advanceFrame(currentFrameID, currentFrame)">
-	<output for=KeyframeScrubber id='playhead'>{{currentFrameID}}</output>
-    <br/>
-	<button ng-click="broadcastKeyframeSelected()">Simulate Keyframe Click</button>
-    </section> -->
-    
-<fileinfo></fileinfo>
 
-<!--     <HR>
-    <div class="AddedChange">
-    <pre>
-        {{diffsArray.textAdded}}
-    </pre>
-    <HR>
-	</div>
-	<div class="RemovedChange">
-    <pre>
-        {{diffsArray.textRemoved}}
-    </pre>
-    </div>
-    <HR>
-	<div class="NoChange">
-    <pre>
-        {{diffsArray.textSame}}
-    </pre>
-    <HR>
-	</div>
-    <em>Current Frame</em>
-    <div ng-show="currentFrameID === 0">
-    <em>First Frame</em>
-    <pre>
-    {{firstFrame}}
-    </pre>
-    </div>
-	<pre>
-		{{currentFrame}}
-	</pre> -->
+        <md-switch 
+            class="md-primary" 
+            md-no-ink aria-label="File Info" 
+            ng-model="infoSwitch" 
+            ng-click="switchInfoMode()">
+          File Info
+        </md-switch>
+
+    </section>
+
+<fileinfo ng-show="infoSwitch"></fileinfo>
 
 </div>
+
+
+
+
+
+
+

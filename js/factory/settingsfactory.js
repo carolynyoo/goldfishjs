@@ -4,6 +4,7 @@ app.factory('SettingsFactory', function (ValuesService) {
 	// Store booleans as private vars and expose functions for getting or setting them.
 	
 	var diffMode = false;
+	var infoMode = false;
 	var currentRepo = "";
 
 	var getMode = function () {
@@ -14,6 +15,15 @@ app.factory('SettingsFactory', function (ValuesService) {
 		// diffMode = diffMode === true ? false : true;
 		diffMode = !diffMode;
 		return diffMode;
+	};
+
+	var getInfoMode = function () {
+		return infoMode;
+	};
+
+	var switchInfoMode = function () {
+		infoMode = !infoMode;
+		return infoMode;
 	};
 
 	var getCurrentRepo = function () {
@@ -39,7 +49,9 @@ app.factory('SettingsFactory', function (ValuesService) {
 		switchMode: switchMode,
 		getRecentRepos: getRecentRepos,
 		getCurrentRepo: getCurrentRepo,
-		setCurrentRepo: setCurrentRepo
+		setCurrentRepo: setCurrentRepo,
+		getInfoMode: getInfoMode,
+		switchInfoMode: switchInfoMode
 	};
 
 });
